@@ -2,6 +2,9 @@
 
 let allPhilosophers = [];
 let idx = null;
+let currentSlide = 0;
+const slidesToShow = 3; // Number of cards to show at once
+let totalSlides = 0;
 
 // Fetch and display philosophers and arguments
 async function fetchPhilosophers() {
@@ -13,6 +16,7 @@ async function fetchPhilosophers() {
         displayArguments(philosophers);
         buildSearchIndex(philosophers);
         buildTimeline(philosophers);
+        calculateTotalSlides(philosophers);
     } catch (error) {
         console.error('Error fetching philosopher data:', error);
     }
@@ -30,6 +34,7 @@ function displayPhilosophers(philosophers) {
         const img = document.createElement('img');
         img.src = philosopher.image;
         img.alt = philosopher.name;
+        img.loading = 'lazy'; // Improve performance with lazy loading
         card.appendChild(img);
         
         // Philosopher Name
@@ -154,6 +159,8 @@ function handleSearch() {
         displayPhilosophers(allPhilosophers);
         displayArguments(allPhilosophers);
         buildTimeline(allPhilosophers);
+        calculateTotalSlides(allPhilosophers);
+        resetCarousel();
         return;
     }
     const results = idx.search(`*${searchInput}*`);
@@ -161,6 +168,8 @@ function handleSearch() {
     displayPhilosophers(matchedPhilosophers);
     displayArguments(matchedPhilosophers);
     buildTimeline(matchedPhilosophers);
+    calculateTotalSlides(matchedPhilosophers);
+    resetCarousel();
 }
 
 // Function to show modal
@@ -204,45 +213,93 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    // Carousel Navigation
+    const prevButton = document.querySelector('.prev-button');
+    const nextButton = document.querySelector('.next-button');
+    const philosophersContainer = document.getElementById('philosophers-container');
+
+    prevButton.addEventListener('click', () => {
+        slideCarousel(-1);
+    });
+
+    nextButton.addEventListener('click', () => {
+        slideCarousel(1);
+    });
 });
+
+// Function to calculate total slides based on philosophers count
+function calculateTotalSlides(philosophers) {
+    totalSlides = Math.ceil(philosophers.length / slidesToShow);
+}
+
+// Function to reset carousel to first slide
+function resetCarousel() {
+    currentSlide = 0;
+    updateCarousel();
+}
+
+// Function to slide carousel
+function slideCarousel(direction) {
+    currentSlide += direction;
+    if (currentSlide < 0) {
+        currentSlide = 0;
+    } else if (currentSlide >= totalSlides) {
+        currentSlide = totalSlides - 1;
+    }
+    updateCarousel();
+}
+
+// Function to update carousel position
+function updateCarousel() {
+    const philosophersContainer = document.getElementById('philosophers-container');
+    const cardWidth = philosophersContainer.querySelector('.card').offsetWidth + 20; // card width + margin-right
+    philosophersContainer.style.transform = `translateX(-${currentSlide * slidesToShow * cardWidth}px)`;
+}
 
 // Function to build timeline (basic implementation)
 function buildTimeline(philosophers) {
     const container = document.getElementById('timeline-container');
     container.innerHTML = ''; // Clear existing content
     
-    // Sort philosophers by their birth year (assuming image filenames have birth years or another method)
-    // Since we don't have birth years, we'll assign a sample order
+    // Sample chronological order based on historical timelines
     const timelineOrder = [
-        "Plato",
-        "Aristotle",
-        "René Descartes",
-        "Immanuel Kant"
-        // Add more philosophers in chronological order
+        { name: "Plato", year: -427 },
+        { name: "Aristotle", year: -384 },
+        { name: "René Descartes", year: 1596 },
+        { name: "Immanuel Kant", year: 1724 }
+        // Add more philosophers with their approximate birth years
     ];
     
-    timelineOrder.forEach(name => {
-        const philosopher = philosophers.find(p => p.name === name);
-        if (philosopher) {
+    // Sort the timelineOrder by year
+    timelineOrder.sort((a, b) => a.year - b.year);
+    
+    timelineOrder.forEach((philosopher, index) => {
+        const philosopherData = philosophers.find(p => p.name === philosopher.name);
+        if (philosopherData) {
             const event = document.createElement('div');
             event.classList.add('timeline-event');
+            event.classList.add(index % 2 === 0 ? 'left' : 'right');
             event.innerHTML = `
-                <h3>${philosopher.name}</h3>
-                <p>${philosopher.bio}</p>
+                <div class="timeline-event-content">
+                    <h3>${philosopherData.name}</h3>
+                    <p><strong>Born:</strong> ${philosopher.year < 0 ? Math.abs(philosopher.year) + " BC" : philosopher.year}</p>
+                    <p>${philosopherData.bio}</p>
+                </div>
             `;
             event.addEventListener('click', () => {
-                showModal(philosopher.name, `
+                showModal(philosopherData.name, `
 Biography:
-${philosopher.bio}
+${philosopherData.bio}
 
 Major Works:
-${philosopher.works.join(', ')}
+${philosopherData.works.join(', ')}
 
 Central Arguments:
-${philosopher.arguments.map(arg => `${arg.title}: ${arg.description}`).join('\n')}
+${philosopherData.arguments.map(arg => `${arg.title}: ${arg.description}`).join('\n')}
 
 Influence:
-${philosopher.influence}
+${philosopherData.influence}
                 `);
             });
             container.appendChild(event);
