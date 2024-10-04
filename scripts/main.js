@@ -1,174 +1,515 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Philosophy Through Time</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="styles/styles.css">
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <nav aria-label="Main Navigation">
-            <div class="logo">Philosophy Through Time</div>
-            <ul class="nav-links">
-                <li><a href="#philosophers">Philosophers</a></li>
-                <li><a href="#arguments">Arguments</a></li>
-                <li><a href="#timeline">Timeline</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="search-container">
-                <input type="text" id="search-input" placeholder="Search..." aria-label="Search">
-                <button id="search-button" aria-label="Search">🔍</button>
-            </div>
-        </nav>
-    </header>
+// scripts/main.js
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Explore the Evolution of Philosophy</h1>
-        <p>From Descartes to Modern Thinkers</p>
-    </section>
+document.addEventListener('DOMContentLoaded', () => {
+    fetchPhilosophers();
+    setupCarouselNavigation();
+    setupFilterButtons();
+    setupModal();
+    setupScrollToTop();
+    populateTimeline();
+    populateFeaturedArguments();
+});
 
-    <!-- Philosophers Section -->
-    <section id="philosophers" class="philosophers-section">
-        <h2>Top Philosophers</h2>
-        <div class="carousel-container" aria-label="Philosophers Carousel">
-            <button class="carousel-button prev-button" aria-label="Previous Philosophers">❮</button>
-            <div class="carousel-wrapper">
-                <div class="carousel track" id="philosophers-container">
-                    <!-- Philosopher cards will be dynamically inserted here -->
-                </div>
-            </div>
-            <button class="carousel-button next-button" aria-label="Next Philosophers">❯</button>
-        </div>
-    </section>
+let allPhilosophers = [];
+let allArguments = [];
+let currentPhilosophersIndex = 0;
+let currentArgumentsIndex = 0;
+let currentFeaturedIndex = 0;
+let currentTimelineIndex = 0;
+const PHILOSOPHERS_VISIBLE = 3;
+const ARGUMENTS_VISIBLE = 4;
+const FEATURED_VISIBLE = 1;
+const TIMELINE_VISIBLE = 3;
 
-    <!-- Arguments Section -->
-    <section id="arguments" class="arguments-section">
-        <h2>Thought-Provoking Questions &amp; Arguments</h2>
-        <p>Philosophy often revolves around big questions. Explore some of the most intriguing arguments that have shaped our understanding of the world.</p>
-        
-        <!-- Argument Category Filters -->
-        <div class="filters" role="group" aria-label="Argument Categories">
-            <button class="filter-button active" data-category="all">
-                <img src="images/default-icon.png" alt="" aria-hidden="true">
-                All
-            </button>
-            <button class="filter-button" data-category="ethics">
-                <img src="images/ethics-icon.png" alt="" aria-hidden="true">
-                Ethics &amp; Morality
-            </button>
-            <button class="filter-button" data-category="existence">
-                <img src="images/existence-icon.png" alt="" aria-hidden="true">
-                Existence &amp; Reality
-            </button>
-            <button class="filter-button" data-category="mind">
-                <img src="images/mind-icon.png" alt="" aria-hidden="true">
-                Mind &amp; Consciousness
-            </button>
-            <button class="filter-button" data-category="religion">
-                <img src="images/religion-icon.png" alt="" aria-hidden="true">
-                Religion &amp; God
-            </button>
-        </div>
-        
-        <!-- Featured Argument Carousel -->
-        <div class="featured-argument-carousel">
-            <h3>Featured Arguments</h3>
-            <div class="carousel-container featured-carousel" aria-label="Featured Arguments Carousel">
-                <button class="carousel-button prev-button" aria-label="Previous Featured Argument">❮</button>
-                <div class="carousel-wrapper">
-                    <div class="carousel track" id="featured-arguments-container">
-                        <!-- Featured argument cards will be dynamically inserted here -->
-                    </div>
-                </div>
-                <button class="carousel-button next-button" aria-label="Next Featured Argument">❯</button>
-            </div>
-        </div>
-        
-        <!-- Arguments Carousel -->
-        <div class="carousel-container" aria-label="Arguments Carousel">
-            <button class="carousel-button prev-button" aria-label="Previous Arguments">❮</button>
-            <div class="carousel-wrapper">
-                <div class="carousel track" id="arguments-container">
-                    <!-- Argument cards will be dynamically inserted here -->
-                </div>
-            </div>
-            <button class="carousel-button next-button" aria-label="Next Arguments">❯</button>
-        </div>
-        
-        <!-- Quotes Section -->
-        <div class="quotes-section">
-            <blockquote>
-                "The unexamined life is not worth living." – Socrates
-                <cite>How much time do you spend examining your life?</cite>
-            </blockquote>
-            <blockquote>
-                "I can control my passions and emotions if I can understand their nature." – Spinoza
-                <cite>Do you think understanding your emotions can lead to better self-control?</cite>
-            </blockquote>
-        </div>
-    </section>
+// Fetch philosophers data
+async function fetchPhilosophers() {
+    try {
+        const response = await fetch('data/philosophers.json');
+        const philosophers = await response.json();
+        allPhilosophers = philosophers;
+        extractArguments();
+        displayPhilosophers();
+        displayArguments('all');
+    } catch (error) {
+        console.error('Error fetching philosopher data:', error);
+    }
+}
 
-    <!-- Timeline Section -->
-    <section id="timeline" class="timeline-section">
-        <h2>Philosophical Timeline</h2>
-        <div class="timeline-carousel-container" aria-label="Philosophical Timeline Carousel">
-            <button class="timeline-button prev-timeline-button" aria-label="Previous Timeline Event">⬆️</button>
-            <div class="timeline-carousel-wrapper">
-                <div class="timeline-carousel track" id="timeline-container">
-                    <!-- Timeline events will be dynamically inserted here -->
-                </div>
-            </div>
-            <button class="timeline-button next-timeline-button" aria-label="Next Timeline Event">⬇️</button>
-        </div>
-    </section>
+// Extract all unique arguments
+function extractArguments() {
+    const argumentsSet = new Set();
+    allPhilosophers.forEach(philosopher => {
+        philosopher.arguments.forEach(arg => {
+            argumentsSet.add(JSON.stringify(arg));
+        });
+    });
+    allArguments = Array.from(argumentsSet).map(arg => JSON.parse(arg));
+}
 
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <h2>About This Website</h2>
-        <p>This website traces the evolution of philosophy from Descartes to the present, highlighting key philosophers, their works, and the central arguments that shaped our understanding of the world.</p>
-    </section>
+// Display philosopher cards
+function displayPhilosophers() {
+    const container = document.getElementById('philosophers-container');
+    container.innerHTML = '';
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <h2>Contact Us</h2>
-        <form id="contact-form" aria-label="Contact Form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required aria-required="true">
+    allPhilosophers.forEach(philosopher => {
+        const card = createPhilosopherCard(philosopher);
+        container.appendChild(card);
+    });
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required aria-required="true">
+    updatePhilosophersCarousel();
+}
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+// Create a philosopher card
+function createPhilosopherCard(philosopher) {
+    const card = document.createElement('div');
+    card.classList.add('philosopher-card');
 
-            <button type="submit">Send</button>
-        </form>
-    </section>
+    const img = document.createElement('img');
+    img.src = philosopher.image;
+    img.alt = `${philosopher.name} Portrait`;
+    card.appendChild(img);
 
-    <!-- Modal for Detailed Information -->
-    <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-body">
-        <div class="modal-content">
-            <span class="close-button" aria-label="Close Modal">&times;</span>
-            <h2 id="modal-title"></h2>
-            <p id="modal-body"></p>
-        </div>
-    </div>
+    const name = document.createElement('h3');
+    name.textContent = philosopher.name;
+    card.appendChild(name);
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Philosophy Through Time. All rights reserved.</p>
-    </footer>
+    const bio = document.createElement('p');
+    bio.textContent = philosopher.bio;
+    card.appendChild(bio);
 
-    <!-- Include Lunr.js for Search Functionality -->
-    <script src="https://unpkg.com/lunr/lunr.js"></script>
-    <!-- Scripts -->
-    <script src="scripts/main.js"></script>
-</body>
-</html>
+    card.addEventListener('click', () => {
+        showModal(philosopher.name, `
+Biography:
+${philosopher.bio}
+
+Major Works:
+${philosopher.works.join(', ')}
+
+Central Arguments:
+${philosopher.arguments.map(arg => `${arg.title}: ${arg.description}`).join('\n')}
+
+Influence:
+${philosopher.influence}
+        `);
+    });
+
+    return card;
+}
+
+// Update philosophers carousel
+function updatePhilosophersCarousel() {
+    const container = document.getElementById('philosophers-container');
+    const totalPhilosophers = allPhilosophers.length;
+    const maxIndex = Math.ceil(totalPhilosophers / PHILOSOPHERS_VISIBLE) - 1;
+
+    const prevButton = document.querySelector('.philosophers-section .prev-button');
+    const nextButton = document.querySelector('.philosophers-section .next-button');
+    prevButton.disabled = currentPhilosophersIndex === 0;
+    nextButton.disabled = currentPhilosophersIndex === maxIndex;
+
+    const translateX = -(currentPhilosophersIndex * (container.children[0].offsetWidth + 30) * PHILOSOPHERS_VISIBLE);
+    container.style.transform = `translateX(${translateX}px)`;
+}
+
+// Display argument cards based on category
+function displayArguments(category) {
+    const container = document.getElementById('arguments-container');
+    container.innerHTML = '';
+
+    let filteredArguments = allArguments;
+    if (category !== 'all') {
+        filteredArguments = allArguments.filter(arg => arg.category === category);
+    }
+
+    filteredArguments.forEach(argument => {
+        const card = createArgumentCard(argument);
+        container.appendChild(card);
+    });
+
+    updateArgumentsCarousel();
+}
+
+// Create an argument card
+function createArgumentCard(argument) {
+    const card = document.createElement('div');
+    card.classList.add('argument-card', `category-${argument.category}`);
+
+    const icon = document.createElement('img');
+    icon.src = getArgumentIcon(argument.title);
+    icon.alt = `${argument.title} Icon`;
+    card.appendChild(icon);
+
+    const title = document.createElement('h3');
+    title.textContent = argument.title;
+    card.appendChild(title);
+
+    const description = document.createElement('p');
+    description.textContent = argument.description;
+    card.appendChild(description);
+
+    card.addEventListener('click', () => {
+        showModal(argument.title, `
+Summary:
+${argument.summary}
+
+Real-Life Example:
+${argument.realLifeExample}
+
+Pros:
+${argument.pro}
+
+Cons:
+${argument.con}
+
+Key Philosopher:
+${argument.keyPhilosopher}
+        `);
+    });
+
+    return card;
+}
+
+// Get argument icon based on title
+function getArgumentIcon(title) {
+    const icons = {
+        "Golden Mean": "images/ethics-icon.png",
+        "Four Causes": "images/existence-icon.png",
+        "Theory of Forms": "images/existence-icon.png",
+        "Allegory of the Cave": "images/existence-icon.png",
+        "Cogito, ergo sum": "images/mind-icon.png",
+        "Dualism": "images/mind-icon.png",
+        "Categorical Imperative": "images/ethics-icon.png",
+        "Transcendental Idealism": "images/existence-icon.png",
+        "The Trolley Problem": "images/trolley-icon.png",
+        "Leap of Faith": "images/religion-icon.png",
+        "Existential Angst": "images/mind-icon.png",
+        "Übermensch (Overman/Superman)": "images/ethics-icon.png",
+        "Will to Power": "images/ethics-icon.png"
+    };
+    return icons[title] || "images/default-icon.png";
+}
+
+// Update arguments carousel
+function updateArgumentsCarousel() {
+    const container = document.getElementById('arguments-container');
+    const totalArguments = container.children.length;
+    const maxIndex = Math.ceil(totalArguments / ARGUMENTS_VISIBLE) - 1;
+
+    const prevButton = document.querySelector('.arguments-section .prev-button');
+    const nextButton = document.querySelector('.arguments-section .next-button');
+    prevButton.disabled = currentArgumentsIndex === 0;
+    nextButton.disabled = currentArgumentsIndex === maxIndex;
+
+    const translateX = -(currentArgumentsIndex * (container.children[0].offsetWidth + 30) * ARGUMENTS_VISIBLE);
+    container.style.transform = `translateX(${translateX}px)`;
+}
+
+// Setup carousel navigation
+function setupCarouselNavigation() {
+    // Philosophers Carousel
+    const prevPhilosophers = document.querySelector('.philosophers-section .prev-button');
+    const nextPhilosophers = document.querySelector('.philosophers-section .next-button');
+
+    prevPhilosophers.addEventListener('click', () => {
+        if (currentPhilosophersIndex > 0) {
+            currentPhilosophersIndex--;
+            updatePhilosophersCarousel();
+        }
+    });
+
+    nextPhilosophers.addEventListener('click', () => {
+        const totalPhilosophers = allPhilosophers.length;
+        const maxIndex = Math.ceil(totalPhilosophers / PHILOSOPHERS_VISIBLE) - 1;
+        if (currentPhilosophersIndex < maxIndex) {
+            currentPhilosophersIndex++;
+            updatePhilosophersCarousel();
+        }
+    });
+
+    // Arguments Carousel
+    const prevArguments = document.querySelector('.arguments-section .prev-button');
+    const nextArguments = document.querySelector('.arguments-section .next-button');
+
+    prevArguments.addEventListener('click', () => {
+        if (currentArgumentsIndex > 0) {
+            currentArgumentsIndex--;
+            updateArgumentsCarousel();
+        }
+    });
+
+    nextArguments.addEventListener('click', () => {
+        const container = document.getElementById('arguments-container');
+        const totalArguments = container.children.length;
+        const maxIndex = Math.ceil(totalArguments / ARGUMENTS_VISIBLE) - 1;
+        if (currentArgumentsIndex < maxIndex) {
+            currentArgumentsIndex++;
+            updateArgumentsCarousel();
+        }
+    });
+
+    // Featured Arguments Carousel
+    const prevFeatured = document.querySelector('.featured-argument-carousel .prev-button');
+    const nextFeatured = document.querySelector('.featured-argument-carousel .next-button');
+
+    prevFeatured.addEventListener('click', () => {
+        if (currentFeaturedIndex > 0) {
+            currentFeaturedIndex--;
+            updateFeaturedCarousel();
+        }
+    });
+
+    nextFeatured.addEventListener('click', () => {
+        const featuredArguments = allArguments.filter(arg => arg.featured);
+        const maxIndex = Math.ceil(featuredArguments.length / FEATURED_VISIBLE) - 1;
+        if (currentFeaturedIndex < maxIndex) {
+            currentFeaturedIndex++;
+            updateFeaturedCarousel();
+        }
+    });
+
+    // Timeline Carousel
+    const prevTimeline = document.querySelector('.timeline-carousel-container .prev-timeline-button');
+    const nextTimeline = document.querySelector('.timeline-carousel-container .next-timeline-button');
+
+    prevTimeline.addEventListener('click', () => {
+        if (currentTimelineIndex > 0) {
+            currentTimelineIndex--;
+            updateTimelineCarousel();
+        }
+    });
+
+    nextTimeline.addEventListener('click', () => {
+        const container = document.getElementById('timeline-container');
+        const totalTimeline = container.children.length;
+        const maxIndex = Math.ceil(totalTimeline / TIMELINE_VISIBLE) - 1;
+        if (currentTimelineIndex < maxIndex) {
+            currentTimelineIndex++;
+            updateTimelineCarousel();
+        }
+    });
+}
+
+// Setup filter buttons
+function setupFilterButtons() {
+    const filterButtons = document.querySelectorAll('.filter-button');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const category = button.getAttribute('data-category');
+            currentArgumentsIndex = 0;
+            displayArguments(category);
+        });
+    });
+}
+
+// Setup modal functionality
+function setupModal() {
+    const modal = document.getElementById('modal');
+    const closeButton = document.querySelector('.close-button');
+
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+        }
+    });
+
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+        }
+    });
+}
+
+// Show modal with content
+function showModal(title, body) {
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+
+    modalTitle.textContent = title;
+    modalBody.textContent = body.trim();
+
+    modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+// Setup scroll to top button
+function setupScrollToTop() {
+    const scrollButton = document.createElement('button');
+    scrollButton.classList.add('scroll-to-top');
+    scrollButton.innerHTML = '⬆️';
+    document.body.appendChild(scrollButton);
+
+    scrollButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            scrollButton.style.display = 'block';
+        } else {
+            scrollButton.style.display = 'none';
+        }
+    });
+}
+
+// Populate timeline
+function populateTimeline() {
+    const timelineContainer = document.getElementById('timeline-container');
+    timelineContainer.innerHTML = '';
+
+    // Sort philosophers by publicationDate
+    const sortedPhilosophers = allPhilosophers.slice().sort((a, b) => compareDates(a.publicationDate, b.publicationDate));
+
+    sortedPhilosophers.forEach(philosopher => {
+        const event = document.createElement('div');
+        event.classList.add('timeline-event');
+
+        const date = document.createElement('h3');
+        date.textContent = philosopher.publicationDate;
+        event.appendChild(date);
+
+        const name = document.createElement('p');
+        name.innerHTML = `<strong>${philosopher.name}</strong>`;
+        event.appendChild(name);
+
+        const arg = philosopher.arguments[0];
+        const summary = document.createElement('p');
+        summary.textContent = arg ? arg.description : 'No summary available.';
+        event.appendChild(summary);
+
+        event.addEventListener('click', () => {
+            showModal(`${philosopher.name} - ${arg.title}`, `
+Publication Date: ${philosopher.publicationDate}
+
+Argument: ${arg.title}
+Description: ${arg.description}
+Summary: ${arg.summary}
+Real-Life Example: ${arg.realLifeExample}
+
+Influence:
+${philosopher.influence}
+            `);
+        });
+
+        timelineContainer.appendChild(event);
+    });
+
+    updateTimelineCarousel();
+}
+
+// Compare dates for sorting
+function compareDates(a, b) {
+    const yearA = parseYear(a);
+    const yearB = parseYear(b);
+    return yearA - yearB;
+}
+
+// Parse year from date string
+function parseYear(dateStr) {
+    const regex = /(\d+)\s*(BC)?/;
+    const match = dateStr.match(regex);
+    if (match) {
+        let year = parseInt(match[1]);
+        if (match[2] === 'BC') {
+            year = -year;
+        }
+        return year;
+    }
+    return 0;
+}
+
+// Populate featured arguments
+function populateFeaturedArguments() {
+    const container = document.getElementById('featured-arguments-container');
+    container.innerHTML = '';
+
+    const featuredArguments = allArguments.filter(arg => arg.featured);
+
+    featuredArguments.forEach(arg => {
+        const card = createFeaturedArgumentCard(arg);
+        container.appendChild(card);
+    });
+
+    updateFeaturedCarousel();
+}
+
+// Create a featured argument card
+function createFeaturedArgumentCard(argument) {
+    const card = document.createElement('div');
+    card.classList.add('featured-argument');
+
+    const img = document.createElement('img');
+    img.src = getArgumentIcon(argument.title);
+    img.alt = `${argument.title} Icon`;
+    img.classList.add('featured-argument-image');
+    card.appendChild(img);
+
+    const title = document.createElement('h3');
+    title.textContent = argument.title;
+    card.appendChild(title);
+
+    const synopsis = document.createElement('p');
+    synopsis.textContent = argument.summary;
+    card.appendChild(synopsis);
+
+    card.addEventListener('click', () => {
+        showModal(argument.title, `
+Summary:
+${argument.summary}
+
+Real-Life Example:
+${argument.realLifeExample}
+
+Pros:
+${argument.pro}
+
+Cons:
+${argument.con}
+
+Key Philosopher:
+${argument.keyPhilosopher}
+        `);
+    });
+
+    return card;
+}
+
+// Update featured arguments carousel
+function updateFeaturedCarousel() {
+    const container = document.getElementById('featured-arguments-container');
+    const totalFeatured = container.children.length;
+    const maxIndex = Math.ceil(totalFeatured / FEATURED_VISIBLE) - 1;
+
+    const prevButton = document.querySelector('.featured-argument-carousel .prev-button');
+    const nextButton = document.querySelector('.featured-argument-carousel .next-button');
+    prevButton.disabled = currentFeaturedIndex === 0;
+    nextButton.disabled = currentFeaturedIndex === maxIndex;
+
+    const translateX = -(currentFeaturedIndex * (container.children[0].offsetWidth + 30) * FEATURED_VISIBLE);
+    container.style.transform = `translateX(${translateX}px)`;
+}
+
+// Update timeline carousel
+function updateTimelineCarousel() {
+    const container = document.getElementById('timeline-container');
+    const totalTimeline = container.children.length;
+    const maxIndex = Math.ceil(totalTimeline / TIMELINE_VISIBLE) - 1;
+
+    const prevButton = document.querySelector('.timeline-carousel-container .prev-timeline-button');
+    const nextButton = document.querySelector('.timeline-carousel-container .next-timeline-button');
+    prevButton.disabled = currentTimelineIndex === 0;
+    nextButton.disabled = currentTimelineIndex === maxIndex;
+
+    const translateY = -(currentTimelineIndex * (container.children[0].offsetHeight + 30) * TIMELINE_VISIBLE);
+    container.style.transform = `translateY(${translateY}px)`;
+}
