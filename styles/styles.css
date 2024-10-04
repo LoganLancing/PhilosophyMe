@@ -269,7 +269,8 @@ section p {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    padding: 60px 20px; /* More space before and after */
+    height: 300px;
     position: relative;
     margin-top: 40px;
     overflow: hidden;
@@ -298,7 +299,7 @@ section p {
     border-radius: 4px;
     position: relative;
     text-align: center;
-    font-size: 1.5em; /* Increased text size */
+    font-size: 1.5em; /* Bigger text */
 }
 
 .quotes-section blockquote::before,
@@ -321,11 +322,11 @@ section p {
     bottom: -10px;
 }
 
-.quotes-section cite {
-    display: block;
-    margin-top: 10px;
-    font-size: 1em; /* Increased font size for questions */
+.quotes-section .quote-question {
+    margin-top: 15px;
+    font-size: 1.2em; /* Increased font size for questions */
     color: var(--color-text);
+    text-align: center;
 }
 
 /* Carousel Wrapper */
@@ -593,10 +594,6 @@ section p {
         right: -40px;
     }
 
-    .timeline-carousel-container {
-        display: none; /* Timeline removed */
-    }
-
     .carousel-wrapper, .featured-carousel .carousel-wrapper {
         max-width: 800px;
     }
@@ -649,15 +646,15 @@ section p {
     }
 
     .quotes-section {
-        height: 150px;
+        height: 250px;
     }
 
     .quotes-section blockquote {
-        font-size: 1.5em; /* Increased font size */
+        font-size: 1.8em; /* Increased font size */
     }
 
-    .quotes-section cite {
-        font-size: 1em; /* Increased font size for questions */
+    .quotes-section .quote-question {
+        font-size: 1.2em; /* Increased font size for questions */
     }
 
     .featured-argument-carousel .prev-featured-button,
@@ -721,11 +718,15 @@ section p {
     }
 
     .quotes-section {
-        height: 100px;
+        height: 200px;
     }
 
     .quotes-section blockquote {
-        font-size: 1.2em; /* Increased font size */
+        font-size: 1.5em; /* Increased font size */
+    }
+
+    .quotes-section .quote-question {
+        font-size: 1em; /* Adjusted font size for questions */
     }
 
     #philosophers-container .philosopher-card,
@@ -785,8 +786,11 @@ section p {
     font-size: 1.5em; /* Bigger text */
 }
 
-.quotes-section cite {
-    font-size: 1em;
+.quotes-section .quote-question {
+    margin-top: 15px;
+    font-size: 1.2em; /* Increased font size for questions */
+    color: var(--color-text);
+    text-align: center;
 }
 
 /* Featured Argument Carousel Positioning */
