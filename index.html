@@ -97,8 +97,14 @@
     <!-- Timeline Section -->
     <section id="timeline" class="timeline-section">
         <h2>Philosophical Timeline</h2>
-        <div class="timeline-container" id="timeline-container" aria-label="Philosophical Timeline">
-            <!-- Timeline events will be dynamically inserted here -->
+        <div class="timeline-carousel-container" aria-label="Philosophical Timeline Carousel">
+            <button class="timeline-button prev-timeline-button" aria-label="Previous Timeline Event">⬆️</button>
+            <div class="timeline-carousel-wrapper">
+                <div class="timeline-carousel track" id="timeline-container">
+                    <!-- Timeline events will be dynamically inserted here -->
+                </div>
+            </div>
+            <button class="timeline-button next-timeline-button" aria-label="Next Timeline Event">⬇️</button>
         </div>
     </section>
 
