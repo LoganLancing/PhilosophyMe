@@ -18,13 +18,28 @@ let currentArgumentsIndex = 0;
 const PHILOSOPHERS_VISIBLE = 3; // Number of philosopher cards visible at once
 const ARGUMENTS_VISIBLE = 4;    // Number of argument cards visible at once
 
+// Mapping of Philosopher's Name to their Most Famous Publication Date
+const publicationDates = {
+    "Aristotle": "384 BC",
+    "Plato": "428 BC",
+    "René Descartes": "1637",
+    "Immanuel Kant": "1781",
+    "Søren Kierkegaard": "1843",
+    "Friedrich Nietzsche": "1883"
+};
+
 // Fetch philosophers and initialize sections
 async function fetchPhilosophers() {
     try {
         const response = await fetch('data/philosophers.json');
         const philosophers = await response.json();
-        allPhilosophers = philosophers;
-        extractArguments(philosophers);
+        allPhilosophers = philosophers.map(philosopher => ({
+            ...philosopher,
+            publicationDate: publicationDates[philosopher.name] || "Unknown"
+        }));
+        // Sort philosophers chronologically based on publicationDate
+        allPhilosophers.sort((a, b) => compareDates(a.publicationDate, b.publicationDate));
+        extractArguments(allPhilosophers);
         displayPhilosophers();
         displayArguments('all'); // Initially display all arguments
     } catch (error) {
@@ -32,35 +47,30 @@ async function fetchPhilosophers() {
     }
 }
 
+// Function to compare dates in various formats
+function compareDates(a, b) {
+    const yearA = parseYear(a);
+    const yearB = parseYear(b);
+    return yearA - yearB;
+}
+
+// Helper function to parse year from date string
+function parseYear(dateStr) {
+    if (dateStr.includes("BC")) {
+        return -parseInt(dateStr);
+    }
+    return parseInt(dateStr);
+}
+
 // Extract arguments from philosophers data
 function extractArguments(philosophers) {
     const argumentsSet = new Set();
     philosophers.forEach(philosopher => {
         philosopher.arguments.forEach(arg => {
-            // Assign category to each argument if not already assigned
-            if (!arg.category) {
-                arg.category = categorizeArgument(arg.title);
-            }
             argumentsSet.add(JSON.stringify(arg));
         });
     });
     allArguments = Array.from(argumentsSet).map(arg => JSON.parse(arg));
-}
-
-// Simple categorization based on argument title keywords
-function categorizeArgument(title) {
-    const lowerTitle = title.toLowerCase();
-    if (lowerTitle.includes('ethic') || lowerTitle.includes('moral')) {
-        return 'ethics';
-    } else if (lowerTitle.includes('existence') || lowerTitle.includes('reality') || lowerTitle.includes('ontological')) {
-        return 'existence';
-    } else if (lowerTitle.includes('mind') || lowerTitle.includes('consciousness')) {
-        return 'mind';
-    } else if (lowerTitle.includes('god') || lowerTitle.includes('religion')) {
-        return 'religion';
-    } else {
-        return 'other';
-    }
 }
 
 // Display philosopher cards in the carousel
@@ -79,7 +89,13 @@ function displayPhilosophers() {
 // Create a single philosopher card element (simplified)
 function createPhilosopherCard(philosopher) {
     const card = document.createElement('div');
-    card.classList.add('card', 'philosopher-card');
+    card.classList.add('philosopher-card');
+
+    // Philosopher Image
+    const img = document.createElement('img');
+    img.src = philosopher.image;
+    img.alt = `${philosopher.name} Portrait`;
+    card.appendChild(img);
 
     // Philosopher Name
     const name = document.createElement('h3');
@@ -124,8 +140,8 @@ function updatePhilosophersCarousel() {
     nextButton.disabled = currentPhilosophersIndex === maxIndex;
 
     // Calculate translateX
-    const cardWidth = 300; // Width of each card
-    const gap = 30;         // Gap between cards
+    const cardWidth = container.children[0].offsetWidth;
+    const gap = parseInt(getComputedStyle(container).gap);
     const translateX = -(currentPhilosophersIndex * (cardWidth + gap) * PHILOSOPHERS_VISIBLE);
     container.style.transform = `translateX(${translateX}px)`;
 }
@@ -153,6 +169,12 @@ function createArgumentCard(argument) {
     const card = document.createElement('div');
     card.classList.add('argument-card', `category-${argument.category}`);
 
+    // Argument Icon
+    const icon = document.createElement('img');
+    icon.src = getArgumentIcon(argument.title);
+    icon.alt = `${argument.title} Icon`;
+    card.appendChild(icon);
+
     // Argument Title
     const title = document.createElement('h3');
     title.textContent = argument.title;
@@ -160,7 +182,7 @@ function createArgumentCard(argument) {
 
     // Brief Overview
     const overview = document.createElement('p');
-    overview.textContent = argument.briefOverview;
+    overview.textContent = argument.description;
     card.appendChild(overview);
 
     // Add event listener to open modal with detailed info
@@ -186,6 +208,26 @@ ${argument.keyPhilosopher}
     return card;
 }
 
+// Function to get argument icon based on title
+function getArgumentIcon(title) {
+    const icons = {
+        "Cogito, ergo sum": "images/mind-icon.png",
+        "Dualism": "images/mind-icon.png",
+        "Categorical Imperative": "images/ethics-icon.png",
+        "Transcendental Idealism": "images/existence-icon.png",
+        "Golden Mean": "images/ethics-icon.png",
+        "Four Causes": "images/existence-icon.png",
+        "Theory of Forms": "images/existence-icon.png",
+        "Allegory of the Cave": "images/existence-icon.png",
+        "Leap of Faith": "images/religion-icon.png",
+        "Existential Angst": "images/mind-icon.png",
+        "Übermensch (Overman/Superman)": "images/ethics-icon.png",
+        "Will to Power": "images/ethics-icon.png"
+        // Add more mappings as needed
+    };
+    return icons[title] || "images/default-icon.png";
+}
+
 // Update arguments carousel position
 function updateArgumentsCarousel() {
     const container = document.getElementById('arguments-container');
@@ -199,8 +241,8 @@ function updateArgumentsCarousel() {
     nextButton.disabled = currentArgumentsIndex === maxIndex;
 
     // Calculate translateX
-    const cardWidth = 300; // Width of each card
-    const gap = 30;         // Gap between cards
+    const cardWidth = container.children[0].offsetWidth;
+    const gap = parseInt(getComputedStyle(container).gap);
     const translateX = -(currentArgumentsIndex * (cardWidth + gap) * ARGUMENTS_VISIBLE);
     container.style.transform = `translateX(${translateX}px)`;
 }
@@ -346,34 +388,34 @@ function populateTimeline() {
     const timelineContainer = document.getElementById('timeline-container');
     const timelineEvents = [
         {
-            year: "1641",
-            title: "René Descartes Born",
-            description: "René Descartes, a French philosopher, is born. He will later become known as the father of modern philosophy."
+            date: "384 BC",
+            philosopher: "Aristotle",
+            summary: "Developed the concept of the Golden Mean, promoting moderation in virtues."
         },
         {
-            year: "1804",
-            title: "Immanuel Kant Dies",
-            description: "Immanuel Kant, a central figure in modern philosophy, passes away, leaving behind a legacy of critical philosophy."
+            date: "428 BC",
+            philosopher: "Plato",
+            summary: "Introduced the Theory of Forms, explaining the nature of reality through abstract forms."
         },
         {
-            year: "384 BC",
-            title: "Aristotle Born",
-            description: "Aristotle, an ancient Greek philosopher and polymath, is born. He becomes a student of Plato and teacher of Alexander the Great."
+            date: "1637",
+            philosopher: "René Descartes",
+            summary: "Proposed 'Cogito, ergo sum' as a foundation for knowledge."
         },
         {
-            year: "428 BC",
-            title: "Plato Dies",
-            description: "Plato, an ancient Greek philosopher and student of Socrates, dies, having founded the Academy in Athens."
+            date: "1781",
+            philosopher: "Immanuel Kant",
+            summary: "Formulated the Categorical Imperative, a central principle in moral philosophy."
         },
         {
-            year: "1813",
-            title: "Søren Kierkegaard Born",
-            description: "Søren Kierkegaard, a Danish philosopher, is born. He is often considered the first existentialist philosopher."
+            date: "1843",
+            philosopher: "Søren Kierkegaard",
+            summary: "Introduced the concept of the Leap of Faith in existential philosophy."
         },
         {
-            year: "1900",
-            title: "Friedrich Nietzsche Dies",
-            description: "Friedrich Nietzsche, a German philosopher known for his critique of traditional morality, passes away."
+            date: "1883",
+            philosopher: "Friedrich Nietzsche",
+            summary: "Presented the idea of the Übermensch to transcend traditional morality."
         }
         // Add more timeline events as needed
     ];
@@ -385,17 +427,17 @@ function populateTimeline() {
         const content = document.createElement('div');
         content.classList.add('timeline-event-content');
 
-        const year = document.createElement('h3');
-        year.textContent = event.year;
-        content.appendChild(year);
+        const date = document.createElement('h3');
+        date.textContent = event.date;
+        content.appendChild(date);
 
-        const title = document.createElement('p');
-        title.innerHTML = `<strong>${event.title}</strong>`;
-        content.appendChild(title);
+        const philosopher = document.createElement('p');
+        philosopher.innerHTML = `<strong>${event.philosopher}</strong>`;
+        content.appendChild(philosopher);
 
-        const description = document.createElement('p');
-        description.textContent = event.description;
-        content.appendChild(description);
+        const summary = document.createElement('p');
+        summary.textContent = event.summary;
+        content.appendChild(summary);
 
         eventElement.appendChild(content);
         timelineContainer.appendChild(eventElement);
@@ -440,6 +482,4 @@ function showQuizResult(isCorrect, correctAnswer) {
     const modalBody = document.getElementById('modal-body');
     const result = document.createElement('div');
     result.classList.add('quiz-results', 'active');
-    result.innerHTML = `<p>${isCorrect ? '✅ Correct!' : `❌ Incorrect. The correct answer is ${correctAnswer}.`}</p>`;
-    modalBody.appendChild(result);
-}
+    result.innerHTML = `<p>${isCorrect ? '✅ Correct!' : `❌ Incorrect. The correct answer is
