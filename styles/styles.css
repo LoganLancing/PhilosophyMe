@@ -1,68 +1,72 @@
 /* Importing Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap');
 
-/* CSS Variables for Color Palette */
+/* CSS Variables for Color Palette and Common Styles */
 :root {
-    --navy-blue: #001F3F;
-    --forest-green: #228B22;
-    --gold: #FFD700;
-    --amber: #FFBF00;
-    --ivory: #FFFFF0;
-    --slate-purple: #6A5ACD;
-    --taupe: #483C32;
-    --light-gray: #D3D3D3;
-    --lavender: #E6E6FA;
-    --snow: #FFFAFA;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --accent-color: #FF7F50; /* Coral for highlights */
+    --color-primary: #001F3F;      /* Navy Blue */
+    --color-secondary: #228B22;    /* Forest Green */
+    --color-accent: #FFD700;       /* Gold */
+    --color-hover: #FFBF00;        /* Amber */
+    --color-bg: #FFFFF0;           /* Ivory */
+    --color-text: #483C32;         /* Taupe */
+    --color-light: #D3D3D3;        /* Light Gray */
+    --color-lavender: #E6E6FA;
+    --color-snow: #FFFAFA;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --font-primary: 'Open Sans', sans-serif;
+    --font-secondary: 'Merriweather', serif;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
 }
 
 /* Global Styles */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    font-family: 'Open Sans', sans-serif;
-    background-color: var(--ivory);
-    color: var(--taupe);
+    font-family: var(--font-primary);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Merriweather', serif;
-    color: var(--navy-blue);
+    font-family: var(--font-secondary);
+    color: var(--color-primary);
     margin-bottom: 0.5em;
 }
 
 a {
-    color: var(--gold);
+    color: var(--color-accent);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--transition-speed);
 }
 
 a:hover {
-    color: var(--amber);
+    color: var(--color-hover);
 }
 
+/* Header & Navigation */
 header {
-    background-color: var(--navy-blue);
-    color: var(--ivory);
+    background-color: var(--color-primary);
+    color: var(--color-bg);
     padding: 20px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    box-shadow: 0 2px 4px var(--color-shadow);
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .logo {
@@ -77,8 +81,6 @@ nav {
 }
 
 .nav-links li a {
-    color: var(--ivory);
-    font-weight: bold;
     position: relative;
     padding: 5px 0;
 }
@@ -88,20 +90,20 @@ nav {
     position: absolute;
     width: 0%;
     height: 2px;
-    background-color: var(--gold);
+    background-color: var(--color-accent);
     left: 0;
     bottom: 0;
-    transition: width 0.3s ease;
+    transition: width var(--transition-speed);
 }
 
 .nav-links li a:hover::after {
     width: 100%;
 }
 
+/* Search Container */
 .search-container {
     display: flex;
     align-items: center;
-    margin-left: 20px;
 }
 
 #search-input {
@@ -111,7 +113,7 @@ nav {
     outline: none;
     font-size: 1em;
     width: 200px;
-    transition: width 0.3s ease;
+    transition: width var(--transition-speed);
 }
 
 #search-input:focus {
@@ -121,23 +123,24 @@ nav {
 #search-button {
     padding: 8px 12px;
     border: none;
-    background-color: var(--gold);
-    color: var(--navy-blue);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
     border-radius: 0 4px 4px 0;
     cursor: pointer;
     font-size: 1em;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition-speed);
 }
 
 #search-button:hover {
-    background-color: var(--amber);
+    background-color: var(--color-hover);
 }
 
+/* Hero Section */
 .hero {
-    background-image: url('../images/hero-background.jpg'); /* Use a high-quality, relevant image */
+    background-image: url('../images/hero-background.jpg');
     background-size: cover;
     background-position: center;
-    color: var(--ivory);
+    color: var(--color-bg);
     text-align: center;
     padding: 120px 20px;
     position: relative;
@@ -150,26 +153,28 @@ nav {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 31, 63, 0.6); /* Overlay for better text readability */
+    background-color: rgba(0, 31, 63, 0.6);
     z-index: 1;
+}
+
+.hero h1,
+.hero p {
+    position: relative;
+    z-index: 2;
 }
 
 .hero h1 {
     font-size: 3.5em;
     margin-bottom: 20px;
-    position: relative;
-    z-index: 2;
 }
 
 .hero p {
     font-size: 1.5em;
-    position: relative;
-    z-index: 2;
 }
 
+/* Sections */
 section {
     padding: 60px 20px;
-    width: 90%;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -187,12 +192,18 @@ section h2::after {
     display: block;
     width: 60px;
     height: 4px;
-    background-color: var(--gold);
+    background-color: var(--color-accent);
     margin: 10px auto 0;
     border-radius: 2px;
 }
 
-/* Carousel Styles */
+section p {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+/* Carousel Container */
 .carousel-container {
     position: relative;
     display: flex;
@@ -202,14 +213,14 @@ section h2::after {
 }
 
 .carousel-button {
-    background-color: var(--gold);
+    background-color: var(--color-accent);
     border: none;
-    color: var(--navy-blue);
+    color: var(--color-primary);
     font-size: 2em;
     padding: 10px 15px;
     cursor: pointer;
     border-radius: 50%;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -217,16 +228,16 @@ section h2::after {
 }
 
 .carousel-button:hover {
-    background-color: var(--amber);
+    background-color: var(--color-hover);
     transform: translateY(-50%) scale(1.1);
 }
 
 .prev-button {
-    left: -50px; /* Position the previous button to the left */
+    left: -50px;
 }
 
 .next-button {
-    right: -50px; /* Position the next button to the right */
+    right: -50px;
 }
 
 .carousel-wrapper {
@@ -235,23 +246,21 @@ section h2::after {
     max-width: 1000px;
 }
 
-.philosophers-container,
-.arguments-container {
+.carousel-container .container {
     display: flex;
-    transition: transform 0.5s ease-in-out;
     gap: 30px;
+    transition: transform 0.5s ease-in-out;
 }
 
+/* Cards (Philosopher & Argument) */
 .card, .argument-card {
-    background-color: var(--snow);
-    border: 1px solid var(--light-gray);
-    border-radius: 8px;
+    background-color: var(--color-snow);
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius);
     width: 300px;
     padding: 20px;
-    box-shadow: 0 4px 6px var(--shadow-color);
+    box-shadow: 0 4px 6px var(--color-shadow);
     transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    overflow: hidden;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -261,7 +270,7 @@ section h2::after {
 
 .card:hover, .argument-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 12px var(--shadow-color);
+    box-shadow: 0 8px 12px var(--color-shadow);
 }
 
 .card img, .argument-card img {
@@ -276,14 +285,12 @@ section h2::after {
     width: 60px;
     height: 60px;
     object-fit: contain;
-    margin-bottom: 15px;
 }
 
 .card h3, .argument-card h3 {
-    margin-top: 15px;
     margin-bottom: 10px;
     font-size: 1.5em;
-    color: var(--navy-blue);
+    color: var(--color-primary);
 }
 
 .card p, .argument-card p {
@@ -291,23 +298,23 @@ section h2::after {
     margin-bottom: 10px;
 }
 
-.card .learn-more-button, .argument-card .learn-more-button {
-    display: inline-block;
+.learn-more-button, .challenge-button {
     padding: 8px 12px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
+    background-color: var(--color-secondary);
+    color: var(--color-bg);
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
+    transition: background-color var(--transition-speed);
     font-weight: bold;
+    text-decoration: none;
 }
 
-.card .learn-more-button:hover, .argument-card .learn-more-button:hover {
-    background-color: var(--gold);
+.learn-more-button:hover, .challenge-button:hover {
+    background-color: var(--color-accent);
 }
 
+/* Filters */
 .filters {
     display: flex;
     justify-content: center;
@@ -318,36 +325,35 @@ section h2::after {
 
 .filter-button {
     padding: 10px 20px;
-    background-color: var(--light-gray);
+    background-color: var(--color-light);
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
     font-weight: bold;
-    color: var(--taupe);
+    color: var(--color-text);
 }
 
-.filter-button.active,
-.filter-button:hover {
-    background-color: var(--gold);
-    color: var(--navy-blue);
+.filter-button.active, .filter-button:hover {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
     transform: scale(1.05);
 }
 
+/* Featured Argument */
 .featured-argument {
-    background-color: var(--lavender);
-    border: 2px solid var(--gold);
-    border-radius: 8px;
+    background-color: var(--color-lavender);
+    border: 2px solid var(--color-accent);
+    border-radius: var(--border-radius);
     padding: 20px;
     text-align: center;
     margin-bottom: 40px;
-    position: relative;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 .featured-argument:hover {
-    background-color: var(--light-gray);
-    box-shadow: 0 4px 8px var(--shadow-color);
+    background-color: var(--color-light);
+    box-shadow: 0 4px 8px var(--color-shadow);
 }
 
 .featured-argument img {
@@ -359,7 +365,7 @@ section h2::after {
 
 .featured-argument h3 {
     margin-bottom: 10px;
-    color: var(--navy-blue);
+    color: var(--color-primary);
 }
 
 .featured-argument p {
@@ -367,87 +373,75 @@ section h2::after {
     margin-bottom: 15px;
 }
 
-.featured-argument .challenge-button {
-    padding: 8px 16px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-}
-
-.featured-argument .challenge-button:hover {
-    background-color: var(--gold);
-}
-
+/* Quotes Section */
 .quotes-section {
     display: flex;
     flex-direction: column;
     gap: 30px;
     margin-top: 40px;
     padding: 20px;
-    background-color: var(--snow);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px var(--shadow-color);
+    background-color: var(--color-snow);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px var(--color-shadow);
 }
 
 .quotes-section blockquote {
     font-style: italic;
     position: relative;
     padding: 20px;
-    margin: 0;
-    border-left: 5px solid var(--gold);
-    background-color: var(--ivory);
+    border-left: 5px solid var(--color-accent);
+    background-color: var(--color-bg);
     border-radius: 4px;
+}
+
+.quotes-section blockquote::before,
+.quotes-section blockquote::after {
+    font-size: 2em;
+    color: var(--color-accent);
 }
 
 .quotes-section blockquote::before {
     content: "“";
-    font-size: 3em;
     position: absolute;
     left: 10px;
     top: -10px;
-    color: var(--gold);
 }
 
 .quotes-section blockquote::after {
     content: "”";
-    font-size: 3em;
     position: absolute;
     right: 10px;
     bottom: -10px;
-    color: var(--gold);
 }
 
 .quotes-section cite {
     display: block;
     margin-top: 10px;
     font-size: 0.9em;
-    color: var(--taupe);
+    color: var(--color-text);
 }
 
+/* Modal */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; 
-    z-index: 1001; 
+    display: none;
+    position: fixed;
+    z-index: 1001;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.5); 
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
 }
 
 .modal-content {
-    background-color: var(--snow);
+    background-color: var(--color-snow);
     margin: 5% auto;
     padding: 20px;
-    border: 1px solid var(--light-gray);
+    border: 1px solid var(--color-light);
     width: 90%;
     max-width: 600px;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     position: relative;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     animation: fadeIn 0.5s;
@@ -459,30 +453,30 @@ section h2::after {
 }
 
 .close-button {
-    color: var(--taupe);
+    color: var(--color-text);
     position: absolute;
     top: 10px;
     right: 20px;
     font-size: 1.5em;
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: color var(--transition-speed);
 }
 
 .close-button:hover {
-    color: var(--gold);
+    color: var(--color-accent);
 }
 
 .modal-content h2 {
     margin-top: 0;
-    color: var(--navy-blue);
+    color: var(--color-primary);
 }
 
 .modal-content p {
-    white-space: pre-wrap; /* Preserve line breaks */
+    white-space: pre-wrap;
     font-size: 1em;
 }
 
-/* Timeline Styles */
+/* Timeline */
 .timeline-container {
     position: relative;
     max-width: 1200px;
@@ -494,24 +488,23 @@ section h2::after {
     content: '';
     position: absolute;
     width: 6px;
-    background-color: var(--gold);
+    background-color: var(--color-accent);
     top: 0;
     bottom: 0;
     left: 50%;
-    margin-left: -3px;
+    transform: translateX(-50%);
 }
 
 .timeline-event {
     padding: 10px 40px;
     position: relative;
-    background-color: inherit;
     width: 50%;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition-speed);
 }
 
 .timeline-event:hover {
-    background-color: var(--light-gray);
+    background-color: var(--color-light);
 }
 
 .timeline-event::after {
@@ -519,9 +512,8 @@ section h2::after {
     position: absolute;
     width: 25px;
     height: 25px;
-    right: -17px;
-    background-color: var(--gold);
-    border: 4px solid var(--ivory);
+    background-color: var(--color-accent);
+    border: 4px solid var(--color-bg);
     top: 15px;
     border-radius: 50%;
     z-index: 1;
@@ -535,52 +527,50 @@ section h2::after {
     left: 50%;
 }
 
-.timeline-event.left::before {
-    content: " ";
-    height: 0;
-    position: absolute;
-    top: 22px;
-    right: 30px;
-    border: medium solid var(--gold);
-    border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent var(--gold);
-}
-
+.timeline-event.left::before,
 .timeline-event.right::before {
     content: " ";
     height: 0;
     position: absolute;
     top: 22px;
+    border: medium solid var(--color-accent);
+}
+
+.timeline-event.left::before {
+    right: 30px;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent var(--color-accent);
+}
+
+.timeline-event.right::before {
     left: 30px;
-    border: medium solid var(--gold);
     border-width: 10px 10px 10px 0;
-    border-color: transparent var(--gold) transparent transparent;
+    border-color: transparent var(--color-accent) transparent transparent;
 }
 
 .timeline-event-content {
     padding: 20px 30px;
-    background-color: var(--snow);
-    position: relative;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    background-color: var(--color-snow);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px var(--color-shadow);
 }
 
 .timeline-event-content h3 {
     margin-top: 0;
-    color: var(--navy-blue);
+    color: var(--color-primary);
 }
 
 .timeline-event-content p {
     margin: 5px 0;
 }
 
-/* About Section Styles */
+/* About Section */
 .about-section p {
     font-size: 1.1em;
     text-align: center;
 }
 
-/* Contact Section Styles */
+/* Contact Section */
 .contact-section form {
     display: flex;
     flex-direction: column;
@@ -596,9 +586,9 @@ section h2::after {
 .contact-section input, 
 .contact-section textarea {
     padding: 10px;
-    border: 1px solid var(--light-gray);
+    border: 1px solid var(--color-light);
     border-radius: 4px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: var(--font-primary);
     font-size: 1em;
 }
 
@@ -606,23 +596,23 @@ section h2::after {
     width: 150px;
     padding: 10px;
     border: none;
-    background-color: var(--gold);
-    color: var(--navy-blue);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition-speed);
     align-self: flex-start;
 }
 
 .contact-section button:hover {
-    background-color: var(--amber);
+    background-color: var(--color-hover);
 }
 
-/* Footer Styles */
+/* Footer */
 footer {
-    background-color: var(--navy-blue);
-    color: var(--ivory);
+    background-color: var(--color-primary);
+    color: var(--color-bg);
     text-align: center;
     padding: 20px 0;
 }
@@ -631,1453 +621,20 @@ footer p {
     margin: 0;
 }
 
-/* Carousel Specific Styles */
-.carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-.carousel-button {
-    background-color: var(--gold);
-    border: none;
-    color: var(--navy-blue);
-    font-size: 2em;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-}
-
-.carousel-button:hover {
-    background-color: var(--amber);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.prev-button {
-    left: -50px; /* Position the previous button to the left */
-}
-
-.next-button {
-    right: -50px; /* Position the next button to the right */
-}
-
-.carousel-wrapper {
-    overflow: hidden;
-    width: 100%;
-    max-width: 1000px;
-}
-
-.philosophers-container,
-.arguments-container {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
-}
-
-.card, .argument-card {
-    background-color: var(--snow);
-    border: 1px solid var(--light-gray);
-    border-radius: 8px;
-    width: 300px;
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--shadow-color);
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.card:hover, .argument-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px var(--shadow-color);
-}
-
-.card img, .argument-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 15px;
-}
-
-.argument-card img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    margin-bottom: 15px;
-}
-
-.card h3, .argument-card h3 {
-    margin-top: 15px;
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    color: var(--navy-blue);
-}
-
-.card p, .argument-card p {
-    font-size: 0.95em;
-    margin-bottom: 10px;
-}
-
-.card .learn-more-button, .argument-card .learn-more-button {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.card .learn-more-button:hover, .argument-card .learn-more-button:hover {
-    background-color: var(--gold);
-}
-
-.filters {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
-
-.filter-button {
-    padding: 10px 20px;
-    background-color: var(--light-gray);
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-weight: bold;
-    color: var(--taupe);
-}
-
-.filter-button.active,
-.filter-button:hover {
-    background-color: var(--gold);
-    color: var(--navy-blue);
-    transform: scale(1.05);
-}
-
-.featured-argument {
-    background-color: var(--lavender);
-    border: 2px solid var(--gold);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 40px;
-    position: relative;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.featured-argument:hover {
-    background-color: var(--light-gray);
-    box-shadow: 0 4px 8px var(--shadow-color);
-}
-
-.featured-argument img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    margin-bottom: 15px;
-}
-
-.featured-argument h3 {
-    margin-bottom: 10px;
-    color: var(--navy-blue);
-}
-
-.featured-argument p {
-    font-size: 1em;
-    margin-bottom: 15px;
-}
-
-.featured-argument .challenge-button {
-    padding: 8px 16px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-}
-
-.featured-argument .challenge-button:hover {
-    background-color: var(--gold);
-}
-
-.quotes-section {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin-top: 40px;
-    padding: 20px;
-    background-color: var(--snow);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px var(--shadow-color);
-}
-
-.quotes-section blockquote {
-    font-style: italic;
-    position: relative;
-    padding: 20px;
-    margin: 0;
-    border-left: 5px solid var(--gold);
-    background-color: var(--ivory);
-    border-radius: 4px;
-}
-
-.quotes-section blockquote::before {
-    content: "“";
-    font-size: 3em;
-    position: absolute;
-    left: 10px;
-    top: -10px;
-    color: var(--gold);
-}
-
-.quotes-section blockquote::after {
-    content: "”";
-    font-size: 3em;
-    position: absolute;
-    right: 10px;
-    bottom: -10px;
-    color: var(--gold);
-}
-
-.quotes-section cite {
-    display: block;
-    margin-top: 10px;
-    font-size: 0.9em;
-    color: var(--taupe);
-}
-
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; 
-    z-index: 1001; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.5); 
-}
-
-.modal-content {
-    background-color: var(--snow);
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid var(--light-gray);
-    width: 90%;
-    max-width: 600px;
-    border-radius: 8px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-50px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.close-button {
-    color: var(--taupe);
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 1.5em;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-button:hover {
-    color: var(--gold);
-}
-
-.modal-content h2 {
-    margin-top: 0;
-    color: var(--navy-blue);
-}
-
-.modal-content p {
-    white-space: pre-wrap; /* Preserve line breaks */
-    font-size: 1em;
-}
-
-/* Timeline Styles */
-.timeline-container {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 0;
-}
-
-.timeline-container::after {
-    content: '';
-    position: absolute;
-    width: 6px;
-    background-color: var(--gold);
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    margin-left: -3px;
-}
-
-.timeline-event {
-    padding: 10px 40px;
-    position: relative;
-    background-color: inherit;
-    width: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.timeline-event:hover {
-    background-color: var(--light-gray);
-}
-
-.timeline-event::after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    right: -17px;
-    background-color: var(--gold);
-    border: 4px solid var(--ivory);
-    top: 15px;
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.timeline-event.left {
-    left: 0;
-}
-
-.timeline-event.right {
-    left: 50%;
-}
-
-.timeline-event.left::before {
-    content: " ";
-    height: 0;
-    position: absolute;
-    top: 22px;
-    right: 30px;
-    border: medium solid var(--gold);
-    border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent var(--gold);
-}
-
-.timeline-event.right::before {
-    content: " ";
-    height: 0;
-    position: absolute;
-    top: 22px;
-    left: 30px;
-    border: medium solid var(--gold);
-    border-width: 10px 10px 10px 0;
-    border-color: transparent var(--gold) transparent transparent;
-}
-
-.timeline-event-content {
-    padding: 20px 30px;
-    background-color: var(--snow);
-    position: relative;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px var(--shadow-color);
-}
-
-.timeline-event-content h3 {
-    margin-top: 0;
-    color: var(--navy-blue);
-}
-
-.timeline-event-content p {
-    margin: 5px 0;
-}
-
-/* About Section Styles */
-.about-section p {
-    font-size: 1.1em;
-    text-align: center;
-}
-
-/* Contact Section Styles */
-.contact-section form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.contact-section label {
-    font-weight: bold;
-}
-
-.contact-section input, 
-.contact-section textarea {
-    padding: 10px;
-    border: 1px solid var(--light-gray);
-    border-radius: 4px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1em;
-}
-
-.contact-section button {
-    width: 150px;
-    padding: 10px;
-    border: none;
-    background-color: var(--gold);
-    color: var(--navy-blue);
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    align-self: flex-start;
-}
-
-.contact-section button:hover {
-    background-color: var(--amber);
-}
-
-/* Footer Styles */
-footer {
-    background-color: var(--navy-blue);
-    color: var(--ivory);
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer p {
-    margin: 0;
-}
-
-/* Carousel Specific Styles */
-.carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-.carousel-button {
-    background-color: var(--gold);
-    border: none;
-    color: var(--navy-blue);
-    font-size: 2em;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-}
-
-.carousel-button:hover {
-    background-color: var(--amber);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.prev-button {
-    left: -50px; /* Position the previous button to the left */
-}
-
-.next-button {
-    right: -50px; /* Position the next button to the right */
-}
-
-.carousel-wrapper {
-    overflow: hidden;
-    width: 100%;
-    max-width: 1000px;
-}
-
-.philosophers-container,
-.arguments-container {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
-}
-
-.card, .argument-card {
-    background-color: var(--snow);
-    border: 1px solid var(--light-gray);
-    border-radius: 8px;
-    width: 300px;
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--shadow-color);
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.card:hover, .argument-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px var(--shadow-color);
-}
-
-.card img, .argument-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 15px;
-}
-
-.argument-card img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    margin-bottom: 15px;
-}
-
-.card h3, .argument-card h3 {
-    margin-top: 15px;
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    color: var(--navy-blue);
-}
-
-.card p, .argument-card p {
-    font-size: 0.95em;
-    margin-bottom: 10px;
-}
-
-.card .learn-more-button, .argument-card .learn-more-button {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.card .learn-more-button:hover, .argument-card .learn-more-button:hover {
-    background-color: var(--gold);
-}
-
-.filters {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
-
-.filter-button {
-    padding: 10px 20px;
-    background-color: var(--light-gray);
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-weight: bold;
-    color: var(--taupe);
-}
-
-.filter-button.active,
-.filter-button:hover {
-    background-color: var(--gold);
-    color: var(--navy-blue);
-    transform: scale(1.05);
-}
-
-.featured-argument {
-    background-color: var(--lavender);
-    border: 2px solid var(--gold);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 40px;
-    position: relative;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.featured-argument:hover {
-    background-color: var(--light-gray);
-    box-shadow: 0 4px 8px var(--shadow-color);
-}
-
-.featured-argument img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    margin-bottom: 15px;
-}
-
-.featured-argument h3 {
-    margin-bottom: 10px;
-    color: var(--navy-blue);
-}
-
-.featured-argument p {
-    font-size: 1em;
-    margin-bottom: 15px;
-}
-
-.featured-argument .challenge-button {
-    padding: 8px 16px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-}
-
-.featured-argument .challenge-button:hover {
-    background-color: var(--gold);
-}
-
-.quotes-section {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin-top: 40px;
-    padding: 20px;
-    background-color: var(--snow);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px var(--shadow-color);
-}
-
-.quotes-section blockquote {
-    font-style: italic;
-    position: relative;
-    padding: 20px;
-    margin: 0;
-    border-left: 5px solid var(--gold);
-    background-color: var(--ivory);
-    border-radius: 4px;
-}
-
-.quotes-section blockquote::before {
-    content: "“";
-    font-size: 3em;
-    position: absolute;
-    left: 10px;
-    top: -10px;
-    color: var(--gold);
-}
-
-.quotes-section blockquote::after {
-    content: "”";
-    font-size: 3em;
-    position: absolute;
-    right: 10px;
-    bottom: -10px;
-    color: var(--gold);
-}
-
-.quotes-section cite {
-    display: block;
-    margin-top: 10px;
-    font-size: 0.9em;
-    color: var(--taupe);
-}
-
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; 
-    z-index: 1001; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.5); 
-}
-
-.modal-content {
-    background-color: var(--snow);
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid var(--light-gray);
-    width: 90%;
-    max-width: 600px;
-    border-radius: 8px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-50px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.close-button {
-    color: var(--taupe);
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 1.5em;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-button:hover {
-    color: var(--gold);
-}
-
-.modal-content h2 {
-    margin-top: 0;
-    color: var(--navy-blue);
-}
-
-.modal-content p {
-    white-space: pre-wrap; /* Preserve line breaks */
-    font-size: 1em;
-}
-
-/* Timeline Styles */
-.timeline-container {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 0;
-}
-
-.timeline-container::after {
-    content: '';
-    position: absolute;
-    width: 6px;
-    background-color: var(--gold);
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    margin-left: -3px;
-}
-
-.timeline-event {
-    padding: 10px 40px;
-    position: relative;
-    background-color: inherit;
-    width: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.timeline-event:hover {
-    background-color: var(--light-gray);
-}
-
-.timeline-event::after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    right: -17px;
-    background-color: var(--gold);
-    border: 4px solid var(--ivory);
-    top: 15px;
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.timeline-event.left {
-    left: 0;
-}
-
-.timeline-event.right {
-    left: 50%;
-}
-
-.timeline-event.left::before {
-    content: " ";
-    height: 0;
-    position: absolute;
-    top: 22px;
-    right: 30px;
-    border: medium solid var(--gold);
-    border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent var(--gold);
-}
-
-.timeline-event.right::before {
-    content: " ";
-    height: 0;
-    position: absolute;
-    top: 22px;
-    left: 30px;
-    border: medium solid var(--gold);
-    border-width: 10px 10px 10px 0;
-    border-color: transparent var(--gold) transparent transparent;
-}
-
-.timeline-event-content {
-    padding: 20px 30px;
-    background-color: var(--snow);
-    position: relative;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px var(--shadow-color);
-}
-
-.timeline-event-content h3 {
-    margin-top: 0;
-    color: var(--navy-blue);
-}
-
-.timeline-event-content p {
-    margin: 5px 0;
-}
-
-/* About Section Styles */
-.about-section p {
-    font-size: 1.1em;
-    text-align: center;
-}
-
-/* Contact Section Styles */
-.contact-section form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.contact-section label {
-    font-weight: bold;
-}
-
-.contact-section input, 
-.contact-section textarea {
-    padding: 10px;
-    border: 1px solid var(--light-gray);
-    border-radius: 4px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1em;
-}
-
-.contact-section button {
-    width: 150px;
-    padding: 10px;
-    border: none;
-    background-color: var(--gold);
-    color: var(--navy-blue);
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    align-self: flex-start;
-}
-
-.contact-section button:hover {
-    background-color: var(--amber);
-}
-
-/* Footer Styles */
-footer {
-    background-color: var(--navy-blue);
-    color: var(--ivory);
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer p {
-    margin: 0;
-}
-
-/* Carousel Specific Styles */
-.carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-.carousel-button {
-    background-color: var(--gold);
-    border: none;
-    color: var(--navy-blue);
-    font-size: 2em;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-}
-
-.carousel-button:hover {
-    background-color: var(--amber);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.prev-button {
-    left: -50px; /* Position the previous button to the left */
-}
-
-.next-button {
-    right: -50px; /* Position the next button to the right */
-}
-
-.carousel-wrapper {
-    overflow: hidden;
-    width: 100%;
-    max-width: 1000px;
-}
-
-.philosophers-container,
-.arguments-container {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.philosophers-container {
-    gap: 30px;
-}
-
-.arguments-container {
-    gap: 30px;
-}
-
-/* Card Styles */
-.card {
-    background-color: var(--snow);
-    border: 1px solid var(--light-gray);
-    border-radius: 8px;
-    width: 300px;
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--shadow-color);
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px var(--shadow-color);
-}
-
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 15px;
-}
-
-.card h3 {
-    margin-top: 15px;
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    color: var(--navy-blue);
-}
-
-.card p {
-    font-size: 0.95em;
-    margin-bottom: 10px;
-}
-
-.card .learn-more-button {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.card .learn-more-button:hover {
-    background-color: var(--gold);
-}
-
-/* Argument Cards */
-.argument-card {
-    background-color: var(--snow);
-    border: 1px solid var(--light-gray);
-    border-radius: 8px;
-    width: 300px;
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--shadow-color);
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.argument-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px var(--shadow-color);
-}
-
-.argument-card img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    margin-bottom: 15px;
-}
-
-.argument-card h3 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    color: var(--navy-blue);
-}
-
-.argument-card p {
-    font-size: 0.95em;
-    margin-bottom: 15px;
-}
-
-.argument-card .learn-more-button {
-    padding: 8px 12px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.argument-card .learn-more-button:hover {
-    background-color: var(--gold);
-}
-
-/* Filters Styles */
-.filters {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
-
-.filter-button {
-    padding: 10px 20px;
-    background-color: var(--light-gray);
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-weight: bold;
-    color: var(--taupe);
-}
-
-.filter-button.active,
-.filter-button:hover {
-    background-color: var(--gold);
-    color: var(--navy-blue);
-    transform: scale(1.05);
-}
-
-/* Featured Argument Styles */
-.featured-argument {
-    background-color: var(--lavender);
-    border: 2px solid var(--gold);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 40px;
-    position: relative;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.featured-argument:hover {
-    background-color: var(--light-gray);
-    box-shadow: 0 4px 8px var(--shadow-color);
-}
-
-.featured-argument img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    margin-bottom: 15px;
-}
-
-.featured-argument h3 {
-    margin-bottom: 10px;
-    color: var(--navy-blue);
-}
-
-.featured-argument p {
-    font-size: 1em;
-    margin-bottom: 15px;
-}
-
-.featured-argument .challenge-button {
-    padding: 8px 16px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-}
-
-.featured-argument .challenge-button:hover {
-    background-color: var(--gold);
-}
-
-/* Quotes Section Styles */
-.quotes-section {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin-top: 40px;
-    padding: 20px;
-    background-color: var(--snow);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px var(--shadow-color);
-}
-
-.quotes-section blockquote {
-    font-style: italic;
-    position: relative;
-    padding: 20px;
-    margin: 0;
-    border-left: 5px solid var(--gold);
-    background-color: var(--ivory);
-    border-radius: 4px;
-}
-
-.quotes-section blockquote::before {
-    content: "“";
-    font-size: 3em;
-    position: absolute;
-    left: 10px;
-    top: -10px;
-    color: var(--gold);
-}
-
-.quotes-section blockquote::after {
-    content: "”";
-    font-size: 3em;
-    position: absolute;
-    right: 10px;
-    bottom: -10px;
-    color: var(--gold);
-}
-
-.quotes-section cite {
-    display: block;
-    margin-top: 10px;
-    font-size: 0.9em;
-    color: var(--taupe);
-}
-
-/* Modal Styles */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; 
-    z-index: 1001; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.5); 
-}
-
-.modal-content {
-    background-color: var(--snow);
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid var(--light-gray);
-    width: 90%;
-    max-width: 600px;
-    border-radius: 8px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-50px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.close-button {
-    color: var(--taupe);
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 1.5em;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-button:hover {
-    color: var(--gold);
-}
-
-.modal-content h2 {
-    margin-top: 0;
-    color: var(--navy-blue);
-}
-
-.modal-content p {
-    white-space: pre-wrap; /* Preserve line breaks */
-    font-size: 1em;
-}
-
-/* Timeline Styles */
-.timeline-container {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 0;
-}
-
-.timeline-container::after {
-    content: '';
-    position: absolute;
-    width: 6px;
-    background-color: var(--gold);
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    margin-left: -3px;
-}
-
-.timeline-event {
-    padding: 10px 40px;
-    position: relative;
-    background-color: inherit;
-    width: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.timeline-event:hover {
-    background-color: var(--light-gray);
-}
-
-.timeline-event::after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    right: -17px;
-    background-color: var(--gold);
-    border: 4px solid var(--ivory);
-    top: 15px;
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.timeline-event.left {
-    left: 0;
-}
-
-.timeline-event.right {
-    left: 50%;
-}
-
-.timeline-event.left::before {
-    content: " ";
-    height: 0;
-    position: absolute;
-    top: 22px;
-    right: 30px;
-    border: medium solid var(--gold);
-    border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent var(--gold);
-}
-
-.timeline-event.right::before {
-    content: " ";
-    height: 0;
-    position: absolute;
-    top: 22px;
-    left: 30px;
-    border: medium solid var(--gold);
-    border-width: 10px 10px 10px 0;
-    border-color: transparent var(--gold) transparent transparent;
-}
-
-.timeline-event-content {
-    padding: 20px 30px;
-    background-color: var(--snow);
-    position: relative;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px var(--shadow-color);
-}
-
-.timeline-event-content h3 {
-    margin-top: 0;
-    color: var(--navy-blue);
-}
-
-.timeline-event-content p {
-    margin: 5px 0;
-}
-
-/* About Section Styles */
-.about-section p {
-    font-size: 1.1em;
-    text-align: center;
-}
-
-/* Contact Section Styles */
-.contact-section form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.contact-section label {
-    font-weight: bold;
-}
-
-.contact-section input, 
-.contact-section textarea {
-    padding: 10px;
-    border: 1px solid var(--light-gray);
-    border-radius: 4px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1em;
-}
-
-.contact-section button {
-    width: 150px;
-    padding: 10px;
-    border: none;
-    background-color: var(--gold);
-    color: var(--navy-blue);
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    align-self: flex-start;
-}
-
-.contact-section button:hover {
-    background-color: var(--amber);
-}
-
-/* Footer Styles */
-footer {
-    background-color: var(--navy-blue);
-    color: var(--ivory);
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer p {
-    margin: 0;
-}
-
-/* Carousel Specific Styles */
-.carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-.carousel-button {
-    background-color: var(--gold);
-    border: none;
-    color: var(--navy-blue);
-    font-size: 2em;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-}
-
-.carousel-button:hover {
-    background-color: var(--amber);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.prev-button {
-    left: -50px; /* Position the previous button to the left */
-}
-
-.next-button {
-    right: -50px; /* Position the next button to the right */
-}
-
-.carousel-wrapper {
-    overflow: hidden;
-    width: 100%;
-    max-width: 1000px;
-}
-
-.philosophers-container,
-.arguments-container {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.philosophers-container {
-    gap: 30px;
-}
-
-.arguments-container {
-    gap: 30px;
-}
-
-/* Responsive Carousel Adjustments */
-@media (max-width: 992px) {
-    .prev-button {
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .carousel-button.prev-button,
+    .carousel-button.next-button {
         left: -40px;
-    }
-
-    .next-button {
         right: -40px;
     }
+}
 
-    .philosophers-container,
-    .arguments-container {
-        gap: 20px;
+@media (max-width: 992px) {
+    .carousel-container .carousel-wrapper {
+        max-width: 800px;
     }
-
+    
     .card, .argument-card {
         width: 250px;
     }
@@ -2090,11 +647,7 @@ footer p {
 
 @media (max-width: 768px) {
     .nav-links {
-        display: none; /* Implement a hamburger menu for mobile */
-    }
-
-    .search-container {
-        margin-left: 10px;
+        display: none; /* Consider implementing a hamburger menu */
     }
 
     .hero h1 {
@@ -2103,18 +656,6 @@ footer p {
 
     .hero p {
         font-size: 1.2em;
-    }
-
-    .carousel-container .carousel-wrapper {
-        max-width: 800px;
-    }
-
-    .prev-button {
-        left: -40px;
-    }
-
-    .next-button {
-        right: -40px;
     }
 
     .timeline-event.left,
@@ -2127,9 +668,8 @@ footer p {
     .timeline-event.right::before {
         left: 50%;
         transform: translateX(-50%);
-        border: medium solid var(--gold);
-        border-width: 10px 10px 10px 10px;
-        border-color: transparent var(--gold) transparent transparent;
+        border-width: 10px;
+        border-color: transparent var(--color-accent) transparent transparent;
     }
 
     .timeline-event::after {
@@ -2152,11 +692,12 @@ footer p {
 }
 
 @media (max-width: 576px) {
-    .prev-button,
-    .next-button {
-        display: none; /* Hide carousel buttons on very small screens */
+    .carousel-button.prev-button,
+    .carousel-button.next-button {
+        display: none;
     }
 
+    .carousel-container .carousel-wrapper,
     .philosophers-container,
     .arguments-container {
         flex-direction: column;
@@ -2185,25 +726,35 @@ footer p {
     }
 }
 
-/* Additional Styles for Interactive Elements */
-.filter-button.active {
-    background-color: var(--gold);
-    color: var(--navy-blue);
-    transform: scale(1.05);
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background-color: var(--color-secondary);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    display: none;
+    z-index: 1000;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
 
-.challenge-button {
-    /* Styles already defined within featured-argument */
+.scroll-to-top:hover {
+    background-color: var(--color-accent);
+    transform: scale(1.1);
 }
 
-/* Animation for Cards */
+/* Animations */
 @keyframes slideIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-.card,
-.argument-card {
+.card, .argument-card {
     animation: slideIn 0.5s ease-in-out;
 }
 
@@ -2224,17 +775,17 @@ footer p {
 
 .poll-options button {
     padding: 10px 20px;
-    background-color: var(--light-gray);
+    background-color: var(--color-light);
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
     font-weight: bold;
-    color: var(--taupe);
+    color: var(--color-text);
 }
 
 .poll-options button:hover {
-    background-color: var(--gold);
+    background-color: var(--color-accent);
     transform: scale(1.05);
 }
 
@@ -2250,7 +801,7 @@ footer p {
 
 .poll-results p {
     font-size: 1em;
-    color: var(--navy-blue);
+    color: var(--color-primary);
 }
 
 /* Quiz Styles */
@@ -2263,7 +814,7 @@ footer p {
 
 .quiz-question {
     font-size: 1.2em;
-    color: var(--navy-blue);
+    color: var(--color-primary);
 }
 
 .quiz-options {
@@ -2274,24 +825,24 @@ footer p {
 
 .quiz-options button {
     padding: 10px;
-    background-color: var(--light-gray);
+    background-color: var(--color-light);
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition-speed);
     font-weight: bold;
     text-align: left;
 }
 
 .quiz-options button:hover {
-    background-color: var(--gold);
+    background-color: var(--color-accent);
 }
 
 .quiz-results {
     display: none;
     margin-top: 15px;
     font-size: 1em;
-    color: var(--navy-blue);
+    color: var(--color-primary);
     text-align: center;
 }
 
@@ -2307,40 +858,17 @@ footer p {
 
 .cta-section .cta-button {
     padding: 12px 24px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
+    background-color: var(--color-secondary);
+    color: var(--color-bg);
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition-speed);
     font-size: 1em;
     font-weight: bold;
     text-decoration: none;
 }
 
 .cta-section .cta-button:hover {
-    background-color: var(--gold);
+    background-color: var(--color-accent);
 }
-
-/* Scroll to Top Button */
-.scroll-to-top {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    background-color: var(--forest-green);
-    color: var(--ivory);
-    border: none;
-    border-radius: 50%;
-    padding: 15px;
-    cursor: pointer;
-    font-size: 1.2em;
-    display: none;
-    z-index: 1000;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.scroll-to-top:hover {
-    background-color: var(--gold);
-    transform: scale(1.1);
-}
-
