@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFilterButtons();
     setupModal();
     setupScrollToTop();
-    populateTimeline();
-    populateFeaturedArguments();
 });
 
 let allPhilosophers = [];
@@ -30,6 +28,8 @@ async function fetchPhilosophers() {
         extractArguments();
         displayPhilosophers();
         displayArguments('all');
+        populateFeaturedArguments();
+        populateTimeline();
     } catch (error) {
         console.error('Error fetching philosopher data:', error);
     }
