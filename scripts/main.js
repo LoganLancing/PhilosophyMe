@@ -368,6 +368,7 @@ function setupScrollToTop() {
 function setupQuotesCarousel() {
     const quotes = document.querySelectorAll('.quotes-section .quote-slide');
     let currentQuote = 0;
+    let quoteTimeout;
 
     if (quotes.length === 0) return;
 
@@ -380,10 +381,23 @@ function setupQuotesCarousel() {
         }
     });
 
-    // Auto-cycle quotes every 7 seconds
-    setInterval(() => {
+    function showNextQuote() {
         quotes[currentQuote].classList.remove('active');
         currentQuote = (currentQuote + 1) % quotes.length;
         quotes[currentQuote].classList.add('active');
-    }, QUOTE_INTERVAL);
+        quoteTimeout = setTimeout(showNextQuote, QUOTE_INTERVAL);
+    }
+
+    // Start the carousel
+    quoteTimeout = setTimeout(showNextQuote, QUOTE_INTERVAL);
+
+    // Pause carousel on hover for better user experience
+    const quotesSection = document.querySelector('.quotes-section');
+    quotesSection.addEventListener('mouseenter', () => {
+        clearTimeout(quoteTimeout);
+    });
+
+    quotesSection.addEventListener('mouseleave', () => {
+        quoteTimeout = setTimeout(showNextQuote, QUOTE_INTERVAL);
+    });
 }
