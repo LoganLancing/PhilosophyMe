@@ -258,15 +258,25 @@ section p {
 }
 
 .prev-timeline-button {
-    top: -40px;
+    top: -50px;
     left: 50%;
     transform: translateX(-50%);
+    background-image: url('../images/arrow-up.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: transparent;
 }
 
 .next-timeline-button {
-    bottom: -40px;
+    bottom: -50px;
     left: 50%;
     transform: translateX(-50%);
+    background-image: url('../images/arrow-down.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: transparent;
 }
 
 /* Carousel Wrapper */
@@ -289,7 +299,7 @@ section p {
     flex-direction: column;
     transition: transform 0.5s ease-in-out;
     gap: 30px;
-    height: 300px; /* Adjust as needed */
+    height: 350px; /* Adjust as needed */
 }
 
 /* Philosopher & Argument Cards */
@@ -362,8 +372,8 @@ section p {
     flex: 0 0 calc(25% - 22.5px); /* 4 items per view */
 }
 
-/* Featured Argument */
-.featured-argument {
+/* Featured Argument Carousel */
+.featured-argument-carousel {
     background-color: var(--color-lavender);
     border: 3px solid var(--color-accent);
     border-radius: var(--border-radius);
@@ -376,36 +386,51 @@ section p {
     transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed);
 }
 
-.featured-argument:hover {
+.featured-argument-carousel:hover {
     transform: translateY(-25px);
     box-shadow: 0 12px 24px var(--color-shadow);
     background-color: var(--color-snow);
 }
 
-.featured-argument-image {
-    width: 150px;
-    height: 150px;
-    object-fit: contain;
-    margin-bottom: 20px;
-    transition: transform var(--transition-speed);
-}
-
-.featured-argument:hover .featured-argument-image {
-    transform: scale(1.1);
-}
-
-.featured-argument h3 {
+.featured-argument-carousel h3 {
     font-size: 2em;
     margin-bottom: 15px;
     color: var(--color-primary);
 }
 
-.featured-argument p {
+.featured-argument-carousel .carousel.track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 30px;
+}
+
+.featured-argument-carousel .featured-argument {
+    background-color: var(--color-lavender);
+    border: none;
+    padding: 20px;
+    box-shadow: none;
+    transform: scale(1);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.featured-argument-carousel .featured-argument-image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    transition: transform var(--transition-speed);
+}
+
+.featured-argument-carousel .featured-argument:hover .featured-argument-image {
+    transform: scale(1.1);
+}
+
+.featured-argument-carousel .featured-argument p {
     font-size: 1.1em;
     margin-bottom: 10px;
 }
 
-.featured-argument p strong {
+.featured-argument-carousel .featured-argument p strong {
     color: var(--color-secondary);
 }
 
@@ -624,6 +649,94 @@ footer p {
     margin: 0;
 }
 
+/* Filter Buttons */
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: var(--color-light);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+    font-weight: bold;
+    color: var(--color-text);
+    box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.filter-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.filter-button.active, .filter-button:hover {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px var(--color-shadow);
+}
+
+/* Featured Argument Carousel */
+.featured-argument-carousel h3 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.featured-argument-carousel .carousel-button {
+    background-color: var(--color-secondary);
+    color: var(--color-bg);
+    font-size: 1.5em;
+}
+
+.featured-argument-carousel .carousel-button:hover {
+    background-color: var(--color-accent);
+}
+
+#featured-arguments-container .featured-argument {
+    flex: 0 0 100%; /* Show one featured argument at a time */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#featured-arguments-container .featured-argument-image {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    transition: transform var(--transition-speed);
+}
+
+#featured-arguments-container .featured-argument-image:hover {
+    transform: scale(1.1);
+}
+
+#featured-arguments-container .featured-argument h3 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: var(--color-primary);
+}
+
+#featured-arguments-container .featured-argument p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#featured-arguments-container .featured-argument p strong {
+    color: var(--color-secondary);
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
     .carousel-button.prev-button,
@@ -656,22 +769,22 @@ footer p {
         flex: 0 0 calc(25% - 22.5px); /* 4 items per view */
     }
 
-    .featured-argument {
+    .featured-argument-carousel {
         padding: 30px 15px;
     }
 
-    .featured-argument-image {
-        width: 180px;
-        height: 180px;
+    #featured-arguments-container .featured-argument-image {
+        width: 200px;
+        height: 200px;
     }
 
-    .featured-argument h3 {
+    #featured-arguments-container .featured-argument h3 {
         font-size: 2.2em;
         margin-bottom: 20px;
     }
 
-    .featured-argument p {
-        font-size: 1.2em;
+    #featured-arguments-container .featured-argument p {
+        font-size: 1.1em;
     }
 
     .timeline-carousel-wrapper {
@@ -720,6 +833,10 @@ footer p {
     .quotes-section blockquote::after {
         font-size: 2em;
     }
+
+    .featured-argument-carousel .carousel-button {
+        font-size: 1.2em;
+    }
 }
 
 @media (max-width: 576px) {
@@ -735,21 +852,21 @@ footer p {
         align-items: center;
     }
 
-    .featured-argument {
+    .featured-argument-carousel {
         padding: 20px 10px;
     }
 
-    .featured-argument-image {
-        width: 120px;
-        height: 120px;
+    #featured-arguments-container .featured-argument-image {
+        width: 150px;
+        height: 150px;
     }
 
-    .featured-argument h3 {
+    #featured-arguments-container .featured-argument h3 {
         font-size: 1.6em;
         margin-bottom: 15px;
     }
 
-    .featured-argument p {
+    #featured-arguments-container .featured-argument p {
         font-size: 1em;
     }
 
@@ -766,6 +883,16 @@ footer p {
 
     .timeline-carousel-wrapper {
         height: 250px; /* Adjust height as needed */
+    }
+
+    .filter-button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+
+    .filter-button img {
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -797,7 +924,7 @@ footer p {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.philosopher-card, .argument-card, .timeline-event {
+.philosopher-card, .argument-card, .timeline-event, #featured-arguments-container .featured-argument {
     animation: slideIn 0.5s ease-in-out;
 }
 
