@@ -480,6 +480,14 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
+/* Carousel Navigation Disabled State */
+.carousel-button:disabled {
+    background-color: var(--light-gray);
+    color: var(--taupe);
+    cursor: not-allowed;
+    transform: translateY(-50%) scale(1);
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
     .prev-button {
@@ -488,6 +496,47 @@ footer {
     
     .next-button {
         right: -35px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .carousel-button {
+        font-size: 1.5em;
+        padding: 8px 12px;
+    }
+
+    .carousel-wrapper {
+        width: 100%;
+    }
+
+    .philosophers-container {
+        /* Adjust transform to show fewer cards if needed */
+    }
+
+    .timeline-container::after {
+        left: 31px;
+    }
+
+    .timeline-event {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+        margin-bottom: 30px;
+    }
+
+    .timeline-event.right {
+        left: 0%;
+    }
+
+    .timeline-event.left::before, .timeline-event.right::before {
+        left: 60px;
+        border: medium solid var(--gold);
+        border-width: 10px 10px 10px 0;
+        border-color: transparent var(--gold) transparent transparent;
+    }
+
+    .timeline-event::after {
+        left: 18px;
     }
 }
 
@@ -500,17 +549,29 @@ footer {
         margin-left: 10px;
     }
 
+    .hero h1 {
+        font-size: 2.5em;
+    }
+
+    .hero p {
+        font-size: 1.2em;
+    }
+
     .carousel-button {
-        font-size: 1.5em;
-        padding: 8px 12px;
+        font-size: 1.2em;
+        padding: 6px 10px;
+    }
+
+    .philosophers-container {
+        /* Show fewer cards on small screens */
+    }
+
+    .philosophers-container .card {
+        width: 250px;
     }
 
     .carousel-wrapper {
         width: 100%;
-    }
-
-    .philosophers-container {
-        /* Adjust transform to show fewer cards if needed */
     }
 
     .timeline-container::after {
