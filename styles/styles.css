@@ -13,9 +13,14 @@
     --light-gray: #D3D3D3;
     --lavender: #E6E6FA;
     --snow: #FFFAFA;
+    --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Global Styles */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Open Sans', sans-serif;
@@ -27,11 +32,13 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Merriweather', serif;
     color: var(--navy-blue);
+    margin-bottom: 0.5em;
 }
 
 a {
     color: var(--gold);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 a:hover {
@@ -45,6 +52,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 nav {
@@ -57,40 +65,67 @@ nav {
 }
 
 .logo {
-    font-size: 1.5em;
+    font-size: 1.8em;
     font-weight: bold;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 25px;
 }
 
 .nav-links li a {
     color: var(--ivory);
     font-weight: bold;
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: var(--gold);
+    left: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
 }
 
 .search-container {
     display: flex;
     align-items: center;
+    margin-left: 20px;
 }
 
 #search-input {
-    padding: 5px 10px;
+    padding: 8px 12px;
     border: none;
     border-radius: 4px 0 0 4px;
     outline: none;
+    font-size: 1em;
+    width: 200px;
+    transition: width 0.3s ease;
+}
+
+#search-input:focus {
+    width: 250px;
 }
 
 #search-button {
-    padding: 6px 10px;
+    padding: 8px 12px;
     border: none;
     background-color: var(--gold);
     color: var(--navy-blue);
     border-radius: 0 4px 4px 0;
     cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
 #search-button:hover {
@@ -98,21 +133,37 @@ nav {
 }
 
 .hero {
-    background-image: url('../images/hero-background.jpg'); /* Add a relevant background image */
+    background-image: url('../images/hero-background.jpg'); /* Use a high-quality, relevant image */
     background-size: cover;
     background-position: center;
     color: var(--ivory);
     text-align: center;
-    padding: 100px 20px;
+    padding: 120px 20px;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 31, 63, 0.6); /* Overlay for better text readability */
+    z-index: 1;
 }
 
 .hero h1 {
-    font-size: 3em;
+    font-size: 3.5em;
     margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
 }
 
 .hero p {
     font-size: 1.5em;
+    position: relative;
+    z-index: 2;
 }
 
 section {
@@ -122,82 +173,116 @@ section {
     margin: 0 auto;
 }
 
+section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    display: inline-block;
+}
+
+section h2::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: var(--gold);
+    margin: 10px auto 0;
+}
+
 .philosophers-container, .arguments-container, .timeline-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px;
     justify-content: center;
 }
 
 .card {
     background-color: var(--snow);
     border: 1px solid var(--light-gray);
-    border-radius: 8px;
+    border-radius: 10px;
     width: 300px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px var(--shadow-color);
     transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 12px 16px var(--shadow-color);
 }
 
 .card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 6px;
+    margin-bottom: 15px;
 }
 
 .card h3 {
-    margin-top: 15px;
+    margin-top: 0;
     margin-bottom: 10px;
+    font-size: 1.5em;
 }
 
 .card p {
     font-size: 0.95em;
+    margin-bottom: 10px;
 }
 
-footer {
+.card .influence {
+    font-style: italic;
+    color: var(--slate-purple);
+}
+
+.footer {
     background-color: var(--navy-blue);
     color: var(--ivory);
     text-align: center;
     padding: 20px 0;
+    margin-top: 40px;
 }
 
-/* Contact Form Styles */
 .contact-section form {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .contact-section label {
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .contact-section input, 
 .contact-section textarea {
-    padding: 10px;
+    padding: 12px 15px;
     border: 1px solid var(--light-gray);
-    border-radius: 4px;
+    border-radius: 6px;
     font-family: 'Open Sans', sans-serif;
     font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.contact-section input:focus, 
+.contact-section textarea:focus {
+    border-color: var(--forest-green);
 }
 
 .contact-section button {
     width: 150px;
-    padding: 10px;
+    padding: 12px;
     border: none;
     background-color: var(--gold);
     color: var(--navy-blue);
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    align-self: flex-start;
+    transition: background-color 0.3s ease;
 }
 
 .contact-section button:hover {
@@ -220,36 +305,40 @@ footer {
 .modal-content {
     background-color: var(--snow);
     margin: 10% auto;
-    padding: 20px;
+    padding: 30px;
     border: 1px solid var(--light-gray);
     width: 80%;
-    max-width: 600px;
-    border-radius: 8px;
+    max-width: 700px;
+    border-radius: 10px;
     position: relative;
+    box-shadow: 0 8px 16px var(--shadow-color);
 }
 
 .close-button {
     color: var(--taupe);
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 20px;
-    font-size: 1.5em;
+    font-size: 1.8em;
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 .close-button:hover {
     color: var(--gold);
 }
 
-/* Responsive Design */
+.modal-content h2 {
+    margin-top: 0;
+}
+
 @media (max-width: 768px) {
     .nav-links {
-        display: none; /* For simplicity, implement a mobile menu later */
+        display: none; /* Implement a mobile menu later */
     }
 
-    .philosophers-container, .arguments-container, .timeline-container {
-        flex-direction: column;
-        align-items: center;
+    .hero {
+        padding: 80px 20px;
     }
 
     .hero h1 {
@@ -258,5 +347,19 @@ footer {
 
     .hero p {
         font-size: 1.2em;
+    }
+
+    .philosophers-container, .arguments-container, .timeline-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #search-input {
+        width: 150px;
+    }
+
+    .contact-section form {
+        width: 100%;
+        padding: 0 10px;
     }
 }
