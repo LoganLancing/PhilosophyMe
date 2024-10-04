@@ -2,23 +2,23 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchPhilosophers();
-    setupCarouselNavigation();
+    setupFeaturedArgumentNavigation();
     setupFilterButtons();
     setupModal();
     setupScrollToTop();
+    setupQuotesCarousel();
 });
 
 let allPhilosophers = [];
 let allArguments = [];
 let featuredArguments = [];
-let currentPhilosophersIndex = 0;
-let currentArgumentsIndex = 0;
 let currentFeaturedIndex = 0;
 let currentTimelineIndex = 0;
-const PHILOSOPHERS_VISIBLE = 3;
-const ARGUMENTS_VISIBLE = 4;
+let currentFilterCategory = 'all';
+
 const FEATURED_VISIBLE = 1;
-const TIMELINE_VISIBLE = 3;
+const TIMELINE_VISIBLE = 5;
+const QUOTE_INTERVAL = 5000; // 5 seconds
 
 // Fetch philosophers data
 async function fetchPhilosophers() {
@@ -28,7 +28,6 @@ async function fetchPhilosophers() {
         allPhilosophers = philosophers;
         extractArguments();
         displayPhilosophers();
-        displayArguments('all');
         populateFeaturedArguments();
         populateTimeline();
     } catch (error) {
@@ -104,52 +103,95 @@ ${philosopher.influence}
 function updatePhilosophersCarousel() {
     const container = document.getElementById('philosophers-container');
     const totalPhilosophers = allPhilosophers.length;
-    const maxIndex = Math.ceil(totalPhilosophers / PHILOSOPHERS_VISIBLE) - 1;
+    const maxIndex = Math.ceil(totalPhilosophers / FEATURED_VISIBLE) - 1;
 
     const prevButton = document.querySelector('.philosophers-section .prev-button');
     const nextButton = document.querySelector('.philosophers-section .next-button');
-    prevButton.disabled = currentPhilosophersIndex === 0;
-    nextButton.disabled = currentPhilosophersIndex === maxIndex;
+    prevButton.disabled = false; // Always enabled for cyclic carousel
+    nextButton.disabled = false;
 
-    const translateX = -(currentPhilosophersIndex * (container.children[0].offsetWidth + 30) * PHILOSOPHERS_VISIBLE);
-    container.style.transform = `translateX(${translateX}px)`;
-}
-
-// Display argument cards based on category
-function displayArguments(category) {
-    const container = document.getElementById('arguments-container');
-    container.innerHTML = '';
-
-    let filteredArguments = allArguments;
-    if (category !== 'all') {
-        filteredArguments = allArguments.filter(arg => arg.category === category);
-    }
-
-    filteredArguments.forEach(argument => {
-        const card = createArgumentCard(argument);
-        container.appendChild(card);
+    // Handle cyclic carousel
+    prevButton.addEventListener('click', () => {
+        if (currentFeaturedIndex > 0) {
+            currentFeaturedIndex--;
+        } else {
+            currentFeaturedIndex = maxIndex;
+        }
+        const translateX = -(currentFeaturedIndex * (container.children[0].offsetWidth + 30) * FEATURED_VISIBLE);
+        container.style.transform = `translateX(${translateX}px)`;
     });
 
-    updateArgumentsCarousel();
+    nextButton.addEventListener('click', () => {
+        if (currentFeaturedIndex < maxIndex) {
+            currentFeaturedIndex++;
+        } else {
+            currentFeaturedIndex = 0;
+        }
+        const translateX = -(currentFeaturedIndex * (container.children[0].offsetWidth + 30) * FEATURED_VISIBLE);
+        container.style.transform = `translateX(${translateX}px)`;
+    });
 }
 
-// Create an argument card
-function createArgumentCard(argument) {
-    const card = document.createElement('div');
-    card.classList.add('argument-card', `category-${argument.category}`);
+// Populate featured arguments based on current filter
+function populateFeaturedArguments() {
+    const container = document.getElementById('featured-argument-container');
+    container.innerHTML = '';
 
-    const icon = document.createElement('img');
-    icon.src = getArgumentIcon(argument.title);
-    icon.alt = `${argument.title} Icon`;
-    card.appendChild(icon);
+    let filteredArguments = featuredArguments;
+    if (currentFilterCategory !== 'all') {
+        filteredArguments = featuredArguments.filter(arg => arg.category === currentFilterCategory);
+    }
+
+    if (filteredArguments.length === 0) {
+        container.innerHTML = '<p>No featured arguments available for this category.</p>';
+        return;
+    }
+
+    const arg = filteredArguments[currentFeaturedIndex];
+    const card = createFeaturedArgumentCard(arg);
+    container.appendChild(card);
+}
+
+// Create a featured argument card
+function createFeaturedArgumentCard(argument) {
+    const card = document.createElement('div');
+    card.classList.add('featured-argument');
+
+    const img = document.createElement('img');
+    img.src = getArgumentIcon(argument.title);
+    img.alt = `${argument.title} Icon`;
+    img.classList.add('featured-argument-image');
+    card.appendChild(img);
 
     const title = document.createElement('h3');
     title.textContent = argument.title;
     card.appendChild(title);
 
-    const description = document.createElement('p');
-    description.textContent = argument.description;
-    card.appendChild(description);
+    const summary = document.createElement('p');
+    summary.classList.add('summary');
+    summary.textContent = argument.summary;
+    card.appendChild(summary);
+
+    const details = document.createElement('div');
+    details.classList.add('details');
+
+    const example = document.createElement('p');
+    example.innerHTML = `<span>Real-Life Example:</span> ${argument.realLifeExample}`;
+    details.appendChild(example);
+
+    const pros = document.createElement('p');
+    pros.innerHTML = `<span>Pros:</span> ${argument.pro}`;
+    details.appendChild(pros);
+
+    const cons = document.createElement('p');
+    cons.innerHTML = `<span>Cons:</span> ${argument.con}`;
+    details.appendChild(cons);
+
+    const keyPhilosopher = document.createElement('p');
+    keyPhilosopher.innerHTML = `<span>Key Philosopher:</span> ${argument.keyPhilosopher}`;
+    details.appendChild(keyPhilosopher);
+
+    card.appendChild(details);
 
     card.addEventListener('click', () => {
         showModal(argument.title, `
@@ -193,129 +235,61 @@ function getArgumentIcon(title) {
     return icons[title] || "images/default-icon.png";
 }
 
-// Update arguments carousel
-function updateArgumentsCarousel() {
-    const container = document.getElementById('arguments-container');
-    const totalArguments = container.children.length;
-    const maxIndex = Math.ceil(totalArguments / ARGUMENTS_VISIBLE) - 1;
-
-    const prevButton = document.querySelector('.arguments-section .prev-arguments-button');
-    const nextButton = document.querySelector('.arguments-section .next-arguments-button');
-    prevButton.disabled = currentArgumentsIndex === 0;
-    nextButton.disabled = currentArgumentsIndex === maxIndex;
-
-    const translateX = -(currentArgumentsIndex * (container.children[0].offsetWidth + 30) * ARGUMENTS_VISIBLE);
-    container.style.transform = `translateX(${translateX}px)`;
-}
-
-// Setup carousel navigation
-function setupCarouselNavigation() {
-    // Philosophers Carousel
-    const prevPhilosophers = document.querySelector('.philosophers-section .prev-button');
-    const nextPhilosophers = document.querySelector('.philosophers-section .next-button');
-
-    prevPhilosophers.addEventListener('click', () => {
-        if (currentPhilosophersIndex > 0) {
-            currentPhilosophersIndex--;
-            updatePhilosophersCarousel();
-        }
-    });
-
-    nextPhilosophers.addEventListener('click', () => {
-        const totalPhilosophers = allPhilosophers.length;
-        const maxIndex = Math.ceil(totalPhilosophers / PHILOSOPHERS_VISIBLE) - 1;
-        if (currentPhilosophersIndex < maxIndex) {
-            currentPhilosophersIndex++;
-            updatePhilosophersCarousel();
-        } else {
-            currentPhilosophersIndex = 0;
-            updatePhilosophersCarousel();
-        }
-    });
-
-    // Arguments Carousel
-    const prevArguments = document.querySelector('.arguments-section .prev-arguments-button');
-    const nextArguments = document.querySelector('.arguments-section .next-arguments-button');
-
-    prevArguments.addEventListener('click', () => {
-        if (currentArgumentsIndex > 0) {
-            currentArgumentsIndex--;
-            updateArgumentsCarousel();
-        }
-    });
-
-    nextArguments.addEventListener('click', () => {
-        const container = document.getElementById('arguments-container');
-        const totalArguments = container.children.length;
-        const maxIndex = Math.ceil(totalArguments / ARGUMENTS_VISIBLE) - 1;
-        if (currentArgumentsIndex < maxIndex) {
-            currentArgumentsIndex++;
-            updateArgumentsCarousel();
-        } else {
-            currentArgumentsIndex = 0;
-            updateArgumentsCarousel();
-        }
-    });
-
-    // Featured Arguments Carousel
+// Setup carousel navigation for Featured Argument
+function setupFeaturedArgumentNavigation() {
     const prevFeatured = document.querySelector('.featured-argument-carousel .prev-featured-button');
     const nextFeatured = document.querySelector('.featured-argument-carousel .next-featured-button');
 
     prevFeatured.addEventListener('click', () => {
+        const filteredArguments = getFilteredFeaturedArguments();
+        if (filteredArguments.length === 0) return;
+
         if (currentFeaturedIndex > 0) {
             currentFeaturedIndex--;
-            updateFeaturedCarousel();
+        } else {
+            currentFeaturedIndex = filteredArguments.length - 1;
         }
+        populateFeaturedArguments();
     });
 
     nextFeatured.addEventListener('click', () => {
-        if (currentFeaturedIndex < featuredArguments.length - 1) {
+        const filteredArguments = getFilteredFeaturedArguments();
+        if (filteredArguments.length === 0) return;
+
+        if (currentFeaturedIndex < filteredArguments.length - 1) {
             currentFeaturedIndex++;
         } else {
             currentFeaturedIndex = 0;
         }
-        updateFeaturedCarousel();
+        populateFeaturedArguments();
     });
+}
 
-    // Timeline Carousel
-    const prevTimeline = document.querySelector('.timeline-carousel-container .prev-timeline-button');
-    const nextTimeline = document.querySelector('.timeline-carousel-container .next-timeline-button');
-
-    prevTimeline.addEventListener('click', () => {
-        if (currentTimelineIndex > 0) {
-            currentTimelineIndex--;
-            updateTimelineCarousel();
-        }
-    });
-
-    nextTimeline.addEventListener('click', () => {
-        const container = document.getElementById('timeline-container');
-        const totalTimeline = container.children.length;
-        const maxIndex = Math.ceil(totalTimeline / TIMELINE_VISIBLE) - 1;
-        if (currentTimelineIndex < maxIndex) {
-            currentTimelineIndex++;
-            updateTimelineCarousel();
-        } else {
-            currentTimelineIndex = 0;
-            updateTimelineCarousel();
-        }
-    });
+// Get filtered featured arguments based on current category
+function getFilteredFeaturedArguments() {
+    if (currentFilterCategory === 'all') {
+        return featuredArguments;
+    }
+    return featuredArguments.filter(arg => arg.category === currentFilterCategory);
 }
 
 // Setup filter buttons
 function setupFilterButtons() {
-    const filterButtons = document.querySelectorAll('.filter-button');
+    const filterButtons = document.querySelectorAll('.filters .filter-button');
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 
-            const category = button.getAttribute('data-category');
-            currentArgumentsIndex = 0;
-            displayArguments(category);
+            currentFilterCategory = button.getAttribute('data-category');
+            currentFeaturedIndex = 0;
+            populateFeaturedArguments();
         });
     });
 }
+
+// Display argument cards based on category (Removed Arguments Carousel)
+// Since the user has removed the bottom carousel, this function is no longer needed
 
 // Setup modal functionality
 function setupModal() {
@@ -442,95 +416,59 @@ function parseYear(dateStr) {
     return 0;
 }
 
-// Populate featured arguments
-function populateFeaturedArguments() {
-    const container = document.getElementById('featured-argument-container');
-    container.innerHTML = '';
+// Update timeline carousel
+function updateTimelineCarousel() {
+    const container = document.getElementById('timeline-container');
+    const totalTimeline = container.children.length;
+    const maxIndex = Math.ceil(totalTimeline / TIMELINE_VISIBLE) - 1;
 
-    if (featuredArguments.length === 0) {
-        container.innerHTML = '<p>No featured arguments available.</p>';
-        return;
-    }
+    const prevButton = document.querySelector('.timeline-carousel-container .prev-timeline-button');
+    const nextButton = document.querySelector('.timeline-carousel-container .next-timeline-button');
+    prevButton.disabled = false; // Always enabled for cyclic carousel
+    nextButton.disabled = false;
 
-    const arg = featuredArguments[currentFeaturedIndex];
-    const card = createFeaturedArgumentCard(arg);
-    container.appendChild(card);
-}
-
-// Create a featured argument card
-function createFeaturedArgumentCard(argument) {
-    const card = document.createElement('div');
-    card.classList.add('featured-argument');
-
-    const img = document.createElement('img');
-    img.src = getArgumentIcon(argument.title);
-    img.alt = `${argument.title} Icon`;
-    img.classList.add('featured-argument-image');
-    card.appendChild(img);
-
-    const title = document.createElement('h3');
-    title.textContent = argument.title;
-    card.appendChild(title);
-
-    const summary = document.createElement('p');
-    summary.classList.add('summary');
-    summary.textContent = argument.summary;
-    card.appendChild(summary);
-
-    const details = document.createElement('div');
-    details.classList.add('details');
-
-    const example = document.createElement('p');
-    example.innerHTML = `<span>Real-Life Example:</span> ${argument.realLifeExample}`;
-    details.appendChild(example);
-
-    const pros = document.createElement('p');
-    pros.innerHTML = `<span>Pros:</span> ${argument.pro}`;
-    details.appendChild(pros);
-
-    const cons = document.createElement('p');
-    cons.innerHTML = `<span>Cons:</span> ${argument.con}`;
-    details.appendChild(cons);
-
-    const keyPhilosopher = document.createElement('p');
-    keyPhilosopher.innerHTML = `<span>Key Philosopher:</span> ${argument.keyPhilosopher}`;
-    details.appendChild(keyPhilosopher);
-
-    card.appendChild(details);
-
-    card.addEventListener('click', () => {
-        showModal(argument.title, `
-Summary:
-${argument.summary}
-
-Real-Life Example:
-${argument.realLifeExample}
-
-Pros:
-${argument.pro}
-
-Cons:
-${argument.con}
-
-Key Philosopher:
-${argument.keyPhilosopher}
-        `);
+    // Handle cyclic carousel
+    prevButton.addEventListener('click', () => {
+        if (currentTimelineIndex > 0) {
+            currentTimelineIndex--;
+        } else {
+            currentTimelineIndex = maxIndex;
+        }
+        const translateY = -(currentTimelineIndex * (container.children[0].offsetHeight + 30) * TIMELINE_VISIBLE);
+        container.style.transform = `translateY(${translateY}px)`;
     });
 
-    return card;
+    nextButton.addEventListener('click', () => {
+        if (currentTimelineIndex < maxIndex) {
+            currentTimelineIndex++;
+        } else {
+            currentTimelineIndex = 0;
+        }
+        const translateY = -(currentTimelineIndex * (container.children[0].offsetHeight + 30) * TIMELINE_VISIBLE);
+        container.style.transform = `translateY(${translateY}px)`;
+    });
 }
 
-// Update featured arguments carousel
-function updateFeaturedCarousel() {
-    const container = document.getElementById('featured-argument-container');
-    container.innerHTML = '';
+// Setup quotes carousel
+function setupQuotesCarousel() {
+    const quotes = document.querySelectorAll('.quotes-section .quote-slide');
+    let currentQuote = 0;
 
-    if (featuredArguments.length === 0) {
-        container.innerHTML = '<p>No featured arguments available.</p>';
-        return;
-    }
+    if (quotes.length === 0) return;
 
-    const arg = featuredArguments[currentFeaturedIndex];
-    const card = createFeaturedArgumentCard(arg);
-    container.appendChild(card);
+    // Initialize first quote
+    quotes.forEach((quote, index) => {
+        if (index === 0) {
+            quote.classList.add('active');
+        } else {
+            quote.classList.remove('active');
+        }
+    });
+
+    // Auto-cycle quotes every 5 seconds
+    setInterval(() => {
+        quotes[currentQuote].classList.remove('active');
+        currentQuote = (currentQuote + 1) % quotes.length;
+        quotes[currentQuote].classList.add('active');
+    }, QUOTE_INTERVAL);
 }
