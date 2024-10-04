@@ -7,7 +7,7 @@
         "arguments": [
             {
                 "title": "Cogito, ergo sum",
-                "briefOverview": "The foundation of Descartes' philosophy, asserting self-awareness as undeniable.",
+                "description": "The foundation of Descartes' philosophy, asserting self-awareness as undeniable.",
                 "summary": "I think, therefore I am. This argument establishes the certainty of one's own existence through the act of thinking.",
                 "realLifeExample": "Even if you doubt everything else, the very act of doubting confirms your existence as a thinking being.",
                 "pro": "Provides a clear starting point for building knowledge based on certainty.",
@@ -17,7 +17,7 @@
             },
             {
                 "title": "Dualism",
-                "briefOverview": "The belief in two fundamental substances: mind and matter.",
+                "description": "The belief in two fundamental substances: mind and matter.",
                 "summary": "Dualism posits that the mind and body are distinct and separable entities, with the mind being non-material.",
                 "realLifeExample": "Your thoughts and consciousness exist independently of your physical body.",
                 "pro": "Explains the subjective experience and consciousness.",
@@ -36,7 +36,7 @@
         "arguments": [
             {
                 "title": "Categorical Imperative",
-                "briefOverview": "A central principle in Kant's deontological moral philosophy.",
+                "description": "A central principle in Kant's deontological moral philosophy.",
                 "summary": "Act only according to that maxim whereby you can, at the same time, will that it should become a universal law.",
                 "realLifeExample": "If you consider lying to get out of trouble, you must imagine a world where everyone lies in similar situations, which would undermine trust.",
                 "pro": "Provides a clear and universal basis for moral actions.",
@@ -46,7 +46,7 @@
             },
             {
                 "title": "Transcendental Idealism",
-                "briefOverview": "Kant's theory on the nature of reality and human perception.",
+                "description": "Kant's theory on the nature of reality and human perception.",
                 "summary": "Asserts that our experience of things is about how they appear to us, not about those things as they are in themselves.",
                 "realLifeExample": "We perceive a tree's color based on our sensory input, not necessarily the tree's inherent color independent of our perception.",
                 "pro": "Bridges rationalism and empiricism, accounting for human perception.",
@@ -65,7 +65,7 @@
         "arguments": [
             {
                 "title": "Golden Mean",
-                "briefOverview": "A key concept in Aristotle's virtue ethics.",
+                "description": "A key concept in Aristotle's virtue ethics.",
                 "summary": "Virtue lies between two extremes of excess and deficiency, promoting moderation.",
                 "realLifeExample": "Courage is the balance between recklessness (excess) and cowardice (deficiency).",
                 "pro": "Encourages balanced and moderate behavior.",
@@ -75,7 +75,7 @@
             },
             {
                 "title": "Four Causes",
-                "briefOverview": "Aristotle's explanation of why things exist as they do.",
+                "description": "Aristotle's explanation of why things exist as they do.",
                 "summary": "Includes material, formal, efficient, and final causes to explain an object's existence and purpose.",
                 "realLifeExample": "A wooden table: material cause (wood), formal cause (design), efficient cause (carpenter), final cause (to hold items).",
                 "pro": "Provides a comprehensive framework for understanding causality.",
@@ -94,7 +94,7 @@
         "arguments": [
             {
                 "title": "Theory of Forms",
-                "briefOverview": "Plato's metaphysical theory explaining the nature of reality.",
+                "description": "Plato's metaphysical theory explaining the nature of reality.",
                 "summary": "Non-material abstract forms, and not the material world, possess the highest and most fundamental kind of reality.",
                 "realLifeExample": "A perfect circle exists in the realm of forms, while any drawn circle is merely an imperfect copy.",
                 "pro": "Explains the universality and perfection of concepts and objects.",
@@ -104,7 +104,7 @@
             },
             {
                 "title": "Allegory of the Cave",
-                "briefOverview": "A metaphor for human perception and enlightenment.",
+                "description": "A metaphor for human perception and enlightenment.",
                 "summary": "Humans are like prisoners in a cave who see only shadows of real objects, mistaking appearances for reality.",
                 "realLifeExample": "Educational enlightenment as breaking free from ignorance to understand the true nature of reality.",
                 "pro": "Illustrates the journey from ignorance to knowledge and the importance of education.",
@@ -123,7 +123,7 @@
         "arguments": [
             {
                 "title": "Leap of Faith",
-                "briefOverview": "Kierkegaard's concept of believing without empirical evidence.",
+                "description": "Kierkegaard's concept of believing without empirical evidence.",
                 "summary": "To believe in something transcendent, such as God, one must make a subjective leap of faith beyond rational understanding.",
                 "realLifeExample": "Choosing to believe in a higher power despite the lack of scientific proof.",
                 "pro": "Emphasizes personal commitment and the importance of individual belief.",
@@ -133,7 +133,7 @@
             },
             {
                 "title": "Existential Angst",
-                "briefOverview": "The feeling of deep anxiety arising from human freedom and responsibility.",
+                "description": "The feeling of deep anxiety arising from human freedom and responsibility.",
                 "summary": "Angst is the realization of one's absolute freedom to choose, leading to feelings of dread and uncertainty.",
                 "realLifeExample": "Feeling overwhelmed by the responsibility of making life-altering decisions.",
                 "pro": "Highlights the importance of personal responsibility and authenticity.",
@@ -152,7 +152,7 @@
         "arguments": [
             {
                 "title": "Übermensch (Overman/Superman)",
-                "briefOverview": "Nietzsche's idea of an individual who has transcended conventional morality to create their own values.",
+                "description": "Nietzsche's idea of an individual who has transcended conventional morality to create their own values.",
                 "summary": "The Übermensch represents the goal for humanity to set their own values and purpose, overcoming the limitations of traditional societal norms.",
                 "realLifeExample": "An artist or thinker who creates groundbreaking work that redefines cultural or moral standards.",
                 "pro": "Encourages personal growth, creativity, and the rejection of herd mentality.",
@@ -162,7 +162,7 @@
             },
             {
                 "title": "Will to Power",
-                "briefOverview": "The fundamental driving force in humans to assert and enhance their power and influence.",
+                "description": "The fundamental driving force in humans to assert and enhance their power and influence.",
                 "summary": "Nietzsche posits that the primary motivation in humans is the 'will to power'—a desire to reach the highest possible position in life.",
                 "realLifeExample": "An entrepreneur striving to build a successful business empire.",
                 "pro": "Explains ambition and the drive for success in human behavior.",
