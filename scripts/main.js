@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     fetchPhilosophers();
     setupFeaturedArgumentNavigation();
+    setupPhilosophersNavigation();
     setupFilterButtons();
     setupModal();
     setupScrollToTop();
@@ -12,12 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
 let allPhilosophers = [];
 let allArguments = [];
 let featuredArguments = [];
+let currentPhilosophersIndex = 0;
 let currentFeaturedIndex = 0;
-let currentTimelineIndex = 0;
 let currentFilterCategory = 'all';
 
+const PHILOSOPHERS_VISIBLE = 3;
 const FEATURED_VISIBLE = 1;
-const TIMELINE_VISIBLE = 5;
 const QUOTE_INTERVAL = 5000; // 5 seconds
 
 // Fetch philosophers data
@@ -28,28 +29,27 @@ async function fetchPhilosophers() {
         allPhilosophers = philosophers;
         extractArguments();
         displayPhilosophers();
-        populateFeaturedArguments();
-        populateTimeline();
+        displayFeaturedArguments();
     } catch (error) {
         console.error('Error fetching philosopher data:', error);
     }
 }
 
-// Extract all unique arguments and featured arguments
+// Extract all arguments and featured arguments
 function extractArguments() {
-    const argumentsSet = new Set();
+    allArguments = [];
+    featuredArguments = [];
     allPhilosophers.forEach(philosopher => {
         philosopher.arguments.forEach(arg => {
-            argumentsSet.add(JSON.stringify(arg));
+            allArguments.push(arg);
             if (arg.featured) {
                 featuredArguments.push(arg);
             }
         });
     });
-    allArguments = Array.from(argumentsSet).map(arg => JSON.parse(arg));
 }
 
-// Display philosopher cards
+// Display philosopher cards in the carousel
 function displayPhilosophers() {
     const container = document.getElementById('philosophers-container');
     container.innerHTML = '';
@@ -99,52 +99,66 @@ ${philosopher.influence}
     return card;
 }
 
-// Update philosophers carousel
+// Update philosophers carousel to show only 3 at a time
 function updatePhilosophersCarousel() {
     const container = document.getElementById('philosophers-container');
     const totalPhilosophers = allPhilosophers.length;
-    const maxIndex = Math.ceil(totalPhilosophers / FEATURED_VISIBLE) - 1;
+    const maxIndex = Math.ceil(totalPhilosophers / PHILOSOPHERS_VISIBLE) - 1;
 
+    // Ensure currentPhilosophersIndex wraps around
+    if (currentPhilosophersIndex > maxIndex) {
+        currentPhilosophersIndex = 0;
+    }
+
+    const translateX = -(currentPhilosophersIndex * (container.children[0].offsetWidth + 30) * PHILOSOPHERS_VISIBLE);
+    container.style.transform = `translateX(${translateX}px)`;
+}
+
+// Setup navigation for Top Philosophers carousel
+function setupPhilosophersNavigation() {
     const prevButton = document.querySelector('.philosophers-section .prev-button');
     const nextButton = document.querySelector('.philosophers-section .next-button');
-    prevButton.disabled = false; // Always enabled for cyclic carousel
-    nextButton.disabled = false;
 
-    // Handle cyclic carousel
     prevButton.addEventListener('click', () => {
-        if (currentFeaturedIndex > 0) {
-            currentFeaturedIndex--;
+        const totalPhilosophers = allPhilosophers.length;
+        const maxIndex = Math.ceil(totalPhilosophers / PHILOSOPHERS_VISIBLE) - 1;
+
+        if (currentPhilosophersIndex > 0) {
+            currentPhilosophersIndex--;
         } else {
-            currentFeaturedIndex = maxIndex;
+            currentPhilosophersIndex = maxIndex;
         }
-        const translateX = -(currentFeaturedIndex * (container.children[0].offsetWidth + 30) * FEATURED_VISIBLE);
-        container.style.transform = `translateX(${translateX}px)`;
+        updatePhilosophersCarousel();
     });
 
     nextButton.addEventListener('click', () => {
-        if (currentFeaturedIndex < maxIndex) {
-            currentFeaturedIndex++;
+        const totalPhilosophers = allPhilosophers.length;
+        const maxIndex = Math.ceil(totalPhilosophers / PHILOSOPHERS_VISIBLE) - 1;
+
+        if (currentPhilosophersIndex < maxIndex) {
+            currentPhilosophersIndex++;
         } else {
-            currentFeaturedIndex = 0;
+            currentPhilosophersIndex = 0;
         }
-        const translateX = -(currentFeaturedIndex * (container.children[0].offsetWidth + 30) * FEATURED_VISIBLE);
-        container.style.transform = `translateX(${translateX}px)`;
+        updatePhilosophersCarousel();
     });
 }
 
-// Populate featured arguments based on current filter
-function populateFeaturedArguments() {
+// Display featured arguments based on current filter
+function displayFeaturedArguments() {
     const container = document.getElementById('featured-argument-container');
     container.innerHTML = '';
 
-    let filteredArguments = featuredArguments;
-    if (currentFilterCategory !== 'all') {
-        filteredArguments = featuredArguments.filter(arg => arg.category === currentFilterCategory);
-    }
+    let filteredArguments = getFilteredFeaturedArguments();
 
     if (filteredArguments.length === 0) {
         container.innerHTML = '<p>No featured arguments available for this category.</p>';
         return;
+    }
+
+    // Ensure currentFeaturedIndex wraps around
+    if (currentFeaturedIndex >= filteredArguments.length) {
+        currentFeaturedIndex = 0;
     }
 
     const arg = filteredArguments[currentFeaturedIndex];
@@ -235,7 +249,7 @@ function getArgumentIcon(title) {
     return icons[title] || "images/default-icon.png";
 }
 
-// Setup carousel navigation for Featured Argument
+// Setup navigation for Featured Argument carousel
 function setupFeaturedArgumentNavigation() {
     const prevFeatured = document.querySelector('.featured-argument-carousel .prev-featured-button');
     const nextFeatured = document.querySelector('.featured-argument-carousel .next-featured-button');
@@ -249,7 +263,7 @@ function setupFeaturedArgumentNavigation() {
         } else {
             currentFeaturedIndex = filteredArguments.length - 1;
         }
-        populateFeaturedArguments();
+        displayFeaturedArguments();
     });
 
     nextFeatured.addEventListener('click', () => {
@@ -261,7 +275,7 @@ function setupFeaturedArgumentNavigation() {
         } else {
             currentFeaturedIndex = 0;
         }
-        populateFeaturedArguments();
+        displayFeaturedArguments();
     });
 }
 
@@ -270,10 +284,10 @@ function getFilteredFeaturedArguments() {
     if (currentFilterCategory === 'all') {
         return featuredArguments;
     }
-    return featuredArguments.filter(arg => arg.category === currentFilterCategory);
+    return featuredArguments.filter(arg => arg.category.toLowerCase() === currentFilterCategory.toLowerCase());
 }
 
-// Setup filter buttons
+// Setup filter buttons for Featured Arguments
 function setupFilterButtons() {
     const filterButtons = document.querySelectorAll('.filters .filter-button');
     filterButtons.forEach(button => {
@@ -283,13 +297,10 @@ function setupFilterButtons() {
 
             currentFilterCategory = button.getAttribute('data-category');
             currentFeaturedIndex = 0;
-            populateFeaturedArguments();
+            displayFeaturedArguments();
         });
     });
 }
-
-// Display argument cards based on category (Removed Arguments Carousel)
-// Since the user has removed the bottom carousel, this function is no longer needed
 
 // Setup modal functionality
 function setupModal() {
@@ -297,21 +308,18 @@ function setupModal() {
     const closeButton = document.querySelector('.close-button');
 
     closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-        modal.setAttribute('aria-hidden', 'true');
+        closeModal();
     });
 
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden', 'true');
+            closeModal();
         }
     });
 
     window.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && modal.style.display === 'block') {
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden', 'true');
+            closeModal();
         }
     });
 }
@@ -327,6 +335,13 @@ function showModal(title, body) {
 
     modal.style.display = 'block';
     modal.setAttribute('aria-hidden', 'false');
+}
+
+// Close modal
+function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
 }
 
 // Setup scroll to top button
@@ -346,106 +361,6 @@ function setupScrollToTop() {
         } else {
             scrollButton.style.display = 'none';
         }
-    });
-}
-
-// Populate timeline
-function populateTimeline() {
-    const timelineContainer = document.getElementById('timeline-container');
-    timelineContainer.innerHTML = '';
-
-    // Sort philosophers by publicationDate
-    const sortedPhilosophers = allPhilosophers.slice().sort((a, b) => compareDates(a.publicationDate, b.publicationDate));
-
-    sortedPhilosophers.forEach(philosopher => {
-        philosopher.arguments.forEach(arg => {
-            const event = document.createElement('div');
-            event.classList.add('timeline-event');
-
-            const date = document.createElement('h3');
-            date.textContent = philosopher.publicationDate;
-            event.appendChild(date);
-
-            const name = document.createElement('p');
-            name.innerHTML = `<strong>${philosopher.name}</strong>`;
-            event.appendChild(name);
-
-            const summary = document.createElement('p');
-            summary.textContent = arg.description;
-            event.appendChild(summary);
-
-            event.addEventListener('click', () => {
-                showModal(`${philosopher.name} - ${arg.title}`, `
-Publication Date: ${philosopher.publicationDate}
-
-Argument: ${arg.title}
-Description: ${arg.description}
-Summary: ${arg.summary}
-Real-Life Example: ${arg.realLifeExample}
-
-Influence:
-${philosopher.influence}
-                `);
-            });
-
-            timelineContainer.appendChild(event);
-        });
-    });
-
-    updateTimelineCarousel();
-}
-
-// Compare dates for sorting
-function compareDates(a, b) {
-    const yearA = parseYear(a);
-    const yearB = parseYear(b);
-    return yearA - yearB;
-}
-
-// Parse year from date string
-function parseYear(dateStr) {
-    const regex = /(\d+)\s*(BC)?/;
-    const match = dateStr.match(regex);
-    if (match) {
-        let year = parseInt(match[1]);
-        if (match[2] === 'BC') {
-            year = -year;
-        }
-        return year;
-    }
-    return 0;
-}
-
-// Update timeline carousel
-function updateTimelineCarousel() {
-    const container = document.getElementById('timeline-container');
-    const totalTimeline = container.children.length;
-    const maxIndex = Math.ceil(totalTimeline / TIMELINE_VISIBLE) - 1;
-
-    const prevButton = document.querySelector('.timeline-carousel-container .prev-timeline-button');
-    const nextButton = document.querySelector('.timeline-carousel-container .next-timeline-button');
-    prevButton.disabled = false; // Always enabled for cyclic carousel
-    nextButton.disabled = false;
-
-    // Handle cyclic carousel
-    prevButton.addEventListener('click', () => {
-        if (currentTimelineIndex > 0) {
-            currentTimelineIndex--;
-        } else {
-            currentTimelineIndex = maxIndex;
-        }
-        const translateY = -(currentTimelineIndex * (container.children[0].offsetHeight + 30) * TIMELINE_VISIBLE);
-        container.style.transform = `translateY(${translateY}px)`;
-    });
-
-    nextButton.addEventListener('click', () => {
-        if (currentTimelineIndex < maxIndex) {
-            currentTimelineIndex++;
-        } else {
-            currentTimelineIndex = 0;
-        }
-        const translateY = -(currentTimelineIndex * (container.children[0].offsetHeight + 30) * TIMELINE_VISIBLE);
-        container.style.transform = `translateY(${translateY}px)`;
     });
 }
 
