@@ -394,44 +394,144 @@ section p {
 
 .featured-argument-carousel h3 {
     font-size: 2em;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     color: var(--color-primary);
 }
 
-.featured-argument-carousel .carousel.track {
+.featured-argument-carousel .carousel-container.featured-carousel .carousel-button {
+    background-color: var(--color-secondary);
+    color: var(--color-bg);
+    font-size: 1.5em;
+}
+
+.featured-argument-carousel .carousel-container.featured-carousel .carousel-button:hover {
+    background-color: var(--color-accent);
+}
+
+#featured-arguments-container .featured-argument {
+    flex: 0 0 100%; /* Show one featured argument at a time */
     display: flex;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-.featured-argument-carousel .featured-argument {
-    background-color: var(--color-lavender);
-    border: none;
-    padding: 20px;
-    box-shadow: none;
-    transform: scale(1);
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-}
-
-.featured-argument-carousel .featured-argument-image {
-    width: 200px;
-    height: 200px;
+#featured-arguments-container .featured-argument img.featured-argument-image {
+    width: 250px;
+    height: 250px;
     object-fit: contain;
     margin-bottom: 20px;
     transition: transform var(--transition-speed);
 }
 
-.featured-argument-carousel .featured-argument:hover .featured-argument-image {
+#featured-arguments-container .featured-argument-image:hover {
     transform: scale(1.1);
 }
 
-.featured-argument-carousel .featured-argument p {
-    font-size: 1.1em;
+#featured-arguments-container .featured-argument h3 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: var(--color-primary);
+}
+
+#featured-arguments-container .featured-argument p {
+    font-size: 1.2em;
     margin-bottom: 10px;
 }
 
-.featured-argument-carousel .featured-argument p strong {
+#featured-arguments-container .featured-argument p strong {
     color: var(--color-secondary);
+}
+
+/* Filter Buttons */
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: var(--color-light);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+    font-weight: bold;
+    color: var(--color-text);
+    box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.filter-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.filter-button.active, .filter-button:hover {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px var(--color-shadow);
+}
+
+/* Timeline Carousel */
+.timeline-carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.timeline-carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    height: 350px; /* Adjust height as needed */
+}
+
+.timeline-carousel.track {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s ease-in-out;
+    gap: 30px;
+    height: 100%;
+}
+
+.timeline-event {
+    background-color: var(--color-snow);
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: 0 4px 6px var(--color-shadow);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.timeline-event:hover {
+    background-color: var(--color-light);
+    box-shadow: 0 8px 12px var(--color-shadow);
+    transform: translateY(-5px);
+}
+
+.timeline-event h3 {
+    font-size: 1.2em;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.timeline-event p {
+    font-size: 1em;
+    color: var(--color-text);
 }
 
 /* Quotes Section */
@@ -649,56 +749,39 @@ footer p {
     margin: 0;
 }
 
-/* Filter Buttons */
-.filters {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
-
-.filter-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background-color: var(--color-light);
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
-    font-weight: bold;
-    color: var(--color-text);
-    box-shadow: 0 2px 4px var(--color-shadow);
-}
-
-.filter-button img {
-    width: 20px;
-    height: 20px;
-}
-
-.filter-button.active, .filter-button:hover {
-    background-color: var(--color-accent);
-    color: var(--color-primary);
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px var(--color-shadow);
-}
-
 /* Featured Argument Carousel */
+.featured-argument-carousel {
+    background-color: var(--color-lavender);
+    border: 3px solid var(--color-accent);
+    border-radius: var(--border-radius);
+    padding: 40px 20px;
+    text-align: center;
+    margin: 60px 0;
+    box-shadow: 0 8px 16px var(--color-shadow);
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed);
+}
+
+.featured-argument-carousel:hover {
+    transform: translateY(-25px);
+    box-shadow: 0 12px 24px var(--color-shadow);
+    background-color: var(--color-snow);
+}
+
 .featured-argument-carousel h3 {
     font-size: 2em;
     margin-bottom: 20px;
     color: var(--color-primary);
 }
 
-.featured-argument-carousel .carousel-button {
+.featured-argument-carousel .carousel-container.featured-carousel .carousel-button {
     background-color: var(--color-secondary);
     color: var(--color-bg);
     font-size: 1.5em;
 }
 
-.featured-argument-carousel .carousel-button:hover {
+.featured-argument-carousel .carousel-container.featured-carousel .carousel-button:hover {
     background-color: var(--color-accent);
 }
 
@@ -710,9 +793,9 @@ footer p {
     text-align: center;
 }
 
-#featured-arguments-container .featured-argument-image {
-    width: 250px;
-    height: 250px;
+#featured-arguments-container .featured-argument img.featured-argument-image {
+    width: 300px;
+    height: 300px;
     object-fit: contain;
     margin-bottom: 20px;
     transition: transform var(--transition-speed);
@@ -774,8 +857,8 @@ footer p {
     }
 
     #featured-arguments-container .featured-argument-image {
-        width: 200px;
-        height: 200px;
+        width: 250px;
+        height: 250px;
     }
 
     #featured-arguments-container .featured-argument h3 {
@@ -857,8 +940,8 @@ footer p {
     }
 
     #featured-arguments-container .featured-argument-image {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
     }
 
     #featured-arguments-container .featured-argument h3 {
