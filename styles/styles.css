@@ -191,6 +191,7 @@ section h2::after {
     border-radius: 2px;
 }
 
+/* Carousel Styles */
 .carousel-container {
     position: relative;
     display: flex;
@@ -230,25 +231,25 @@ section h2::after {
 .carousel-wrapper {
     overflow: hidden;
     width: 100%;
-    max-width: 1200px;
 }
 
 .philosophers-container {
     display: flex;
     transition: transform 0.5s ease-in-out;
-    flex-wrap: nowrap;
 }
 
+/* Philosopher Cards */
 .card {
-    min-width: 300px;
-    margin-right: 20px;
-    flex-shrink: 0;
     background-color: var(--snow);
     border: 1px solid var(--light-gray);
     border-radius: 8px;
+    width: 300px;
     padding: 20px;
     box-shadow: 0 4px 6px var(--shadow-color);
     transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+    margin: 0 10px;
     cursor: pointer;
 }
 
@@ -274,55 +275,6 @@ section h2::after {
 .card p {
     font-size: 0.95em;
     margin-bottom: 10px;
-}
-
-footer {
-    background-color: var(--navy-blue);
-    color: var(--ivory);
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer p {
-    margin: 0;
-}
-
-.contact-section form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.contact-section label {
-    font-weight: bold;
-}
-
-.contact-section input, 
-.contact-section textarea {
-    padding: 10px;
-    border: 1px solid var(--light-gray);
-    border-radius: 4px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1em;
-}
-
-.contact-section button {
-    width: 150px;
-    padding: 10px;
-    border: none;
-    background-color: var(--gold);
-    color: var(--navy-blue);
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    align-self: flex-start;
-    transition: background-color 0.3s ease;
-}
-
-.contact-section button:hover {
-    background-color: var(--amber);
 }
 
 /* Modal Styles */
@@ -465,51 +417,125 @@ footer p {
     margin: 5px 0;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 1024px) {
+/* Footer Styles */
+footer {
+    background-color: var(--navy-blue);
+    color: var(--ivory);
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Contact Form Styles */
+.contact-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-section label {
+    font-weight: bold;
+}
+
+.contact-section input, 
+.contact-section textarea {
+    padding: 10px;
+    border: 1px solid var(--light-gray);
+    border-radius: 4px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+}
+
+.contact-section button {
+    width: 150px;
+    padding: 10px;
+    border: none;
+    background-color: var(--gold);
+    color: var(--navy-blue);
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.3s ease;
+}
+
+.contact-section button:hover {
+    background-color: var(--amber);
+}
+
+/* Loader Styles */
+.loader {
+    border: 8px solid var(--light-gray);
+    border-top: 8px solid var(--gold);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 100px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
     .prev-button {
         left: -35px;
     }
-
+    
     .next-button {
         right: -35px;
-    }
-
-    .card {
-        min-width: 250px;
     }
 }
 
 @media (max-width: 768px) {
+    .nav-links {
+        display: none; /* For simplicity, implement a mobile menu later */
+    }
+
+    .search-container {
+        margin-left: 10px;
+    }
+
     .carousel-button {
         font-size: 1.5em;
         padding: 8px 12px;
     }
 
-    .prev-button {
-        left: -30px;
-    }
-
-    .next-button {
-        right: -30px;
-    }
-
-    .card {
-        min-width: 220px;
-    }
-}
-
-@media (max-width: 480px) {
-    .carousel-button {
-        display: none; /* Hide buttons on very small screens */
-    }
-
-    .card {
-        min-width: 100%;
-        margin-right: 0;
+    .carousel-wrapper {
+        width: 100%;
     }
 
     .philosophers-container {
-        flex-direction: column;
+        /* Adjust transform to show fewer cards if needed */
+    }
+
+    .timeline-container::after {
+        left: 31px;
+    }
+
+    .timeline-event {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+        margin-bottom: 30px;
+    }
+
+    .timeline-event.right {
+        left: 0%;
+    }
+
+    .timeline-event.left::before, .timeline-event.right::before {
+        left: 60px;
+        border: medium solid var(--gold);
+        border-width: 10px 10px 10px 0;
+        border-color: transparent var(--gold) transparent transparent;
+    }
+
+    .timeline-event::after {
+        left: 18px;
     }
 }
