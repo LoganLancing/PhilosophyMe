@@ -12,7 +12,7 @@
 <body>
     <!-- Header -->
     <header>
-        <nav>
+        <nav aria-label="Main Navigation">
             <div class="logo">Philosophy Through Time</div>
             <ul class="nav-links">
                 <li><a href="#philosophers">Philosophers</a></li>
@@ -22,7 +22,7 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="search-container">
-                <input type="text" id="search-input" placeholder="Search...">
+                <input type="text" id="search-input" placeholder="Search..." aria-label="Search Philosophers and Arguments">
                 <button id="search-button" aria-label="Search">🔍</button>
             </div>
         </nav>
@@ -37,8 +37,14 @@
     <!-- Philosophers Section -->
     <section id="philosophers" class="philosophers-section">
         <h2>Top Philosophers</h2>
-        <div class="philosophers-container" id="philosophers-container">
-            <!-- Philosopher cards will be dynamically inserted here -->
+        <div class="carousel-container">
+            <button class="carousel-button prev-button" aria-label="Previous Philosophers">❮</button>
+            <div class="carousel-wrapper">
+                <div class="philosophers-container" id="philosophers-container">
+                    <!-- Philosopher cards will be dynamically inserted here -->
+                </div>
+            </div>
+            <button class="carousel-button next-button" aria-label="Next Philosophers">❯</button>
         </div>
     </section>
 
@@ -84,7 +90,7 @@
     <!-- Modal for Detailed Information -->
     <div id="modal" class="modal">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span class="close-button" aria-label="Close Modal">&times;</span>
             <h2 id="modal-title"></h2>
             <p id="modal-body"></p>
         </div>
@@ -95,6 +101,8 @@
         <p>&copy; 2024 Philosophy Through Time. All rights reserved.</p>
     </footer>
 
+    <!-- Include Lunr.js -->
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
     <!-- Scripts -->
     <script src="scripts/main.js"></script>
 </body>
