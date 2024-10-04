@@ -115,6 +115,16 @@
                 "con": "Leaves the nature of things-in-themselves obscure and unknowable.",
                 "keyPhilosopher": "Immanuel Kant",
                 "category": "existence"
+            },
+            {
+                "title": "The Trolley Problem",
+                "description": "The Trolley Problem is about deciding whether to sacrifice one life to save five others.",
+                "summary": "Is it morally acceptable to sacrifice one person to save five others? This dilemma challenges utilitarian and deontological ethical frameworks by questioning whether the ends justify the means.",
+                "realLifeExample": "A runaway trolley is headed towards five workers on the tracks. You can pull a lever to divert it to another track where only one worker is present. Should you pull the lever?",
+                "pro": "Highlights the complexities of moral decision-making and the conflict between different ethical principles.",
+                "con": "Can oversimplify moral dilemmas and may not account for all real-world variables.",
+                "keyPhilosopher": "Immanuel Kant",
+                "category": "ethics"
             }
         ],
         "influence": "His critical philosophy bridged rationalism and empiricism, influencing German Idealism and contemporary philosophy."
