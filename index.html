@@ -40,7 +40,7 @@
         <div class="carousel-container">
             <button class="carousel-button prev-button" aria-label="Previous Philosophers">❮</button>
             <div class="carousel-wrapper">
-                <div class="philosophers-container" id="philosophers-container">
+                <div class="carousel track" id="philosophers-container">
                     <!-- Philosopher cards will be dynamically inserted here -->
                 </div>
             </div>
@@ -74,7 +74,7 @@
         <div class="carousel-container">
             <button class="carousel-button prev-button" aria-label="Previous Arguments">❮</button>
             <div class="carousel-wrapper">
-                <div class="arguments-container" id="arguments-container">
+                <div class="carousel track" id="arguments-container">
                     <!-- Argument cards will be dynamically inserted here -->
                 </div>
             </div>
@@ -126,9 +126,9 @@
     </section>
 
     <!-- Modal for Detailed Information -->
-    <div id="modal" class="modal">
+    <div id="modal" class="modal" aria-hidden="true">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span class="close-button" aria-label="Close Modal">&times;</span>
             <h2 id="modal-title"></h2>
             <p id="modal-body"></p>
         </div>
@@ -139,7 +139,7 @@
         <p>&copy; 2024 Philosophy Through Time. All rights reserved.</p>
     </footer>
 
-    <!-- Include Lunr.js -->
+    <!-- Include Lunr.js for Search Functionality -->
     <script src="https://unpkg.com/lunr/lunr.js"></script>
     <!-- Scripts -->
     <script src="scripts/main.js"></script>
