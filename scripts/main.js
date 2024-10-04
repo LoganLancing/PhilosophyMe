@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCarouselNavigation();
     setupFilterButtons();
     setupModal();
-    setupFeaturedArgument();
     setupScrollToTop();
+    // Removed setupFeaturedArgument as quiz functionality is no longer needed
     populateTimeline();
 });
 
@@ -224,7 +224,8 @@ function getArgumentIcon(title) {
         "Leap of Faith": "images/religion-icon.png",
         "Existential Angst": "images/mind-icon.png",
         "Übermensch (Overman/Superman)": "images/ethics-icon.png",
-        "Will to Power": "images/ethics-icon.png"
+        "Will to Power": "images/ethics-icon.png",
+        "The Trolley Problem": "images/trolley-icon.png" // Added for featured argument
         // Add more mappings as needed
     };
     return icons[title] || "images/default-icon.png";
@@ -374,18 +375,6 @@ function showModal(title, body) {
     modal.setAttribute('aria-hidden', 'false');
 }
 
-// Setup featured argument interaction (Challenge Yourself Quiz)
-function setupFeaturedArgument() {
-    const challengeButton = document.querySelector('.featured-argument .challenge-button');
-    challengeButton.addEventListener('click', () => {
-        setupQuiz(
-            'Who proposed the Ontological Argument?',
-            ['Aristotle', 'René Descartes', 'Anselm of Canterbury', 'Immanuel Kant'],
-            3 // Correct answer index (Anselm of Canterbury)
-        );
-    });
-}
-
 // Setup scroll to top button
 function setupScrollToTop() {
     const scrollButton = document.createElement('button');
@@ -415,26 +404,22 @@ function populateTimeline() {
         summary: philosopher.arguments[0].description
     }));
 
-    timelineEvents.forEach((event, index) => {
+    timelineEvents.forEach((event) => {
         const eventElement = document.createElement('div');
         eventElement.classList.add('timeline-event');
 
-        const content = document.createElement('div');
-        content.classList.add('timeline-event-content');
-
         const date = document.createElement('h3');
         date.textContent = event.date;
-        content.appendChild(date);
+        eventElement.appendChild(date);
 
         const philosopher = document.createElement('p');
         philosopher.innerHTML = `<strong>${event.philosopher}</strong>`;
-        content.appendChild(philosopher);
+        eventElement.appendChild(philosopher);
 
         const summary = document.createElement('p');
         summary.textContent = event.summary;
-        content.appendChild(summary);
+        eventElement.appendChild(summary);
 
-        eventElement.appendChild(content);
         timelineContainer.appendChild(eventElement);
     });
 
@@ -460,44 +445,6 @@ function updateTimelineCarousel() {
     container.style.transform = `translateY(${translateY}px)`;
 }
 
-// Setup quiz functionality
-function setupQuiz(question, options, correctAnswer) {
-    const modal = document.getElementById('modal');
-    const modalBody = document.getElementById('modal-body');
+// Setup quiz functionality removed as per request
 
-    // Clear existing content
-    modalBody.innerHTML = '';
-
-    const quizContainer = document.createElement('div');
-    quizContainer.classList.add('quiz-container');
-
-    const quizQuestion = document.createElement('p');
-    quizQuestion.classList.add('quiz-question');
-    quizQuestion.textContent = question;
-    quizContainer.appendChild(quizQuestion);
-
-    const quizOptions = document.createElement('div');
-    quizOptions.classList.add('quiz-options');
-
-    options.forEach((option, index) => {
-        const button = document.createElement('button');
-        button.textContent = `${index + 1}. ${option}`;
-        button.addEventListener('click', () => {
-            showQuizResult(index + 1 === correctAnswer, correctAnswer);
-        });
-        quizOptions.appendChild(button);
-    });
-
-    quizContainer.appendChild(quizOptions);
-
-    modalBody.appendChild(quizContainer);
-}
-
-// Show quiz result
-function showQuizResult(isCorrect, correctAnswer) {
-    const modalBody = document.getElementById('modal-body');
-    const result = document.createElement('div');
-    result.classList.add('quiz-results', 'active');
-    result.innerHTML = `<p>${isCorrect ? '✅ Correct!' : `❌ Incorrect. The correct answer is ${correctAnswer}.`}</p>`;
-    modalBody.appendChild(result);
-}
+// Removed setupFeaturedArgument and related quiz functions
