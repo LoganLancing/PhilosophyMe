@@ -1,0 +1,66 @@
+[
+    {
+        "name": "René Descartes",
+        "image": "images/descartes.jpg",
+        "bio": "A French philosopher, mathematician, and scientist, often regarded as the father of modern philosophy.",
+        "works": ["Meditations on First Philosophy", "Discourse on the Method"],
+        "arguments": [
+            {
+                "title": "Cogito, ergo sum",
+                "description": "I think, therefore I am.",
+                "importance": "Foundation for modern Western philosophy and the concept of self-awareness.",
+                "context": "Responded to skepticism about the external world.",
+                "influence": "Influenced existentialism and modern epistemology."
+            }
+        ],
+        "influence": "His work laid the groundwork for rationalism and influenced subsequent philosophers like Spinoza and Leibniz."
+    },
+    {
+        "name": "Immanuel Kant",
+        "image": "images/kant.jpg",
+        "bio": "A German philosopher who is a central figure in modern philosophy.",
+        "works": ["Critique of Pure Reason", "Groundwork for the Metaphysics of Morals"],
+        "arguments": [
+            {
+                "title": "Categorical Imperative",
+                "description": "Act only according to that maxim whereby you can, at the same time, will that it should become a universal law.",
+                "importance": "Foundation of deontological ethics.",
+                "context": "Responded to moral relativism and consequentialist theories.",
+                "influence": "Influenced deontological ethical theories and human rights discourse."
+            }
+        ],
+        "influence": "His critical philosophy bridged rationalism and empiricism, influencing German Idealism and contemporary philosophy."
+    },
+    {
+        "name": "Aristotle",
+        "image": "images/aristotle.jpg",
+        "bio": "An ancient Greek philosopher and polymath, student of Plato and teacher of Alexander the Great.",
+        "works": ["Nicomachean Ethics", "Politics", "Metaphysics"],
+        "arguments": [
+            {
+                "title": "Golden Mean",
+                "description": "Virtue lies between two extremes of excess and deficiency.",
+                "importance": "Basis for virtue ethics.",
+                "context": "Responded to moral absolutism and hedonism.",
+                "influence": "Influenced subsequent ethical theories and character education."
+            }
+        ],
+        "influence": "His works laid the foundation for Western philosophy and science, influencing countless scholars through the centuries."
+    },
+    {
+        "name": "Plato",
+        "image": "images/plato.jpg",
+        "bio": "An ancient Greek philosopher, student of Socrates, and teacher of Aristotle.",
+        "works": ["The Republic", "Symposium", "Phaedo"],
+        "arguments": [
+            {
+                "title": "Theory of Forms",
+                "description": "Non-material abstract forms, and not the material world, possess the highest and most fundamental kind of reality.",
+                "importance": "Foundation for metaphysical realism.",
+                "context": "Responded to the problem of universals and the nature of reality.",
+                "influence": "Influenced Neoplatonism, Christian theology, and modern philosophical realism."
+            }
+        ],
+        "influence": "Plato's ideas have shaped Western thought, politics, and education for over two millennia."
+    }
+]
