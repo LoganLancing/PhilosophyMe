@@ -2,11 +2,10 @@
 
 let allPhilosophers = [];
 let idx = null;
-let currentSlide = 0;
-const slidesToShow = 3; // Number of cards to show at once
-let totalSlides = 0;
+let currentIndex = 0;
+const cardsToShow = 3; // Number of cards to display at once
 
-// Fetch and display philosophers and arguments
+// Fetch and display philosophers, arguments, and timeline
 async function fetchPhilosophers() {
     try {
         const response = await fetch('data/philosophers.json');
@@ -16,13 +15,13 @@ async function fetchPhilosophers() {
         displayArguments(philosophers);
         buildSearchIndex(philosophers);
         buildTimeline(philosophers);
-        calculateTotalSlides(philosophers);
     } catch (error) {
         console.error('Error fetching philosopher data:', error);
+        displayError('Failed to load philosophers data.');
     }
 }
 
-// Function to display philosopher cards
+// Function to display philosopher cards in the carousel
 function displayPhilosophers(philosophers) {
     const container = document.getElementById('philosophers-container');
     container.innerHTML = ''; // Clear existing content
@@ -34,7 +33,7 @@ function displayPhilosophers(philosophers) {
         const img = document.createElement('img');
         img.src = philosopher.image;
         img.alt = philosopher.name;
-        img.loading = 'lazy'; // Improve performance with lazy loading
+        img.loading = 'lazy';
         card.appendChild(img);
         
         // Philosopher Name
@@ -82,6 +81,10 @@ ${philosopher.influence}
         
         container.appendChild(card);
     });
+    
+    // Adjust philosophers-container width based on number of philosophers
+    const totalWidth = philosophers.length * 320; // 300px card + 20px margin
+    container.style.width = `${totalWidth}px`;
 }
 
 // Function to display argument cards
@@ -156,19 +159,19 @@ function buildSearchIndex(philosophers) {
 function handleSearch() {
     const searchInput = document.getElementById('search-input').value.trim().toLowerCase();
     if (searchInput.length < 2) {
+        currentIndex = 0;
         displayPhilosophers(allPhilosophers);
         displayArguments(allPhilosophers);
         buildTimeline(allPhilosophers);
-        calculateTotalSlides(allPhilosophers);
         resetCarousel();
         return;
     }
     const results = idx.search(`*${searchInput}*`);
     const matchedPhilosophers = results.map(result => allPhilosophers[result.ref]);
+    currentIndex = 0;
     displayPhilosophers(matchedPhilosophers);
     displayArguments(matchedPhilosophers);
     buildTimeline(matchedPhilosophers);
-    calculateTotalSlides(matchedPhilosophers);
     resetCarousel();
 }
 
@@ -182,12 +185,14 @@ function showModal(title, body) {
     modalBody.textContent = body.trim();
     
     modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
 }
 
 // Function to close modal
 function closeModal() {
     const modal = document.getElementById('modal');
     modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
 }
 
 // Event listeners for modal
@@ -214,47 +219,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Carousel Navigation
+    // Carousel navigation
     const prevButton = document.querySelector('.prev-button');
     const nextButton = document.querySelector('.next-button');
     const philosophersContainer = document.getElementById('philosophers-container');
+    const totalPhilosophers = () => allPhilosophers.length;
+    const maxIndex = () => Math.ceil(totalPhilosophers() / cardsToShow) - 1;
 
     prevButton.addEventListener('click', () => {
-        slideCarousel(-1);
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+        }
     });
 
     nextButton.addEventListener('click', () => {
-        slideCarousel(1);
+        if (currentIndex < maxIndex()) {
+            currentIndex++;
+            updateCarousel();
+        }
     });
 });
-
-// Function to calculate total slides based on philosophers count
-function calculateTotalSlides(philosophers) {
-    totalSlides = Math.ceil(philosophers.length / slidesToShow);
-}
-
-// Function to reset carousel to first slide
-function resetCarousel() {
-    currentSlide = 0;
-    updateCarousel();
-}
-
-// Function to slide carousel
-function slideCarousel(direction) {
-    currentSlide += direction;
-    if (currentSlide < 0) {
-        currentSlide = 0;
-    } else if (currentSlide >= totalSlides) {
-        currentSlide = totalSlides - 1;
-    }
-    updateCarousel();
-}
 
 // Function to update carousel position
 function updateCarousel() {
     const philosophersContainer = document.getElementById('philosophers-container');
-    const cardWidth = philosophersContainer.querySelector('.card').offsetWidth + 20; // card width + margin-right
-    philosophersContainer.style.transform = `translateX(-${currentSlide * slidesToShow * cardWidth}px)`;
+    philosophersContainer.style.transform = `translateX(-${currentIndex * (320 * cardsToShow)}px)`;
+}
+
+// Function to reset carousel position
+function resetCarousel() {
+    currentIndex = 0;
+    updateCarousel();
 }
 
 // Function to build timeline (basic implementation)
@@ -305,4 +301,10 @@ ${philosopherData.influence}
             container.appendChild(event);
         }
     });
+}
+
+// Function to display error message
+function displayError(message) {
+    const container = document.getElementById('philosophers-container');
+    container.innerHTML = `<p class="error-message">${message}</p>`;
 }
