@@ -174,7 +174,7 @@ nav {
 
 /* Sections */
 section {
-    padding: 80px 20px; /* Increased padding for better spacing */
+    padding: 60px 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -266,49 +266,45 @@ section p {
 
 /* Quotes Section */
 .quotes-section {
-    position: relative;
-    padding: 100px 20px; /* Increased padding for more space */
-    height: 300px; /* Adjust height as needed */
-    background-color: var(--color-lavender); /* Background color for visual appeal */
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 8px var(--color-shadow);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    padding: 60px 20px; /* More space before and after */
+    height: 300px;
+    position: relative;
+    margin-top: 40px;
     overflow: hidden;
-    margin: 60px 0; /* Space before and after the section */
 }
 
 .quote-slide {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+    transition: opacity 1s ease-in-out;
+    width: 100%;
     max-width: 800px;
-    width: 90%;
-    text-align: center;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .quote-slide.active {
     opacity: 1;
+    position: relative;
 }
 
 .quotes-section blockquote {
     font-style: italic;
-    padding: 20px 40px;
+    padding: 20px;
     border-left: 5px solid var(--color-accent);
     background-color: var(--color-bg);
     border-radius: 4px;
     position: relative;
-    font-size: 2em; /* Larger text */
-    margin: 0;
+    text-align: center;
+    font-size: 1.5em; /* Bigger text */
 }
 
 .quotes-section blockquote::before,
 .quotes-section blockquote::after {
-    font-size: 2.5em;
+    font-size: 2em;
     color: var(--color-accent);
 }
 
@@ -316,20 +312,21 @@ section p {
     content: "“";
     position: absolute;
     left: 10px;
-    top: -20px;
+    top: -10px;
 }
 
 .quotes-section blockquote::after {
     content: "”";
     position: absolute;
     right: 10px;
-    bottom: -20px;
+    bottom: -10px;
 }
 
 .quotes-section .quote-question {
-    margin-top: 20px;
-    font-size: 1.5em; /* Larger text for questions */
+    margin-top: 15px;
+    font-size: 1.2em; /* Increased font size for questions */
     color: var(--color-text);
+    text-align: center;
 }
 
 /* Carousel Wrapper */
@@ -653,12 +650,11 @@ section p {
     }
 
     .quotes-section blockquote {
-        font-size: 1.8em; /* Adjusted font size */
-        padding: 15px 30px;
+        font-size: 1.8em; /* Increased font size */
     }
 
     .quotes-section .quote-question {
-        font-size: 1.3em; /* Adjusted font size for questions */
+        font-size: 1.2em; /* Increased font size for questions */
     }
 
     .featured-argument-carousel .prev-featured-button,
@@ -726,12 +722,11 @@ section p {
     }
 
     .quotes-section blockquote {
-        font-size: 1.5em; /* Adjusted font size */
-        padding: 10px 20px;
+        font-size: 1.5em; /* Increased font size */
     }
 
     .quotes-section .quote-question {
-        font-size: 1.2em; /* Adjusted font size for questions */
+        font-size: 1em; /* Adjusted font size for questions */
     }
 
     #philosophers-container .philosopher-card,
@@ -767,4 +762,59 @@ section p {
     #featured-argument-container .featured-argument .details p {
         font-size: 0.75em;
     }
+}
+
+/* Quotes Section Auto-Cycle */
+.quotes-section .quote-slide {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    box-sizing: border-box;
+}
+
+.quotes-section .quote-slide.active {
+    opacity: 1;
+    position: relative;
+}
+
+/* Ensure only one quote is visible at a time */
+.quotes-section blockquote {
+    font-size: 1.5em; /* Bigger text */
+}
+
+.quotes-section .quote-question {
+    margin-top: 15px;
+    font-size: 1.2em; /* Increased font size for questions */
+    color: var(--color-text);
+    text-align: center;
+}
+
+/* Featured Argument Carousel Positioning */
+.featured-carousel .prev-featured-button {
+    left: -50px;
+}
+
+.featured-carousel .next-featured-button {
+    right: -50px;
+}
+
+/* Ensure only 3 philosophers are visible at once */
+#philosophers-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 30px;
+}
+
+.philosopher-card {
+    flex: 0 0 calc(33.333% - 20px); /* 3 items per view */
+    width: calc(33.333% - 20px);
+}
+
+/* Hide timeline styles as timeline is removed */
+.timeline-section {
+    display: none;
 }
