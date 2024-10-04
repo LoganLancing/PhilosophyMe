@@ -266,27 +266,29 @@ section p {
 
 /* Quotes Section */
 .quotes-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 80px 20px; /* More space before and after */
-    height: 350px;
     position: relative;
-    margin-top: 60px;
-    overflow: hidden;
-    background-color: var(--color-lavender); /* Added background for visual appeal */
+    padding: 100px 20px; /* Increased padding for more space */
+    height: 300px; /* Adjust height as needed */
+    background-color: var(--color-lavender); /* Background color for visual appeal */
     border-radius: var(--border-radius);
     box-shadow: 0 4px 8px var(--color-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 60px 0; /* Space before and after the section */
 }
 
 .quote-slide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 1s ease-in-out;
-    width: 100%;
+    transition: opacity 1.5s ease-in-out;
     max-width: 800px;
-    padding: 0 20px;
-    box-sizing: border-box;
-    text-align: center; /* Ensure text is centered */
+    width: 90%;
+    text-align: center;
 }
 
 .quote-slide.active {
@@ -295,14 +297,13 @@ section p {
 
 .quotes-section blockquote {
     font-style: italic;
-    padding: 20px;
+    padding: 20px 40px;
     border-left: 5px solid var(--color-accent);
     background-color: var(--color-bg);
     border-radius: 4px;
     position: relative;
-    text-align: center;
     font-size: 2em; /* Larger text */
-    margin-bottom: 20px; /* Space between quote and question */
+    margin: 0;
 }
 
 .quotes-section blockquote::before,
@@ -315,21 +316,20 @@ section p {
     content: "“";
     position: absolute;
     left: 10px;
-    top: -10px;
+    top: -20px;
 }
 
 .quotes-section blockquote::after {
     content: "”";
     position: absolute;
     right: 10px;
-    bottom: -10px;
+    bottom: -20px;
 }
 
 .quotes-section .quote-question {
+    margin-top: 20px;
     font-size: 1.5em; /* Larger text for questions */
     color: var(--color-text);
-    text-align: center;
-    transition: opacity 1s ease-in-out;
 }
 
 /* Carousel Wrapper */
@@ -649,15 +649,16 @@ section p {
     }
 
     .quotes-section {
-        height: 300px;
+        height: 250px;
     }
 
     .quotes-section blockquote {
-        font-size: 2.5em; /* Increased font size */
+        font-size: 1.8em; /* Adjusted font size */
+        padding: 15px 30px;
     }
 
     .quotes-section .quote-question {
-        font-size: 1.5em; /* Increased font size for questions */
+        font-size: 1.3em; /* Adjusted font size for questions */
     }
 
     .featured-argument-carousel .prev-featured-button,
@@ -721,11 +722,12 @@ section p {
     }
 
     .quotes-section {
-        height: 250px;
+        height: 200px;
     }
 
     .quotes-section blockquote {
-        font-size: 2em; /* Increased font size */
+        font-size: 1.5em; /* Adjusted font size */
+        padding: 10px 20px;
     }
 
     .quotes-section .quote-question {
@@ -765,83 +767,4 @@ section p {
     #featured-argument-container .featured-argument .details p {
         font-size: 0.75em;
     }
-}
-
-/* Quotes Section Auto-Cycle */
-.quotes-section .quote-slide {
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    width: 100%;
-    max-width: 800px;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-.quotes-section .quote-slide.active {
-    opacity: 1;
-}
-
-.quotes-section blockquote {
-    font-style: italic;
-    padding: 20px;
-    border-left: 5px solid var(--color-accent);
-    background-color: var(--color-bg);
-    border-radius: 4px;
-    position: relative;
-    text-align: center;
-    font-size: 2em; /* Bigger text */
-    margin-bottom: 20px; /* Space between quote and question */
-}
-
-.quotes-section blockquote::before,
-.quotes-section blockquote::after {
-    font-size: 2.5em;
-    color: var(--color-accent);
-}
-
-.quotes-section blockquote::before {
-    content: "“";
-    position: absolute;
-    left: 10px;
-    top: -10px;
-}
-
-.quotes-section blockquote::after {
-    content: "”";
-    position: absolute;
-    right: 10px;
-    bottom: -10px;
-}
-
-.quotes-section .quote-question {
-    font-size: 1.5em; /* Larger text for questions */
-    color: var(--color-text);
-    text-align: center;
-    transition: opacity 1s ease-in-out;
-}
-
-/* Featured Argument Carousel Positioning */
-.featured-carousel .prev-featured-button {
-    left: -50px;
-}
-
-.featured-carousel .next-featured-button {
-    right: -50px;
-}
-
-/* Ensure only 3 philosophers are visible at once */
-#philosophers-container {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
-}
-
-.philosopher-card {
-    flex: 0 0 calc(33.333% - 20px); /* 3 items per view */
-    width: calc(33.333% - 20px);
-}
-
-/* Hide timeline styles as timeline is removed */
-.timeline-section {
-    display: none;
 }
