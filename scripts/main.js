@@ -19,7 +19,7 @@ let currentFilterCategory = 'all';
 
 const PHILOSOPHERS_VISIBLE = 3;
 const FEATURED_VISIBLE = 1;
-const QUOTE_INTERVAL = 7000; // 7 seconds
+const QUOTE_INTERVAL = 5000; // 5 seconds
 
 // Fetch philosophers data
 async function fetchPhilosophers() {
@@ -368,7 +368,6 @@ function setupScrollToTop() {
 function setupQuotesCarousel() {
     const quotes = document.querySelectorAll('.quotes-section .quote-slide');
     let currentQuote = 0;
-    let quoteTimeout;
 
     if (quotes.length === 0) return;
 
@@ -381,23 +380,10 @@ function setupQuotesCarousel() {
         }
     });
 
-    function showNextQuote() {
+    // Auto-cycle quotes every 5 seconds
+    setInterval(() => {
         quotes[currentQuote].classList.remove('active');
         currentQuote = (currentQuote + 1) % quotes.length;
         quotes[currentQuote].classList.add('active');
-        quoteTimeout = setTimeout(showNextQuote, QUOTE_INTERVAL);
-    }
-
-    // Start the carousel
-    quoteTimeout = setTimeout(showNextQuote, QUOTE_INTERVAL);
-
-    // Pause carousel on hover for better user experience
-    const quotesSection = document.querySelector('.quotes-section');
-    quotesSection.addEventListener('mouseenter', () => {
-        clearTimeout(quoteTimeout);
-    });
-
-    quotesSection.addEventListener('mouseleave', () => {
-        quoteTimeout = setTimeout(showNextQuote, QUOTE_INTERVAL);
-    });
+    }, QUOTE_INTERVAL);
 }
