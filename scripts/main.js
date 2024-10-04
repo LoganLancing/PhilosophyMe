@@ -15,8 +15,10 @@ let allPhilosophers = [];
 let allArguments = [];
 let currentPhilosophersIndex = 0;
 let currentArgumentsIndex = 0;
+let currentTimelineIndex = 0;
 const PHILOSOPHERS_VISIBLE = 3; // Number of philosopher cards visible at once
 const ARGUMENTS_VISIBLE = 4;    // Number of argument cards visible at once
+const TIMELINE_VISIBLE = 3;     // Number of timeline events visible at once
 
 // Mapping of Philosopher's Name to their Most Famous Publication Date
 const publicationDates = {
@@ -247,7 +249,7 @@ function updateArgumentsCarousel() {
     container.style.transform = `translateX(${translateX}px)`;
 }
 
-// Setup carousel navigation for both philosophers and arguments
+// Setup carousel navigation for philosophers, arguments, and timeline
 function setupCarouselNavigation() {
     // Philosophers Carousel Buttons
     const prevPhilosophers = document.querySelector('.philosophers-section .prev-button');
@@ -287,6 +289,27 @@ function setupCarouselNavigation() {
         if (currentArgumentsIndex < maxIndex) {
             currentArgumentsIndex++;
             updateArgumentsCarousel();
+        }
+    });
+
+    // Timeline Carousel Buttons
+    const prevTimeline = document.querySelector('.timeline-carousel-container .prev-timeline-button');
+    const nextTimeline = document.querySelector('.timeline-carousel-container .next-timeline-button');
+
+    prevTimeline.addEventListener('click', () => {
+        if (currentTimelineIndex > 0) {
+            currentTimelineIndex--;
+            updateTimelineCarousel();
+        }
+    });
+
+    nextTimeline.addEventListener('click', () => {
+        const container = document.getElementById('timeline-container');
+        const totalTimeline = container.children.length;
+        const maxIndex = Math.ceil(totalTimeline / TIMELINE_VISIBLE) - 1;
+        if (currentTimelineIndex < maxIndex) {
+            currentTimelineIndex++;
+            updateTimelineCarousel();
         }
     });
 }
@@ -386,43 +409,15 @@ function setupScrollToTop() {
 // Populate the philosophical timeline
 function populateTimeline() {
     const timelineContainer = document.getElementById('timeline-container');
-    const timelineEvents = [
-        {
-            date: "384 BC",
-            philosopher: "Aristotle",
-            summary: "Developed the concept of the Golden Mean, promoting moderation in virtues."
-        },
-        {
-            date: "428 BC",
-            philosopher: "Plato",
-            summary: "Introduced the Theory of Forms, explaining the nature of reality through abstract forms."
-        },
-        {
-            date: "1637",
-            philosopher: "René Descartes",
-            summary: "Proposed 'Cogito, ergo sum' as a foundation for knowledge."
-        },
-        {
-            date: "1781",
-            philosopher: "Immanuel Kant",
-            summary: "Formulated the Categorical Imperative, a central principle in moral philosophy."
-        },
-        {
-            date: "1843",
-            philosopher: "Søren Kierkegaard",
-            summary: "Introduced the concept of the Leap of Faith in existential philosophy."
-        },
-        {
-            date: "1883",
-            philosopher: "Friedrich Nietzsche",
-            summary: "Presented the idea of the Übermensch to transcend traditional morality."
-        }
-        // Add more timeline events as needed
-    ];
+    const timelineEvents = allPhilosophers.map(philosopher => ({
+        date: philosopher.publicationDate,
+        philosopher: philosopher.name,
+        summary: philosopher.arguments[0].description
+    }));
 
     timelineEvents.forEach((event, index) => {
         const eventElement = document.createElement('div');
-        eventElement.classList.add('timeline-event', index % 2 === 0 ? 'left' : 'right');
+        eventElement.classList.add('timeline-event');
 
         const content = document.createElement('div');
         content.classList.add('timeline-event-content');
@@ -442,9 +437,30 @@ function populateTimeline() {
         eventElement.appendChild(content);
         timelineContainer.appendChild(eventElement);
     });
+
+    updateTimelineCarousel();
 }
 
-// Example: "Challenge Yourself" Quiz
+// Update timeline carousel position
+function updateTimelineCarousel() {
+    const container = document.getElementById('timeline-container');
+    const totalTimeline = container.children.length;
+    const maxIndex = Math.ceil(totalTimeline / TIMELINE_VISIBLE) - 1;
+
+    // Disable buttons at the ends
+    const prevButton = document.querySelector('.timeline-carousel-container .prev-timeline-button');
+    const nextButton = document.querySelector('.timeline-carousel-container .next-timeline-button');
+    prevButton.disabled = currentTimelineIndex === 0;
+    nextButton.disabled = currentTimelineIndex === maxIndex;
+
+    // Calculate translateY
+    const eventHeight = container.children[0].offsetHeight;
+    const gap = parseInt(getComputedStyle(container).gap);
+    const translateY = -(currentTimelineIndex * (eventHeight + gap) * TIMELINE_VISIBLE);
+    container.style.transform = `translateY(${translateY}px)`;
+}
+
+// Setup quiz functionality
 function setupQuiz(question, options, correctAnswer) {
     const modal = document.getElementById('modal');
     const modalBody = document.getElementById('modal-body');
@@ -482,4 +498,6 @@ function showQuizResult(isCorrect, correctAnswer) {
     const modalBody = document.getElementById('modal-body');
     const result = document.createElement('div');
     result.classList.add('quiz-results', 'active');
-    result.innerHTML = `<p>${isCorrect ? '✅ Correct!' : `❌ Incorrect. The correct answer is
+    result.innerHTML = `<p>${isCorrect ? '✅ Correct!' : `❌ Incorrect. The correct answer is ${correctAnswer}.`}</p>`;
+    modalBody.appendChild(result);
+}
