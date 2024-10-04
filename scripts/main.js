@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupModal();
     setupFeaturedArgument();
     setupScrollToTop();
+    populateTimeline();
 });
 
 // Global Variables
@@ -15,7 +16,7 @@ let allArguments = [];
 let currentPhilosophersIndex = 0;
 let currentArgumentsIndex = 0;
 const PHILOSOPHERS_VISIBLE = 3; // Number of philosopher cards visible at once
-const ARGUMENTS_VISIBLE = 3;    // Number of argument cards visible at once
+const ARGUMENTS_VISIBLE = 4;    // Number of argument cards visible at once
 
 // Fetch philosophers and initialize sections
 async function fetchPhilosophers() {
@@ -36,7 +37,7 @@ function extractArguments(philosophers) {
     const argumentsSet = new Set();
     philosophers.forEach(philosopher => {
         philosopher.arguments.forEach(arg => {
-            // Assign category to each argument
+            // Assign category to each argument if not already assigned
             if (!arg.category) {
                 arg.category = categorizeArgument(arg.title);
             }
@@ -75,44 +76,20 @@ function displayPhilosophers() {
     updatePhilosophersCarousel();
 }
 
-// Create a single philosopher card element
+// Create a single philosopher card element (simplified)
 function createPhilosopherCard(philosopher) {
     const card = document.createElement('div');
-    card.classList.add('card');
-    card.classList.add('philosopher-card');
-
-    // Philosopher Image
-    const img = document.createElement('img');
-    img.src = philosopher.image;
-    img.alt = philosopher.name;
-    img.loading = 'lazy';
-    card.appendChild(img);
+    card.classList.add('card', 'philosopher-card');
 
     // Philosopher Name
     const name = document.createElement('h3');
     name.textContent = philosopher.name;
     card.appendChild(name);
 
-    // Biography
-    const bio = document.createElement('p');
-    bio.textContent = philosopher.bio;
-    card.appendChild(bio);
-
-    // Major Works
-    const works = document.createElement('p');
-    works.innerHTML = `<strong>Major Works:</strong> ${philosopher.works.join(', ')}`;
-    card.appendChild(works);
-
-    // Central Arguments
-    const args = philosopher.arguments.map(arg => `<em>${arg.title}:</em> ${arg.description}`).join('<br>');
-    const argumentsPara = document.createElement('p');
-    argumentsPara.innerHTML = `<strong>Central Arguments:</strong> ${args}`;
-    card.appendChild(argumentsPara);
-
-    // Influence
-    const influence = document.createElement('p');
-    influence.innerHTML = `<strong>Influence:</strong> ${philosopher.influence}`;
-    card.appendChild(influence);
+    // Central Argument
+    const centralArg = document.createElement('p');
+    centralArg.innerHTML = `<strong>Central Argument:</strong> ${philosopher.arguments[0].title}`;
+    card.appendChild(centralArg);
 
     // Add event listener to open modal with detailed info
     card.addEventListener('click', () => {
@@ -141,11 +118,15 @@ function updatePhilosophersCarousel() {
     const maxIndex = Math.ceil(totalPhilosophers / PHILOSOPHERS_VISIBLE) - 1;
 
     // Disable buttons at the ends
-    document.querySelector('.philosophers-section .prev-button').disabled = currentPhilosophersIndex === 0;
-    document.querySelector('.philosophers-section .next-button').disabled = currentPhilosophersIndex === maxIndex;
+    const prevButton = document.querySelector('.philosophers-section .prev-button');
+    const nextButton = document.querySelector('.philosophers-section .next-button');
+    prevButton.disabled = currentPhilosophersIndex === 0;
+    nextButton.disabled = currentPhilosophersIndex === maxIndex;
 
     // Calculate translateX
-    const translateX = -(currentPhilosophersIndex * PHILOSOPHERS_VISIBLE * (300 + 30)); // 300px width + 30px gap
+    const cardWidth = 300; // Width of each card
+    const gap = 30;         // Gap between cards
+    const translateX = -(currentPhilosophersIndex * (cardWidth + gap) * PHILOSOPHERS_VISIBLE);
     container.style.transform = `translateX(${translateX}px)`;
 }
 
@@ -167,18 +148,10 @@ function displayArguments(category) {
     updateArgumentsCarousel();
 }
 
-// Create a single argument card element
+// Create a single argument card element (simplified)
 function createArgumentCard(argument) {
     const card = document.createElement('div');
-    card.classList.add('argument-card');
-    card.classList.add(`category-${argument.category}`);
-
-    // Argument Icon
-    const icon = document.createElement('img');
-    icon.src = getArgumentIcon(argument.title);
-    icon.alt = `${argument.title} Icon`;
-    icon.loading = 'lazy';
-    card.appendChild(icon);
+    card.classList.add('argument-card', `category-${argument.category}`);
 
     // Argument Title
     const title = document.createElement('h3');
@@ -190,15 +163,8 @@ function createArgumentCard(argument) {
     overview.textContent = argument.briefOverview;
     card.appendChild(overview);
 
-    // Learn More Button
-    const learnMore = document.createElement('button');
-    learnMore.classList.add('learn-more-button');
-    learnMore.textContent = 'Learn More';
-    card.appendChild(learnMore);
-
     // Add event listener to open modal with detailed info
-    learnMore.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent triggering card's click event
+    card.addEventListener('click', () => {
         showModal(argument.title, `
 Summary:
 ${argument.summary}
@@ -220,18 +186,6 @@ ${argument.keyPhilosopher}
     return card;
 }
 
-// Get argument icon based on title
-function getArgumentIcon(title) {
-    const icons = {
-        "The Problem of Evil": "images/balance-scale.png",
-        "The Trolley Problem": "images/trolley-icon.png",
-        "Utilitarianism": "images/utilitarianism.png",
-        "Ontological Argument": "images/ontological.png",
-        // Add more mappings as needed
-    };
-    return icons[title] || "images/default-icon.png"; // Fallback icon
-}
-
 // Update arguments carousel position
 function updateArgumentsCarousel() {
     const container = document.getElementById('arguments-container');
@@ -239,11 +193,15 @@ function updateArgumentsCarousel() {
     const maxIndex = Math.ceil(totalArguments / ARGUMENTS_VISIBLE) - 1;
 
     // Disable buttons at the ends
-    document.querySelector('.arguments-section .prev-button').disabled = currentArgumentsIndex === 0;
-    document.querySelector('.arguments-section .next-button').disabled = currentArgumentsIndex === maxIndex;
+    const prevButton = document.querySelector('.arguments-section .prev-button');
+    const nextButton = document.querySelector('.arguments-section .next-button');
+    prevButton.disabled = currentArgumentsIndex === 0;
+    nextButton.disabled = currentArgumentsIndex === maxIndex;
 
     // Calculate translateX
-    const translateX = -(currentArgumentsIndex * ARGUMENTS_VISIBLE * (300 + 30)); // 300px width + 30px gap
+    const cardWidth = 300; // Width of each card
+    const gap = 30;         // Gap between cards
+    const translateX = -(currentArgumentsIndex * (cardWidth + gap) * ARGUMENTS_VISIBLE);
     container.style.transform = `translateX(${translateX}px)`;
 }
 
@@ -318,12 +276,22 @@ function setupModal() {
     // Close modal when clicking on the close button
     closeButton.addEventListener('click', () => {
         modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
     });
 
     // Close modal when clicking outside the modal content
     window.addEventListener('click', (event) => {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+        }
+    });
+
+    // Accessibility: Close modal with Escape key
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
         }
     });
 }
@@ -338,6 +306,7 @@ function showModal(title, body) {
     modalBody.textContent = body.trim();
 
     modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
 }
 
 // Setup featured argument interaction (Challenge Yourself Quiz)
@@ -352,7 +321,7 @@ function setupFeaturedArgument() {
     });
 }
 
-// Setup scroll to top button (if implemented)
+// Setup scroll to top button
 function setupScrollToTop() {
     const scrollButton = document.createElement('button');
     scrollButton.classList.add('scroll-to-top');
@@ -372,74 +341,65 @@ function setupScrollToTop() {
     });
 }
 
-// Additional Interactive Features
+// Populate the philosophical timeline
+function populateTimeline() {
+    const timelineContainer = document.getElementById('timeline-container');
+    const timelineEvents = [
+        {
+            year: "1641",
+            title: "René Descartes Born",
+            description: "René Descartes, a French philosopher, is born. He will later become known as the father of modern philosophy."
+        },
+        {
+            year: "1804",
+            title: "Immanuel Kant Dies",
+            description: "Immanuel Kant, a central figure in modern philosophy, passes away, leaving behind a legacy of critical philosophy."
+        },
+        {
+            year: "384 BC",
+            title: "Aristotle Born",
+            description: "Aristotle, an ancient Greek philosopher and polymath, is born. He becomes a student of Plato and teacher of Alexander the Great."
+        },
+        {
+            year: "428 BC",
+            title: "Plato Dies",
+            description: "Plato, an ancient Greek philosopher and student of Socrates, dies, having founded the Academy in Athens."
+        },
+        {
+            year: "1813",
+            title: "Søren Kierkegaard Born",
+            description: "Søren Kierkegaard, a Danish philosopher, is born. He is often considered the first existentialist philosopher."
+        },
+        {
+            year: "1900",
+            title: "Friedrich Nietzsche Dies",
+            description: "Friedrich Nietzsche, a German philosopher known for his critique of traditional morality, passes away."
+        }
+        // Add more timeline events as needed
+    ];
 
-// Example: Poll/Voting Option
-function setupPoll(argumentTitle) {
-    const pollContainer = document.createElement('div');
-    pollContainer.classList.add('poll-container');
+    timelineEvents.forEach((event, index) => {
+        const eventElement = document.createElement('div');
+        eventElement.classList.add('timeline-event', index % 2 === 0 ? 'left' : 'right');
 
-    const pollQuestion = document.createElement('p');
-    pollQuestion.textContent = `Do you agree with the idea of ${argumentTitle}?`;
-    pollContainer.appendChild(pollQuestion);
+        const content = document.createElement('div');
+        content.classList.add('timeline-event-content');
 
-    const pollOptions = document.createElement('div');
-    pollOptions.classList.add('poll-options');
+        const year = document.createElement('h3');
+        year.textContent = event.year;
+        content.appendChild(year);
 
-    const agreeButton = document.createElement('button');
-    agreeButton.textContent = 'Agree';
-    agreeButton.addEventListener('click', () => {
-        incrementVote(argumentTitle, 'agree');
+        const title = document.createElement('p');
+        title.innerHTML = `<strong>${event.title}</strong>`;
+        content.appendChild(title);
+
+        const description = document.createElement('p');
+        description.textContent = event.description;
+        content.appendChild(description);
+
+        eventElement.appendChild(content);
+        timelineContainer.appendChild(eventElement);
     });
-    pollOptions.appendChild(agreeButton);
-
-    const disagreeButton = document.createElement('button');
-    disagreeButton.textContent = 'Disagree';
-    disagreeButton.addEventListener('click', () => {
-        incrementVote(argumentTitle, 'disagree');
-    });
-    pollOptions.appendChild(disagreeButton);
-
-    pollContainer.appendChild(pollOptions);
-
-    const pollResults = document.createElement('div');
-    pollResults.classList.add('poll-results');
-    pollContainer.appendChild(pollResults);
-
-    // Append poll to modal body
-    const modalBody = document.getElementById('modal-body');
-    modalBody.appendChild(pollContainer);
-
-    displayPollResults(argumentTitle, pollResults);
-}
-
-// Increment vote count and update results
-function incrementVote(argumentTitle, voteType) {
-    const votes = JSON.parse(localStorage.getItem('votes')) || {};
-    if (!votes[argumentTitle]) {
-        votes[argumentTitle] = { agree: 0, disagree: 0 };
-    }
-    votes[argumentTitle][voteType]++;
-    localStorage.setItem('votes', JSON.stringify(votes));
-    displayPollResults(argumentTitle, document.querySelector('.poll-results'));
-}
-
-// Display poll results
-function displayPollResults(argumentTitle, container) {
-    const votes = JSON.parse(localStorage.getItem('votes')) || {};
-    if (!votes[argumentTitle]) {
-        votes[argumentTitle] = { agree: 0, disagree: 0 };
-    }
-    const { agree, disagree } = votes[argumentTitle];
-    const total = agree + disagree;
-    const agreePercent = total ? ((agree / total) * 100).toFixed(1) : 0;
-    const disagreePercent = total ? ((disagree / total) * 100).toFixed(1) : 0;
-
-    container.innerHTML = `
-        <p>Agree: ${agree} (${agreePercent}%)</p>
-        <p>Disagree: ${disagree} (${disagreePercent}%)</p>
-    `;
-    container.classList.add('active');
 }
 
 // Example: "Challenge Yourself" Quiz
