@@ -174,7 +174,7 @@ nav {
 
 /* Sections */
 section {
-    padding: 60px 20px;
+    padding: 80px 20px; /* Increased padding for better spacing */
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -274,21 +274,23 @@ section p {
     position: relative;
     margin-top: 60px;
     overflow: hidden;
+    background-color: var(--color-lavender); /* Added background for visual appeal */
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px var(--color-shadow);
 }
 
 .quote-slide {
-    position: absolute;
     opacity: 0;
     transition: opacity 1s ease-in-out;
     width: 100%;
     max-width: 800px;
     padding: 0 20px;
     box-sizing: border-box;
+    text-align: center; /* Ensure text is centered */
 }
 
 .quote-slide.active {
     opacity: 1;
-    position: relative;
 }
 
 .quotes-section blockquote {
@@ -299,7 +301,8 @@ section p {
     border-radius: 4px;
     position: relative;
     text-align: center;
-    font-size: 2em; /* Bigger text */
+    font-size: 2em; /* Larger text */
+    margin-bottom: 20px; /* Space between quote and question */
 }
 
 .quotes-section blockquote::before,
@@ -323,10 +326,10 @@ section p {
 }
 
 .quotes-section .quote-question {
-    margin-top: 20px;
-    font-size: 1.5em; /* Increased font size for questions */
+    font-size: 1.5em; /* Larger text for questions */
     color: var(--color-text);
     text-align: center;
+    transition: opacity 1s ease-in-out;
 }
 
 /* Carousel Wrapper */
@@ -768,29 +771,53 @@ section p {
 .quotes-section .quote-slide {
     opacity: 0;
     transition: opacity 1s ease-in-out;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
 .quotes-section .quote-slide.active {
     opacity: 1;
-    position: relative;
 }
 
-/* Ensure only one quote is visible at a time */
 .quotes-section blockquote {
+    font-style: italic;
+    padding: 20px;
+    border-left: 5px solid var(--color-accent);
+    background-color: var(--color-bg);
+    border-radius: 4px;
+    position: relative;
+    text-align: center;
     font-size: 2em; /* Bigger text */
+    margin-bottom: 20px; /* Space between quote and question */
+}
+
+.quotes-section blockquote::before,
+.quotes-section blockquote::after {
+    font-size: 2.5em;
+    color: var(--color-accent);
+}
+
+.quotes-section blockquote::before {
+    content: "“";
+    position: absolute;
+    left: 10px;
+    top: -10px;
+}
+
+.quotes-section blockquote::after {
+    content: "”";
+    position: absolute;
+    right: 10px;
+    bottom: -10px;
 }
 
 .quotes-section .quote-question {
-    margin-top: 20px;
-    font-size: 1.5em; /* Increased font size for questions */
+    font-size: 1.5em; /* Larger text for questions */
     color: var(--color-text);
     text-align: center;
+    transition: opacity 1s ease-in-out;
 }
 
 /* Featured Argument Carousel Positioning */
