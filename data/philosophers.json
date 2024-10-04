@@ -1,66 +1,9 @@
 [
     {
-        "name": "René Descartes",
-        "image": "images/descartes.jpg",
-        "bio": "A French philosopher, mathematician, and scientist, often regarded as the father of modern philosophy.",
-        "works": ["Meditations on First Philosophy", "Discourse on the Method"],
-        "arguments": [
-            {
-                "title": "Cogito, ergo sum",
-                "description": "The foundation of Descartes' philosophy, asserting self-awareness as undeniable.",
-                "summary": "I think, therefore I am. This argument establishes the certainty of one's own existence through the act of thinking.",
-                "realLifeExample": "Even if you doubt everything else, the very act of doubting confirms your existence as a thinking being.",
-                "pro": "Provides a clear starting point for building knowledge based on certainty.",
-                "con": "Critiqued for being too introspective and not addressing the existence of the external world.",
-                "keyPhilosopher": "René Descartes",
-                "category": "mind"
-            },
-            {
-                "title": "Dualism",
-                "description": "The belief in two fundamental substances: mind and matter.",
-                "summary": "Dualism posits that the mind and body are distinct and separable entities, with the mind being non-material.",
-                "realLifeExample": "Your thoughts and consciousness exist independently of your physical body.",
-                "pro": "Explains the subjective experience and consciousness.",
-                "con": "Struggles to explain the interaction between mind and body.",
-                "keyPhilosopher": "René Descartes",
-                "category": "mind"
-            }
-        ],
-        "influence": "His work laid the groundwork for rationalism and influenced subsequent philosophers like Spinoza and Leibniz."
-    },
-    {
-        "name": "Immanuel Kant",
-        "image": "images/kant.jpg",
-        "bio": "A German philosopher who is a central figure in modern philosophy.",
-        "works": ["Critique of Pure Reason", "Groundwork for the Metaphysics of Morals"],
-        "arguments": [
-            {
-                "title": "Categorical Imperative",
-                "description": "A central principle in Kant's deontological moral philosophy.",
-                "summary": "Act only according to that maxim whereby you can, at the same time, will that it should become a universal law.",
-                "realLifeExample": "If you consider lying to get out of trouble, you must imagine a world where everyone lies in similar situations, which would undermine trust.",
-                "pro": "Provides a clear and universal basis for moral actions.",
-                "con": "Can be rigid and may not account for complex moral dilemmas.",
-                "keyPhilosopher": "Immanuel Kant",
-                "category": "ethics"
-            },
-            {
-                "title": "Transcendental Idealism",
-                "description": "Kant's theory on the nature of reality and human perception.",
-                "summary": "Asserts that our experience of things is about how they appear to us, not about those things as they are in themselves.",
-                "realLifeExample": "We perceive a tree's color based on our sensory input, not necessarily the tree's inherent color independent of our perception.",
-                "pro": "Bridges rationalism and empiricism, accounting for human perception.",
-                "con": "Leaves the nature of things-in-themselves obscure and unknowable.",
-                "keyPhilosopher": "Immanuel Kant",
-                "category": "existence"
-            }
-        ],
-        "influence": "His critical philosophy bridged rationalism and empiricism, influencing German Idealism and contemporary philosophy."
-    },
-    {
         "name": "Aristotle",
         "image": "images/aristotle.jpg",
         "bio": "An ancient Greek philosopher and polymath, student of Plato and teacher of Alexander the Great.",
+        "publicationDate": "384 BC",
         "works": ["Nicomachean Ethics", "Politics", "Metaphysics"],
         "arguments": [
             {
@@ -90,6 +33,7 @@
         "name": "Plato",
         "image": "images/plato.jpg",
         "bio": "An ancient Greek philosopher, student of Socrates, and teacher of Aristotle.",
+        "publicationDate": "428 BC",
         "works": ["The Republic", "Symposium", "Phaedo"],
         "arguments": [
             {
@@ -116,9 +60,70 @@
         "influence": "Plato's ideas have shaped Western thought, politics, and education for over two millennia."
     },
     {
+        "name": "René Descartes",
+        "image": "images/descartes.jpg",
+        "bio": "A French philosopher, mathematician, and scientist, often regarded as the father of modern philosophy.",
+        "publicationDate": "1637",
+        "works": ["Meditations on First Philosophy", "Discourse on the Method"],
+        "arguments": [
+            {
+                "title": "Cogito, ergo sum",
+                "description": "The foundation of Descartes' philosophy, asserting self-awareness as undeniable.",
+                "summary": "I think, therefore I am. This argument establishes the certainty of one's own existence through the act of thinking.",
+                "realLifeExample": "Even if you doubt everything else, the very act of doubting confirms your existence as a thinking being.",
+                "pro": "Provides a clear starting point for building knowledge based on certainty.",
+                "con": "Critiqued for being too introspective and not addressing the existence of the external world.",
+                "keyPhilosopher": "René Descartes",
+                "category": "mind"
+            },
+            {
+                "title": "Dualism",
+                "description": "The belief in two fundamental substances: mind and matter.",
+                "summary": "Dualism posits that the mind and body are distinct and separable entities, with the mind being non-material.",
+                "realLifeExample": "Your thoughts and consciousness exist independently of your physical body.",
+                "pro": "Explains the subjective experience and consciousness.",
+                "con": "Struggles to explain the interaction between mind and body.",
+                "keyPhilosopher": "René Descartes",
+                "category": "mind"
+            }
+        ],
+        "influence": "His work laid the groundwork for rationalism and influenced subsequent philosophers like Spinoza and Leibniz."
+    },
+    {
+        "name": "Immanuel Kant",
+        "image": "images/kant.jpg",
+        "bio": "A German philosopher who is a central figure in modern philosophy.",
+        "publicationDate": "1781",
+        "works": ["Critique of Pure Reason", "Groundwork for the Metaphysics of Morals"],
+        "arguments": [
+            {
+                "title": "Categorical Imperative",
+                "description": "A central principle in Kant's deontological moral philosophy.",
+                "summary": "Act only according to that maxim whereby you can, at the same time, will that it should become a universal law.",
+                "realLifeExample": "If you consider lying to get out of trouble, you must imagine a world where everyone lies in similar situations, which would undermine trust.",
+                "pro": "Provides a clear and universal basis for moral actions.",
+                "con": "Can be rigid and may not account for complex moral dilemmas.",
+                "keyPhilosopher": "Immanuel Kant",
+                "category": "ethics"
+            },
+            {
+                "title": "Transcendental Idealism",
+                "description": "Kant's theory on the nature of reality and human perception.",
+                "summary": "Asserts that our experience of things is about how they appear to us, not about those things as they are in themselves.",
+                "realLifeExample": "We perceive a tree's color based on our sensory input, not necessarily the tree's inherent color independent of our perception.",
+                "pro": "Bridges rationalism and empiricism, accounting for human perception.",
+                "con": "Leaves the nature of things-in-themselves obscure and unknowable.",
+                "keyPhilosopher": "Immanuel Kant",
+                "category": "existence"
+            }
+        ],
+        "influence": "His critical philosophy bridged rationalism and empiricism, influencing German Idealism and contemporary philosophy."
+    },
+    {
         "name": "Søren Kierkegaard",
         "image": "images/kierkegaard.jpg",
         "bio": "A Danish philosopher, social critic, and theologian, often considered the first existentialist philosopher.",
+        "publicationDate": "1843",
         "works": ["Either/Or", "Fear and Trembling", "The Sickness Unto Death"],
         "arguments": [
             {
@@ -148,6 +153,7 @@
         "name": "Friedrich Nietzsche",
         "image": "images/nietzsche.jpg",
         "bio": "A German philosopher, cultural critic, poet, and philologist whose work has exerted a profound influence on Western philosophy and modern intellectual history.",
+        "publicationDate": "1883",
         "works": ["Thus Spoke Zarathustra", "Beyond Good and Evil", "The Genealogy of Morals"],
         "arguments": [
             {
