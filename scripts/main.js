@@ -1,9 +1,8 @@
 // scripts/main.js
 
 let allPhilosophers = [];
-let idx = null;
 
-// Function to fetch and display philosophers
+// Fetch and display philosophers
 async function fetchPhilosophers() {
     try {
         const response = await fetch('data/philosophers.json');
@@ -11,14 +10,14 @@ async function fetchPhilosophers() {
         allPhilosophers = philosophers; // Store for searching
         displayPhilosophers(philosophers);
         displayArguments(philosophers);
-        buildSearchIndex(philosophers);
-        buildTimeline(philosophers);
+        // Initialize timeline after fetching data
+        initializeTimeline(philosophers);
     } catch (error) {
         console.error('Error fetching philosopher data:', error);
     }
 }
 
-// Function to display philosopher cards
+// Function to create philosopher cards
 function displayPhilosophers(philosophers) {
     const container = document.getElementById('philosophers-container');
     container.innerHTML = ''; // Clear existing content
@@ -55,14 +54,20 @@ function displayPhilosophers(philosophers) {
         
         // Influence
         const influence = document.createElement('p');
+        influence.classList.add('influence');
         influence.innerHTML = `<strong>Influence:</strong> ${philosopher.influence}`;
         card.appendChild(influence);
+        
+        // Add event listener for detailed view
+        card.addEventListener('click', () => {
+            showPhilosopherDetails(philosopher);
+        });
         
         container.appendChild(card);
     });
 }
 
-// Function to display argument cards
+// Function to create argument cards
 function displayArguments(philosophers) {
     const container = document.getElementById('arguments-container');
     container.innerHTML = ''; // Clear existing content
@@ -90,117 +95,118 @@ function displayArguments(philosophers) {
         
         // Add event listener for more details
         card.addEventListener('click', () => {
-            showModal(arg.title, `**Importance:** ${arg.importance}\n\n**Context:** ${arg.context}\n\n**Influence:** ${arg.influence}`);
+            showArgumentDetails(arg);
         });
         
         container.appendChild(card);
     });
 }
 
-// Function to show modal with detailed information
-function showModal(title, body) {
+// Function to show philosopher details in modal
+function showPhilosopherDetails(philosopher) {
     const modal = document.getElementById('modal');
     const modalTitle = document.getElementById('modal-title');
     const modalBody = document.getElementById('modal-body');
     
-    modalTitle.textContent = title;
-    // Replace line breaks with <br> for HTML rendering
-    modalBody.innerHTML = body.replace(/\n/g, '<br>');
+    modalTitle.textContent = philosopher.name;
+    modalBody.innerHTML = `
+        <img src="${philosopher.image}" alt="${philosopher.name}" style="width:100%; height:auto; border-radius:6px; margin-bottom:15px;">
+        <p><strong>Biography:</strong> ${philosopher.bio}</p>
+        <p><strong>Major Works:</strong> ${philosopher.works.join(', ')}</p>
+        <p><strong>Central Arguments:</strong><br>${philosopher.arguments.map(arg => `<em>${arg.title}:</em> ${arg.description}`).join('<br>')}</p>
+        <p><strong>Influence:</strong> ${philosopher.influence}</p>
+    `;
     
     modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
 }
 
-// Function to build search index using Lunr.js
-function buildSearchIndex(philosophers) {
-    idx = lunr(function () {
-        this.field('name');
-        this.field('works');
-        this.field('arguments_title', { boost: 10 });
-        this.field('arguments_description');
-        this.ref('id');
-        
-        philosophers.forEach(function (philosopher, index) {
-            this.add({
-                id: index,
-                name: philosopher.name,
-                works: philosopher.works.join(' '),
-                arguments_title: philosopher.arguments.map(arg => arg.title).join(' '),
-                arguments_description: philosopher.arguments.map(arg => arg.description).join(' ')
-            });
-        }, this);
+// Function to show argument details in modal
+function showArgumentDetails(arg) {
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    
+    modalTitle.textContent = arg.title;
+    modalBody.innerHTML = `
+        <p><strong>Description:</strong> ${arg.description}</p>
+        <p><strong>Importance:</strong> ${arg.importance}</p>
+        <p><strong>Context:</strong> ${arg.context}</p>
+        <p><strong>Influence:</strong> ${arg.influence}</p>
+    `;
+    
+    modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+// Function to initialize modal functionality
+function initializeModal() {
+    const modal = document.getElementById('modal');
+    const closeButton = document.querySelector('.close-button');
+    
+    // Close modal when clicking the close button
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    });
+    
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+        }
+    });
+    
+    // Close modal on pressing 'Escape' key
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+        }
     });
 }
 
-// Function to handle search
+// Function to handle search functionality
 function handleSearch() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    if (searchInput.length < 2) {
-        displayPhilosophers(allPhilosophers);
-        displayArguments(allPhilosophers);
-        buildTimeline(allPhilosophers);
-        return;
-    }
-    const results = idx.search(`*${searchInput}*`);
-    const matchedPhilosophers = results.map(result => allPhilosophers[result.ref]);
-    displayPhilosophers(matchedPhilosophers);
-    displayArguments(matchedPhilosophers);
-    buildTimeline(matchedPhilosophers);
+    const filteredPhilosophers = allPhilosophers.filter(philosopher => 
+        philosopher.name.toLowerCase().includes(searchInput) ||
+        philosopher.works.some(work => work.toLowerCase().includes(searchInput)) ||
+        philosopher.arguments.some(arg => arg.title.toLowerCase().includes(searchInput) || arg.description.toLowerCase().includes(searchInput))
+    );
+    displayPhilosophers(filteredPhilosophers);
+    displayArguments(filteredPhilosophers);
 }
 
-// Function to build an interactive timeline
-function buildTimeline(philosophers) {
-    const container = document.getElementById('timeline-container');
-    container.innerHTML = ''; // Clear existing content
-
-    // Sort philosophers by birth year for the timeline
-    const sortedPhilosophers = philosophers.slice().sort((a, b) => a.birthYear - b.birthYear);
-
+// Function to initialize timeline (basic example)
+function initializeTimeline(philosophers) {
+    const timelineContainer = document.getElementById('timeline-container');
+    const sortedPhilosophers = philosophers.sort((a, b) => new Date(a.birthYear || '0') - new Date(b.birthYear || '0'));
+    
     sortedPhilosophers.forEach(philosopher => {
         const event = document.createElement('div');
         event.classList.add('timeline-event');
         event.innerHTML = `
-            <h3>${philosopher.name}</h3>
-            <p><strong>Birth Year:</strong> ${philosopher.birthYear || 'N/A'}</p>
-            <p><strong>Major Works:</strong> ${philosopher.works.join(', ')}</p>
+            <h4>${philosopher.name}</h4>
+            <p>${philosopher.bio}</p>
         `;
-        container.appendChild(event);
+        timelineContainer.appendChild(event);
     });
-}
-
-// Function to handle contact form submission
-function handleContactForm(event) {
-    event.preventDefault();
-    alert('Thank you for your message! We will get back to you soon.');
-    document.getElementById('contact-form').reset();
 }
 
 // Initialize the website
 document.addEventListener('DOMContentLoaded', () => {
     fetchPhilosophers();
-
+    initializeModal();
+    
     const searchButton = document.getElementById('search-button');
     searchButton.addEventListener('click', handleSearch);
+    
     const searchInput = document.getElementById('search-input');
     searchInput.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
             handleSearch();
         }
     });
-
-    // Modal functionality
-    const closeButton = document.querySelector('.close-button');
-    closeButton.addEventListener('click', () => {
-        document.getElementById('modal').style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        const modal = document.getElementById('modal');
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    });
-
-    // Contact form submission
-    const contactForm = document.getElementById('contact-form');
-    contactForm.addEventListener('submit', handleContactForm);
 });
