@@ -249,56 +249,65 @@ section p {
     background-color: var(--color-accent);
 }
 
-/* Arguments Carousel Buttons */
-.prev-arguments-button, .next-arguments-button {
-    background-color: var(--color-secondary);
-    color: var(--color-bg);
-    font-size: 1.5em;
+/* Quotes Section */
+.quotes-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    position: relative;
+    margin-top: 40px;
+    overflow: hidden;
 }
 
-.prev-arguments-button:hover, .next-arguments-button:hover {
-    background-color: var(--color-accent);
-}
-
-/* Timeline Carousel Buttons */
-.timeline-button {
-    background-color: var(--color-accent);
-    border: none;
-    color: var(--color-primary);
-    font-size: 1.5em;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background-color var(--transition-speed), transform var(--transition-speed);
+.quote-slide {
     position: absolute;
-    z-index: 2;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    width: 100%;
+    max-width: 800px;
 }
 
-.timeline-button:hover {
-    background-color: var(--color-hover);
-    transform: scale(1.1);
+.quote-slide.active {
+    opacity: 1;
+    position: relative;
 }
 
-.prev-timeline-button {
-    top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-image: url('../images/arrow-up.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: transparent;
+.quotes-section blockquote {
+    font-style: italic;
+    padding: 20px;
+    border-left: 5px solid var(--color-accent);
+    background-color: var(--color-bg);
+    border-radius: 4px;
+    position: relative;
+    text-align: center;
 }
 
-.next-timeline-button {
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-image: url('../images/arrow-down.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: transparent;
+.quotes-section blockquote::before,
+.quotes-section blockquote::after {
+    font-size: 2em;
+    color: var(--color-accent);
+}
+
+.quotes-section blockquote::before {
+    content: "“";
+    position: absolute;
+    left: 10px;
+    top: -10px;
+}
+
+.quotes-section blockquote::after {
+    content: "”";
+    position: absolute;
+    right: 10px;
+    bottom: -10px;
+}
+
+.quotes-section cite {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: var(--color-text);
 }
 
 /* Carousel Wrapper */
@@ -308,93 +317,6 @@ section p {
     max-width: 1000px;
 }
 
-/* Horizontal Carousel Track */
-.carousel.track {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
-}
-
-/* Vertical Timeline Carousel Track */
-.timeline-carousel.track {
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
-    height: 350px; /* Adjust as needed */
-}
-
-/* Philosopher & Argument Cards */
-.philosopher-card, .argument-card {
-    background-color: var(--color-snow);
-    border: 1px solid var(--color-light);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--color-shadow);
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.philosopher-card:hover, .argument-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px var(--color-shadow);
-}
-
-.philosopher-card img, .argument-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 15px;
-}
-
-.argument-card img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-}
-
-.philosopher-card h3, .argument-card h3 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    color: var(--color-primary);
-}
-
-.philosopher-card p, .argument-card p {
-    font-size: 0.95em;
-    margin-bottom: 10px;
-}
-
-.learn-more-button, .challenge-button {
-    padding: 8px 12px;
-    background-color: var(--color-secondary);
-    color: var(--color-bg);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color var(--transition-speed);
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.learn-more-button:hover, .challenge-button:hover {
-    background-color: var(--color-accent);
-}
-
-/* Specific Carousel Item Widths */
-#philosophers-container .philosopher-card {
-    flex: 0 0 calc(33.333% - 20px); /* 3 items per view */
-}
-
-#arguments-container .argument-card {
-    flex: 0 0 calc(25% - 22.5px); /* 4 items per view */
-}
-
-/* Featured Argument Carousel */
 .featured-argument-carousel {
     background-color: var(--color-lavender);
     border: 2px solid var(--color-accent);
@@ -416,6 +338,79 @@ section p {
     font-size: 2em;
     margin-bottom: 20px;
     color: var(--color-primary);
+}
+
+/* Horizontal Carousel Track */
+.carousel.track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 30px;
+}
+
+/* Vertical Timeline Carousel Track */
+.timeline-carousel.track {
+    display: flex;
+    flex-wrap: wrap;
+    transition: transform 0.5s ease-in-out;
+    gap: 30px;
+    height: auto;
+}
+
+/* Philosopher & Argument Cards */
+.philosopher-card, .argument-card, .timeline-event, #featured-argument-container .featured-argument {
+    background-color: var(--color-snow);
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: 0 4px 6px var(--color-shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.philosopher-card:hover, .argument-card:hover, .timeline-event:hover, #featured-argument-container .featured-argument:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px var(--color-shadow);
+}
+
+.philosopher-card img, .argument-card img, #featured-argument-container .featured-argument img.featured-argument-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.argument-card img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.featured-argument-image {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    transition: transform var(--transition-speed);
+}
+
+.featured-argument-image:hover {
+    transform: scale(1.1);
+}
+
+.philosopher-card h3, .argument-card h3, #featured-argument-container .featured-argument h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: var(--color-primary);
+}
+
+.philosopher-card p, .argument-card p, #featured-argument-container .featured-argument p.summary {
+    font-size: 0.95em;
+    margin-bottom: 10px;
 }
 
 .featured-argument-carousel .carousel-container.featured-carousel .carousel-button {
@@ -447,18 +442,6 @@ section p {
     background-color: var(--color-light);
     box-shadow: 0 8px 12px var(--color-shadow);
     transform: translateY(-5px);
-}
-
-#featured-argument-container .featured-argument img.featured-argument-image {
-    width: 250px;
-    height: 250px;
-    object-fit: contain;
-    margin-bottom: 20px;
-    transition: transform var(--transition-speed);
-}
-
-#featured-argument-container .featured-argument-image:hover {
-    transform: scale(1.1);
 }
 
 #featured-argument-container .featured-argument h3 {
@@ -505,19 +488,20 @@ section p {
 .timeline-carousel-wrapper {
     overflow: hidden;
     width: 100%;
-    max-width: 800px;
-    height: 350px; /* Adjust height as needed */
+    max-width: 1200px;
+    height: auto;
 }
 
 .timeline-carousel.track {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     transition: transform 0.5s ease-in-out;
     gap: 30px;
-    height: 100%;
+    height: auto;
 }
 
 .timeline-event {
+    flex: 0 0 calc(20% - 24px); /* 5 items per view */
     background-color: var(--color-snow);
     border: 1px solid var(--color-light);
     border-radius: var(--border-radius);
@@ -548,52 +532,40 @@ section p {
     color: var(--color-text);
 }
 
-/* Quotes Section */
-.quotes-section {
+/* Filter Buttons */
+.filters {
     display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin-top: 40px;
-    padding: 20px;
-    background-color: var(--color-snow);
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 6px var(--color-shadow);
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
-.quotes-section blockquote {
-    font-style: italic;
-    position: relative;
-    padding: 20px;
-    border-left: 5px solid var(--color-accent);
-    background-color: var(--color-bg);
-    border-radius: 4px;
-}
-
-.quotes-section blockquote::before,
-.quotes-section blockquote::after {
-    font-size: 2em;
-    color: var(--color-accent);
-}
-
-.quotes-section blockquote::before {
-    content: "“";
-    position: absolute;
-    left: 10px;
-    top: -10px;
-}
-
-.quotes-section blockquote::after {
-    content: "”";
-    position: absolute;
-    right: 10px;
-    bottom: -10px;
-}
-
-.quotes-section cite {
-    display: block;
-    margin-top: 10px;
-    font-size: 0.9em;
+.filter-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: var(--color-light);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+    font-weight: bold;
     color: var(--color-text);
+    box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.filter-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.filter-button.active, .filter-button:hover {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px var(--color-shadow);
 }
 
 /* Modal */
@@ -651,246 +623,36 @@ section p {
     font-size: 1em;
 }
 
-/* Timeline Carousel */
-.timeline-carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-.timeline-carousel-wrapper {
-    overflow: hidden;
-    width: 100%;
-    max-width: 800px;
-    height: 350px; /* Adjust height as needed */
-}
-
-.timeline-carousel.track {
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
-    height: 100%;
-}
-
-.timeline-event {
-    background-color: var(--color-snow);
-    border: 1px solid var(--color-light);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--color-shadow);
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.timeline-event:hover {
-    background-color: var(--color-light);
-    box-shadow: 0 8px 12px var(--color-shadow);
-    transform: translateY(-5px);
-}
-
-.timeline-event h3 {
-    font-size: 1.2em;
-    color: var(--color-primary);
-    margin-bottom: 10px;
-}
-
-.timeline-event p {
-    font-size: 1em;
-    color: var(--color-text);
-}
-
-/* About Section */
-.about-section p {
-    font-size: 1.1em;
-    text-align: center;
-}
-
-/* Contact Section */
-.contact-section form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.contact-section label {
-    font-weight: bold;
-}
-
-.contact-section input, 
-.contact-section textarea {
-    padding: 10px;
-    border: 1px solid var(--color-light);
-    border-radius: 4px;
-    font-family: var(--font-primary);
-    font-size: 1em;
-}
-
-.contact-section button {
-    width: 150px;
-    padding: 10px;
-    border: none;
-    background-color: var(--color-accent);
-    color: var(--color-primary);
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color var(--transition-speed);
-    align-self: flex-start;
-}
-
-.contact-section button:hover {
-    background-color: var(--color-hover);
-}
-
-/* Footer */
-footer {
-    background-color: var(--color-primary);
-    color: var(--color-bg);
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer p {
-    margin: 0;
-}
-
-/* Featured Argument Carousel */
-.featured-argument-carousel {
-    background-color: var(--color-lavender);
-    border: 2px solid var(--color-accent);
-    border-radius: var(--border-radius);
-    padding: 30px 20px;
-    text-align: center;
-    margin: 40px 0;
-    box-shadow: 0 6px 12px var(--color-shadow);
-    position: relative;
-    transition: box-shadow var(--transition-speed), background-color var(--transition-speed);
-}
-
-.featured-argument-carousel:hover {
-    box-shadow: 0 10px 20px var(--color-shadow);
-    background-color: var(--color-snow);
-}
-
-.featured-argument-carousel h3 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: var(--color-primary);
-}
-
-.featured-argument-carousel .carousel-container.featured-carousel .carousel-button {
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
     background-color: var(--color-secondary);
     color: var(--color-bg);
-    font-size: 1.5em;
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    display: none;
+    z-index: 1000;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
 
-.featured-argument-carousel .carousel-container.featured-carousel .carousel-button:hover {
+.scroll-to-top:hover {
     background-color: var(--color-accent);
-}
-
-/* Featured Argument Card */
-#featured-argument-container .featured-argument {
-    flex: 0 0 100%; /* Show one featured argument at a time */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: var(--color-snow);
-    border: 1px solid var(--color-light);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--color-shadow);
-    transition: transform 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
-}
-
-#featured-argument-container .featured-argument:hover {
-    background-color: var(--color-light);
-    box-shadow: 0 8px 12px var(--color-shadow);
-    transform: translateY(-5px);
-}
-
-#featured-argument-container .featured-argument img.featured-argument-image {
-    width: 250px;
-    height: 250px;
-    object-fit: contain;
-    margin-bottom: 20px;
-    transition: transform var(--transition-speed);
-}
-
-#featured-argument-container .featured-argument-image:hover {
     transform: scale(1.1);
 }
 
-#featured-argument-container .featured-argument h3 {
-    font-size: 2em;
-    margin-bottom: 10px;
-    color: var(--color-primary);
+/* Animations */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-#featured-argument-container .featured-argument p.summary {
-    font-size: 1.1em;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-#featured-argument-container .featured-argument .details {
-    text-align: left;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-#featured-argument-container .featured-argument .details p {
-    margin-bottom: 10px;
-}
-
-#featured-argument-container .featured-argument .details p span {
-    font-weight: bold;
-    color: var(--color-secondary);
-}
-
-/* Filter Buttons */
-.filters {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
-
-.filter-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background-color: var(--color-light);
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
-    font-weight: bold;
-    color: var(--color-text);
-    box-shadow: 0 2px 4px var(--color-shadow);
-}
-
-.filter-button img {
-    width: 20px;
-    height: 20px;
-}
-
-.filter-button.active, .filter-button:hover {
-    background-color: var(--color-accent);
-    color: var(--color-primary);
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px var(--color-shadow);
+.philosopher-card, .argument-card, .timeline-event, #featured-argument-container .featured-argument {
+    animation: slideIn 0.5s ease-in-out;
 }
 
 /* Responsive Design */
@@ -954,7 +716,7 @@ footer p {
     }
 
     .timeline-carousel-wrapper {
-        height: 400px; /* Adjust height as needed */
+        height: auto; /* Adjust height as needed */
     }
 }
 
@@ -972,7 +734,7 @@ footer p {
     }
 
     .timeline-event {
-        width: 100%;
+        flex: 0 0 calc(20% - 24px); /* Maintain 5 items per view */
     }
 
     .timeline-carousel.track {
@@ -980,15 +742,11 @@ footer p {
     }
 
     .timeline-carousel-wrapper {
-        height: 300px; /* Adjust height as needed */
+        height: auto; /* Adjust height as needed */
     }
 
-    .timeline-event h3 {
-        font-size: 1em;
-    }
-
-    .timeline-event p {
-        font-size: 0.9em;
+    .quotes-section {
+        height: 150px;
     }
 
     .quotes-section blockquote {
@@ -1031,8 +789,6 @@ footer p {
     .carousel-button.next-button,
     .featured-argument-carousel .carousel-button.prev-featured-button,
     .featured-argument-carousel .carousel-button.next-featured-button,
-    .arguments-section .carousel-button.prev-arguments-button,
-    .arguments-section .carousel-button.next-arguments-button,
     .timeline-carousel-container .timeline-button.prev-timeline-button,
     .timeline-carousel-container .timeline-button.next-timeline-button {
         display: none;
@@ -1045,49 +801,6 @@ footer p {
 
     .featured-argument-carousel {
         padding: 20px 10px;
-    }
-
-    #featured-argument-container .featured-argument-image {
-        width: 150px;
-        height: 150px;
-    }
-
-    #featured-argument-container .featured-argument h3 {
-        font-size: 1.4em;
-        margin-bottom: 10px;
-    }
-
-    #featured-argument-container .featured-argument p.summary {
-        font-size: 0.9em;
-    }
-
-    #featured-argument-container .featured-argument .details p {
-        font-size: 0.85em;
-    }
-
-    .quotes-section blockquote {
-        font-size: 0.9em;
-    }
-
-    #philosophers-container .philosopher-card,
-    #arguments-container .argument-card,
-    #timeline-container .timeline-event {
-        flex: 0 0 100%;
-        width: 100%;
-    }
-
-    .timeline-carousel-wrapper {
-        height: 250px; /* Adjust height as needed */
-    }
-
-    .filter-button {
-        padding: 8px 16px;
-        font-size: 0.9em;
-    }
-
-    .filter-button img {
-        width: 18px;
-        height: 18px;
     }
 
     #featured-argument-container .featured-argument-image {
@@ -1107,107 +820,475 @@ footer p {
     #featured-argument-container .featured-argument .details p {
         font-size: 0.8em;
     }
+
+    .quotes-section {
+        height: 100px;
+    }
+
+    .quotes-section blockquote {
+        font-size: 0.9em;
+    }
+
+    #philosophers-container .philosopher-card,
+    #arguments-container .argument-card,
+    #timeline-container .timeline-event {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+
+    .timeline-carousel-wrapper {
+        height: auto; /* Adjust height as needed */
+    }
+
+    .filter-button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+
+    .filter-button img {
+        width: 18px;
+        height: 18px;
+    }
+
+    #featured-argument-container .featured-argument-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    #featured-argument-container .featured-argument h3 {
+        font-size: 1em;
+        margin-bottom: 6px;
+    }
+
+    #featured-argument-container .featured-argument p.summary {
+        font-size: 0.8em;
+    }
+
+    #featured-argument-container .featured-argument .details p {
+        font-size: 0.75em;
+    }
 }
 
-/* Scroll to Top Button */
-.scroll-to-top {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
+/* Featured Argument Carousel */
+.featured-argument-carousel {
+    background-color: var(--color-lavender);
+    border: 2px solid var(--color-accent);
+    border-radius: var(--border-radius);
+    padding: 30px 20px;
+    text-align: center;
+    margin: 40px 0;
+    box-shadow: 0 6px 12px var(--color-shadow);
+    position: relative;
+    transition: box-shadow var(--transition-speed), background-color var(--transition-speed);
+}
+
+.featured-argument-carousel:hover {
+    box-shadow: 0 10px 20px var(--color-shadow);
+    background-color: var(--color-snow);
+}
+
+.featured-argument-carousel h3 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+/* Featured Argument Carousel Buttons */
+.featured-carousel .prev-featured-button,
+.featured-carousel .next-featured-button {
     background-color: var(--color-secondary);
     color: var(--color-bg);
-    border: none;
+    font-size: 1.5em;
     border-radius: 50%;
-    padding: 15px;
-    cursor: pointer;
-    font-size: 1.2em;
-    display: none;
-    z-index: 1000;
+    padding: 10px;
     transition: background-color var(--transition-speed), transform var(--transition-speed);
+    cursor: pointer;
 }
 
-.scroll-to-top:hover {
+.featured-carousel .prev-featured-button:hover,
+.featured-carousel .next-featured-button:hover {
     background-color: var(--color-accent);
     transform: scale(1.1);
 }
 
-/* Animations */
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.philosopher-card, .argument-card, .timeline-event, #featured-argument-container .featured-argument {
-    animation: slideIn 0.5s ease-in-out;
-}
-
-/* Poll Styles */
-.poll-container {
+/* Featured Argument Card */
+#featured-argument-container .featured-argument {
+    flex: 0 0 100%; /* Show one featured argument at a time */
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.poll-options {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.poll-options button {
-    padding: 10px 20px;
-    background-color: var(--color-light);
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color var(--transition-speed), transform var(--transition-speed);
-    font-weight: bold;
-    color: var(--color-text);
-}
-
-.poll-options button:hover {
-    background-color: var(--color-accent);
-    transform: scale(1.05);
-}
-
-.poll-results {
-    display: none;
-    margin-top: 15px;
+    align-items: center;
     text-align: center;
+    background-color: var(--color-snow);
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: 0 4px 6px var(--color-shadow);
+    transition: transform 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
 }
 
-.poll-results.active {
-    display: block;
+#featured-argument-container .featured-argument:hover {
+    background-color: var(--color-light);
+    box-shadow: 0 8px 12px var(--color-shadow);
+    transform: translateY(-5px);
 }
 
-.poll-results p {
-    font-size: 1em;
+#featured-argument-container .featured-argument h3 {
+    font-size: 2em;
+    margin-bottom: 10px;
     color: var(--color-primary);
 }
 
-/* Quiz Styles Removed */
-
-/* Call-to-Action Styles */
-.cta-section {
-    text-align: center;
-    margin-top: 40px;
-}
-
-.cta-section .cta-button {
-    padding: 12px 24px;
-    background-color: var(--color-secondary);
-    color: var(--color-bg);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color var(--transition-speed);
-    font-size: 1em;
+#featured-argument-container .featured-argument p.summary {
+    font-size: 1.1em;
+    margin-bottom: 15px;
     font-weight: bold;
-    text-decoration: none;
 }
 
-.cta-section .cta-button:hover {
-    background-color: var(--color-accent);
+#featured-argument-container .featured-argument .details {
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#featured-argument-container .featured-argument .details p {
+    margin-bottom: 10px;
+}
+
+#featured-argument-container .featured-argument .details p span {
+    font-weight: bold;
+    color: var(--color-secondary);
+}
+
+/* Timeline Carousel */
+.timeline-carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.timeline-carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+}
+
+.timeline-carousel.track {
+    display: flex;
+    flex-wrap: wrap;
+    transition: transform 0.5s ease-in-out;
+    gap: 30px;
+    height: auto;
+}
+
+.timeline-event {
+    flex: 0 0 calc(20% - 24px); /* 5 items per view */
+    background-color: var(--color-snow);
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: 0 4px 6px var(--color-shadow);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.timeline-event:hover {
+    background-color: var(--color-light);
+    box-shadow: 0 8px 12px var(--color-shadow);
+    transform: translateY(-5px);
+}
+
+.timeline-event h3 {
+    font-size: 1.2em;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.timeline-event p {
+    font-size: 1em;
+    color: var(--color-text);
+}
+
+/* Responsive Design Adjustments */
+
+/* Medium Devices (Tablets) */
+@media (max-width: 992px) {
+    .carousel-button.prev-button,
+    .carousel-button.next-button,
+    .featured-carousel .carousel-button.prev-featured-button,
+    .featured-carousel .carousel-button.next-featured-button,
+    .timeline-carousel-container .timeline-button.prev-timeline-button,
+    .timeline-carousel-container .timeline-button.next-timeline-button {
+        left: -40px;
+        right: -40px;
+    }
+
+    .timeline-button.prev-timeline-button,
+    .timeline-button.next-timeline-button {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .carousel-wrapper, .timeline-carousel-wrapper {
+        max-width: 800px;
+    }
+    
+    .philosopher-card, .argument-card, .timeline-event {
+        width: 250px;
+    }
+
+    .philosopher-card {
+        flex: 0 0 calc(33.333% - 20px); /* 3 items per view */
+    }
+
+    .argument-card {
+        flex: 0 0 calc(25% - 22.5px); /* 4 items per view */
+    }
+
+    .featured-argument-carousel {
+        padding: 30px 15px;
+    }
+
+    #featured-argument-container .featured-argument-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    #featured-argument-container .featured-argument h3 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+
+    #featured-argument-container .featured-argument p.summary {
+        font-size: 1em;
+    }
+
+    #featured-argument-container .featured-argument .details p {
+        font-size: 0.95em;
+    }
+
+    .timeline-carousel-wrapper {
+        height: auto; /* Adjust height as needed */
+    }
+}
+
+/* Small Devices (Phones) */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Consider implementing a hamburger menu */
+    }
+
+    .hero h1 {
+        font-size: 2.5em;
+    }
+
+    .hero p {
+        font-size: 1.2em;
+    }
+
+    .timeline-event {
+        flex: 0 0 calc(20% - 24px); /* Maintain 5 items per view */
+    }
+
+    .timeline-carousel.track {
+        gap: 20px;
+    }
+
+    .timeline-carousel-wrapper {
+        height: auto; /* Adjust height as needed */
+    }
+
+    .quotes-section {
+        height: 150px;
+    }
+
+    .quotes-section blockquote {
+        font-size: 1em;
+    }
+
+    .quotes-section blockquote::before,
+    .quotes-section blockquote::after {
+        font-size: 2em;
+    }
+
+    .featured-argument-carousel .carousel-button.prev-featured-button,
+    .featured-argument-carousel .carousel-button.next-featured-button,
+    .arguments-section .carousel-button.prev-arguments-button,
+    .arguments-section .carousel-button.next-arguments-button {
+        font-size: 1.2em;
+    }
+
+    #featured-argument-container .featured-argument-image {
+        width: 180px;
+        height: 180px;
+    }
+
+    #featured-argument-container .featured-argument h3 {
+        font-size: 1.6em;
+        margin-bottom: 12px;
+    }
+
+    #featured-argument-container .featured-argument p.summary {
+        font-size: 0.95em;
+    }
+
+    #featured-argument-container .featured-argument .details p {
+        font-size: 0.9em;
+    }
+}
+
+/* Extra Small Devices (Extra Small Phones) */
+@media (max-width: 576px) {
+    .carousel-button.prev-button,
+    .carousel-button.next-button,
+    .featured-carousel .carousel-button.prev-featured-button,
+    .featured-carousel .carousel-button.next-featured-button,
+    .timeline-carousel-container .timeline-button.prev-timeline-button,
+    .timeline-carousel-container .timeline-button.next-timeline-button {
+        display: none;
+    }
+
+    .carousel.track, .timeline-carousel.track {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .featured-argument-carousel {
+        padding: 20px 10px;
+    }
+
+    #featured-argument-container .featured-argument-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    #featured-argument-container .featured-argument h3 {
+        font-size: 1.2em;
+        margin-bottom: 8px;
+    }
+
+    #featured-argument-container .featured-argument p.summary {
+        font-size: 0.85em;
+    }
+
+    #featured-argument-container .featured-argument .details p {
+        font-size: 0.8em;
+    }
+
+    .quotes-section {
+        height: 100px;
+    }
+
+    .quotes-section blockquote {
+        font-size: 0.9em;
+    }
+
+    #philosophers-container .philosopher-card,
+    #arguments-container .argument-card,
+    #timeline-container .timeline-event {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+
+    .timeline-carousel-wrapper {
+        height: auto; /* Adjust height as needed */
+    }
+
+    .filter-button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+
+    .filter-button img {
+        width: 18px;
+        height: 18px;
+    }
+
+    #featured-argument-container .featured-argument-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    #featured-argument-container .featured-argument h3 {
+        font-size: 1em;
+        margin-bottom: 6px;
+    }
+
+    #featured-argument-container .featured-argument p.summary {
+        font-size: 0.8em;
+    }
+
+    #featured-argument-container .featured-argument .details p {
+        font-size: 0.75em;
+    }
+}
+
+/* Quotes Section Auto-Cycle */
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
+}
+
+.quote-slide {
+    animation: fadeInOut 10s infinite;
+}
+
+.quote-slide:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.quote-slide:nth-child(2) {
+    animation-delay: 5s;
+}
+
+.quote-slide:nth-child(3) {
+    animation-delay: 10s;
+}
+
+/* Ensure only one quote is visible at a time */
+.quote-slide {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+}
+
+.quote-slide.active {
+    opacity: 1;
+    position: relative;
+}
+
+/* Timeline Event Sizing for 5 Cards */
+.timeline-event {
+    flex: 0 0 calc(20% - 24px); /* 5 items per view */
+    width: calc(20% - 24px);
+}
+
+@media (max-width: 1200px) {
+    .timeline-event {
+        flex: 0 0 calc(33.333% - 24px); /* 3 items per view on medium screens */
+        width: calc(33.333% - 24px);
+    }
+}
+
+@media (max-width: 768px) {
+    .timeline-event {
+        flex: 0 0 calc(50% - 24px); /* 2 items per view on small screens */
+        width: calc(50% - 24px);
+    }
+}
+
+@media (max-width: 576px) {
+    .timeline-event {
+        flex: 0 0 100%; /* 1 item per view on extra small screens */
+        width: 100%;
+    }
 }
