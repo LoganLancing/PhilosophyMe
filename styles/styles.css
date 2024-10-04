@@ -191,23 +191,65 @@ section h2::after {
     border-radius: 2px;
 }
 
-.philosophers-container, .arguments-container, .timeline-container {
+.carousel-container {
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+    align-items: center;
     justify-content: center;
+    margin: 40px 0;
+}
+
+.carousel-button {
+    background-color: var(--gold);
+    border: none;
+    color: var(--navy-blue);
+    font-size: 2em;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.carousel-button:hover {
+    background-color: var(--amber);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-button {
+    left: -50px; /* Position the previous button to the left */
+}
+
+.next-button {
+    right: -50px; /* Position the next button to the right */
+}
+
+.carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.philosophers-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    flex-wrap: nowrap;
 }
 
 .card {
+    min-width: 300px;
+    margin-right: 20px;
+    flex-shrink: 0;
     background-color: var(--snow);
     border: 1px solid var(--light-gray);
     border-radius: 8px;
-    width: 300px;
     padding: 20px;
     box-shadow: 0 4px 6px var(--shadow-color);
     transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    overflow: hidden;
+    cursor: pointer;
 }
 
 .card:hover {
@@ -234,7 +276,7 @@ section h2::after {
     margin-bottom: 10px;
 }
 
-.footer {
+footer {
     background-color: var(--navy-blue);
     color: var(--ivory);
     text-align: center;
@@ -331,30 +373,143 @@ footer p {
     white-space: pre-wrap; /* Preserve line breaks */
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* For simplicity, implement a mobile menu later */
+/* Timeline Styles */
+.timeline-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.timeline-container::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background-color: var(--gold);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+}
+
+.timeline-event {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.timeline-event:hover {
+    background-color: var(--light-gray);
+}
+
+.timeline-event::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: -17px;
+    background-color: var(--gold);
+    border: 4px solid var(--ivory);
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.timeline-event.left {
+    left: 0;
+}
+
+.timeline-event.right {
+    left: 50%;
+}
+
+.timeline-event.left::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    right: 30px;
+    border: medium solid var(--gold);
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent var(--gold);
+}
+
+.timeline-event.right::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    left: 30px;
+    border: medium solid var(--gold);
+    border-width: 10px 10px 10px 0;
+    border-color: transparent var(--gold) transparent transparent;
+}
+
+.timeline-event-content {
+    padding: 20px 30px;
+    background-color: var(--snow);
+    position: relative;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.timeline-event-content h3 {
+    margin-top: 0;
+    color: var(--navy-blue);
+}
+
+.timeline-event-content p {
+    margin: 5px 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .prev-button {
+        left: -35px;
     }
 
-    .search-container {
-        margin-left: 10px;
-    }
-
-    .philosophers-container, .arguments-container, .timeline-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .hero h1 {
-        font-size: 2.5em;
-    }
-
-    .hero p {
-        font-size: 1.2em;
+    .next-button {
+        right: -35px;
     }
 
     .card {
-        width: 90%;
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-button {
+        font-size: 1.5em;
+        padding: 8px 12px;
+    }
+
+    .prev-button {
+        left: -30px;
+    }
+
+    .next-button {
+        right: -30px;
+    }
+
+    .card {
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-button {
+        display: none; /* Hide buttons on very small screens */
+    }
+
+    .card {
+        min-width: 100%;
+        margin-right: 0;
+    }
+
+    .philosophers-container {
+        flex-direction: column;
     }
 }
