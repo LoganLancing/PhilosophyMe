@@ -19,7 +19,7 @@ let currentFilterCategory = 'all';
 
 const PHILOSOPHERS_VISIBLE = 3;
 const FEATURED_VISIBLE = 1;
-const QUOTE_INTERVAL = 5000; // 5 seconds
+const QUOTE_INTERVAL = 7000; // 7 seconds
 
 // Fetch philosophers data
 async function fetchPhilosophers() {
@@ -380,7 +380,7 @@ function setupQuotesCarousel() {
         }
     });
 
-    // Auto-cycle quotes every 5 seconds
+    // Auto-cycle quotes every 7 seconds
     setInterval(() => {
         quotes[currentQuote].classList.remove('active');
         currentQuote = (currentQuote + 1) % quotes.length;
