@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philosophy Through Time</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Philosophy Through Time</div>
+            <ul class="nav-links">
+                <li><a href="#philosophers">Philosophers</a></li>
+                <li><a href="#arguments">Arguments</a></li>
+                <li><a href="#timeline">Timeline</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search...">
+                <button id="search-button" aria-label="Search">🔍</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Explore the Evolution of Philosophy</h1>
+        <p>From Descartes to Modern Thinkers</p>
+    </section>
+
+    <!-- Philosophers Section -->
+    <section id="philosophers" class="philosophers-section">
+        <h2>Top Philosophers</h2>
+        <div class="philosophers-container" id="philosophers-container">
+            <!-- Philosopher cards will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Arguments Section -->
+    <section id="arguments" class="arguments-section">
+        <h2>Key Philosophical Arguments</h2>
+        <div class="arguments-container" id="arguments-container">
+            <!-- Argument cards will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="timeline-section">
+        <h2>Philosophical Timeline</h2>
+        <div class="timeline-container" id="timeline-container">
+            <!-- Timeline events will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <h2>About This Website</h2>
+        <p>This website traces the evolution of philosophy from Descartes to the present, highlighting key philosophers, their works, and the central arguments that shaped our understanding of the world.</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2>Contact Us</h2>
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <!-- Modal for Detailed Information -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-body"></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Philosophy Through Time. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scripts/main.js"></script>
+</body>
+</html>

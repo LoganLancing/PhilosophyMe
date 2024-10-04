@@ -1,0 +1,262 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap');
+
+/* CSS Variables for Color Palette */
+:root {
+    --navy-blue: #001F3F;
+    --forest-green: #228B22;
+    --gold: #FFD700;
+    --amber: #FFBF00;
+    --ivory: #FFFFF0;
+    --slate-purple: #6A5ACD;
+    --taupe: #483C32;
+    --light-gray: #D3D3D3;
+    --lavender: #E6E6FA;
+    --snow: #FFFAFA;
+}
+
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--ivory);
+    color: var(--taupe);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', serif;
+    color: var(--navy-blue);
+}
+
+a {
+    color: var(--gold);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--amber);
+}
+
+header {
+    background-color: var(--navy-blue);
+    color: var(--ivory);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    color: var(--ivory);
+    font-weight: bold;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+#search-input {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+#search-button {
+    padding: 6px 10px;
+    border: none;
+    background-color: var(--gold);
+    color: var(--navy-blue);
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+#search-button:hover {
+    background-color: var(--amber);
+}
+
+.hero {
+    background-image: url('../images/hero-background.jpg'); /* Add a relevant background image */
+    background-size: cover;
+    background-position: center;
+    color: var(--ivory);
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.5em;
+}
+
+section {
+    padding: 60px 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.philosophers-container, .arguments-container, .timeline-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    background-color: var(--snow);
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    width: 300px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.card h3 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 0.95em;
+}
+
+footer {
+    background-color: var(--navy-blue);
+    color: var(--ivory);
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Contact Form Styles */
+.contact-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-section label {
+    font-weight: bold;
+}
+
+.contact-section input, 
+.contact-section textarea {
+    padding: 10px;
+    border: 1px solid var(--light-gray);
+    border-radius: 4px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+}
+
+.contact-section button {
+    width: 150px;
+    padding: 10px;
+    border: none;
+    background-color: var(--gold);
+    color: var(--navy-blue);
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.contact-section button:hover {
+    background-color: var(--amber);
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; 
+    z-index: 1001; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.5); 
+}
+
+.modal-content {
+    background-color: var(--snow);
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid var(--light-gray);
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.close-button {
+    color: var(--taupe);
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: var(--gold);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* For simplicity, implement a mobile menu later */
+    }
+
+    .philosophers-container, .arguments-container, .timeline-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero h1 {
+        font-size: 2.5em;
+    }
+
+    .hero p {
+        font-size: 1.2em;
+    }
+}
