@@ -14,7 +14,8 @@
                 "pro": "Encourages balanced and moderate behavior.",
                 "con": "Determining the exact mean can be subjective and context-dependent.",
                 "keyPhilosopher": "Aristotle",
-                "category": "ethics"
+                "category": "ethics",
+                "featured": true
             },
             {
                 "title": "Four Causes",
@@ -44,7 +45,8 @@
                 "pro": "Explains the universality and perfection of concepts and objects.",
                 "con": "Difficult to explain how forms interact with the physical world.",
                 "keyPhilosopher": "Plato",
-                "category": "existence"
+                "category": "existence",
+                "featured": true
             },
             {
                 "title": "Allegory of the Cave",
@@ -74,7 +76,8 @@
                 "pro": "Provides a clear starting point for building knowledge based on certainty.",
                 "con": "Critiqued for being too introspective and not addressing the existence of the external world.",
                 "keyPhilosopher": "René Descartes",
-                "category": "mind"
+                "category": "mind",
+                "featured": true
             },
             {
                 "title": "Dualism",
@@ -104,7 +107,8 @@
                 "pro": "Provides a clear and universal basis for moral actions.",
                 "con": "Can be rigid and may not account for complex moral dilemmas.",
                 "keyPhilosopher": "Immanuel Kant",
-                "category": "ethics"
+                "category": "ethics",
+                "featured": true
             },
             {
                 "title": "Transcendental Idealism",
@@ -124,7 +128,8 @@
                 "pro": "Highlights the complexities of moral decision-making and the conflict between different ethical principles.",
                 "con": "Can oversimplify moral dilemmas and may not account for all real-world variables.",
                 "keyPhilosopher": "Immanuel Kant",
-                "category": "ethics"
+                "category": "ethics",
+                "featured": true
             }
         ],
         "influence": "His critical philosophy bridged rationalism and empiricism, influencing German Idealism and contemporary philosophy."
@@ -174,7 +179,8 @@
                 "pro": "Encourages personal growth, creativity, and the rejection of herd mentality.",
                 "con": "Critiqued for promoting elitism and disregarding communal values.",
                 "keyPhilosopher": "Friedrich Nietzsche",
-                "category": "ethics"
+                "category": "ethics",
+                "featured": true
             },
             {
                 "title": "Will to Power",
