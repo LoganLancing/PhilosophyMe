@@ -176,6 +176,7 @@ section {
 section h2 {
     text-align: center;
     margin-bottom: 40px;
+    font-size: 2.5em;
     position: relative;
     display: inline-block;
 }
@@ -183,10 +184,11 @@ section h2 {
 section h2::after {
     content: '';
     display: block;
-    width: 50px;
-    height: 3px;
+    width: 60px;
+    height: 4px;
     background-color: var(--gold);
     margin: 10px auto 0;
+    border-radius: 2px;
 }
 
 .philosophers-container, .arguments-container, .timeline-container {
@@ -199,30 +201,30 @@ section h2::after {
 .card {
     background-color: var(--snow);
     border: 1px solid var(--light-gray);
-    border-radius: 10px;
+    border-radius: 8px;
     width: 300px;
     padding: 20px;
-    box-shadow: 0 4px 8px var(--shadow-color);
+    box-shadow: 0 4px 6px var(--shadow-color);
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
     overflow: hidden;
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 16px var(--shadow-color);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px var(--shadow-color);
 }
 
 .card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 4px;
     margin-bottom: 15px;
 }
 
 .card h3 {
-    margin-top: 0;
+    margin-top: 15px;
     margin-bottom: 10px;
     font-size: 1.5em;
 }
@@ -232,17 +234,15 @@ section h2::after {
     margin-bottom: 10px;
 }
 
-.card .influence {
-    font-style: italic;
-    color: var(--slate-purple);
-}
-
 .footer {
     background-color: var(--navy-blue);
     color: var(--ivory);
     text-align: center;
     padding: 20px 0;
-    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
 }
 
 .contact-section form {
@@ -255,33 +255,27 @@ section h2::after {
 
 .contact-section label {
     font-weight: bold;
-    margin-bottom: 5px;
 }
 
 .contact-section input, 
 .contact-section textarea {
-    padding: 12px 15px;
+    padding: 10px;
     border: 1px solid var(--light-gray);
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: 'Open Sans', sans-serif;
     font-size: 1em;
-    transition: border-color 0.3s ease;
-}
-
-.contact-section input:focus, 
-.contact-section textarea:focus {
-    border-color: var(--forest-green);
 }
 
 .contact-section button {
     width: 150px;
-    padding: 12px;
+    padding: 10px;
     border: none;
     background-color: var(--gold);
     color: var(--navy-blue);
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
+    align-self: flex-start;
     transition: background-color 0.3s ease;
 }
 
@@ -305,21 +299,21 @@ section h2::after {
 .modal-content {
     background-color: var(--snow);
     margin: 10% auto;
-    padding: 30px;
+    padding: 20px;
     border: 1px solid var(--light-gray);
     width: 80%;
-    max-width: 700px;
-    border-radius: 10px;
+    max-width: 600px;
+    border-radius: 8px;
     position: relative;
-    box-shadow: 0 8px 16px var(--shadow-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 .close-button {
     color: var(--taupe);
     position: absolute;
-    top: 15px;
+    top: 10px;
     right: 20px;
-    font-size: 1.8em;
+    font-size: 1.5em;
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -330,15 +324,26 @@ section h2::after {
 
 .modal-content h2 {
     margin-top: 0;
+    color: var(--navy-blue);
 }
 
+.modal-content p {
+    white-space: pre-wrap; /* Preserve line breaks */
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .nav-links {
-        display: none; /* Implement a mobile menu later */
+        display: none; /* For simplicity, implement a mobile menu later */
     }
 
-    .hero {
-        padding: 80px 20px;
+    .search-container {
+        margin-left: 10px;
+    }
+
+    .philosophers-container, .arguments-container, .timeline-container {
+        flex-direction: column;
+        align-items: center;
     }
 
     .hero h1 {
@@ -349,17 +354,7 @@ section h2::after {
         font-size: 1.2em;
     }
 
-    .philosophers-container, .arguments-container, .timeline-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #search-input {
-        width: 150px;
-    }
-
-    .contact-section form {
-        width: 100%;
-        padding: 0 10px;
+    .card {
+        width: 90%;
     }
 }
