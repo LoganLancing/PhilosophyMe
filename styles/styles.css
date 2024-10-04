@@ -239,14 +239,29 @@ section p {
 }
 
 /* Featured Argument Carousel Buttons */
-.prev-featured-button, .next-featured-button {
+.featured-carousel .prev-featured-button,
+.featured-carousel .next-featured-button {
     background-color: var(--color-secondary);
     color: var(--color-bg);
     font-size: 1.5em;
+    border-radius: 50%;
+    padding: 10px;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+    cursor: pointer;
 }
 
-.prev-featured-button:hover, .next-featured-button:hover {
+.featured-carousel .prev-featured-button {
+    left: -50px;
+}
+
+.featured-carousel .next-featured-button {
+    right: -50px;
+}
+
+.featured-carousel .prev-featured-button:hover,
+.featured-carousel .next-featured-button:hover {
     background-color: var(--color-accent);
+    transform: scale(1.1);
 }
 
 /* Quotes Section */
@@ -266,6 +281,8 @@ section p {
     transition: opacity 1s ease-in-out;
     width: 100%;
     max-width: 800px;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .quote-slide.active {
@@ -281,6 +298,7 @@ section p {
     border-radius: 4px;
     position: relative;
     text-align: center;
+    font-size: 1.5em; /* Increased text size */
 }
 
 .quotes-section blockquote::before,
@@ -306,12 +324,12 @@ section p {
 .quotes-section cite {
     display: block;
     margin-top: 10px;
-    font-size: 0.9em;
+    font-size: 1em; /* Increased font size for questions */
     color: var(--color-text);
 }
 
 /* Carousel Wrapper */
-.carousel-wrapper, .timeline-carousel-wrapper {
+.carousel-wrapper {
     overflow: hidden;
     width: 100%;
     max-width: 1000px;
@@ -347,17 +365,17 @@ section p {
     gap: 30px;
 }
 
-/* Vertical Timeline Carousel Track */
-.timeline-carousel.track {
+/* Featured Argument Carousel Track */
+.featured-carousel .track {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     transition: transform 0.5s ease-in-out;
     gap: 30px;
     height: auto;
 }
 
 /* Philosopher & Argument Cards */
-.philosopher-card, .argument-card, .timeline-event, #featured-argument-container .featured-argument {
+.philosopher-card, .argument-card, #featured-argument-container .featured-argument {
     background-color: var(--color-snow);
     border: 1px solid var(--color-light);
     border-radius: var(--border-radius);
@@ -371,7 +389,7 @@ section p {
     text-align: center;
 }
 
-.philosopher-card:hover, .argument-card:hover, .timeline-event:hover, #featured-argument-container .featured-argument:hover {
+.philosopher-card:hover, .argument-card:hover, #featured-argument-container .featured-argument:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 12px var(--color-shadow);
 }
@@ -413,37 +431,6 @@ section p {
     margin-bottom: 10px;
 }
 
-.featured-argument-carousel .carousel-container.featured-carousel .carousel-button {
-    background-color: var(--color-secondary);
-    color: var(--color-bg);
-    font-size: 1.5em;
-}
-
-.featured-argument-carousel .carousel-container.featured-carousel .carousel-button:hover {
-    background-color: var(--color-accent);
-}
-
-/* Featured Argument Card */
-#featured-argument-container .featured-argument {
-    flex: 0 0 100%; /* Show one featured argument at a time */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: var(--color-snow);
-    border: 1px solid var(--color-light);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--color-shadow);
-    transition: transform 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
-}
-
-#featured-argument-container .featured-argument:hover {
-    background-color: var(--color-light);
-    box-shadow: 0 8px 12px var(--color-shadow);
-    transform: translateY(-5px);
-}
-
 #featured-argument-container .featured-argument h3 {
     font-size: 2em;
     margin-bottom: 10px;
@@ -469,67 +456,6 @@ section p {
 #featured-argument-container .featured-argument .details p span {
     font-weight: bold;
     color: var(--color-secondary);
-}
-
-/* Arguments Carousel */
-#arguments-container .argument-card {
-    flex: 0 0 calc(25% - 22.5px); /* 4 items per view */
-}
-
-/* Timeline Carousel */
-.timeline-carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-.timeline-carousel-wrapper {
-    overflow: hidden;
-    width: 100%;
-    max-width: 1200px;
-    height: auto;
-}
-
-.timeline-carousel.track {
-    display: flex;
-    flex-wrap: wrap;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
-    height: auto;
-}
-
-.timeline-event {
-    flex: 0 0 calc(20% - 24px); /* 5 items per view */
-    background-color: var(--color-snow);
-    border: 1px solid var(--color-light);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--color-shadow);
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.timeline-event:hover {
-    background-color: var(--color-light);
-    box-shadow: 0 8px 12px var(--color-shadow);
-    transform: translateY(-5px);
-}
-
-.timeline-event h3 {
-    font-size: 1.2em;
-    color: var(--color-primary);
-    margin-bottom: 10px;
-}
-
-.timeline-event p {
-    font-size: 1em;
-    color: var(--color-text);
 }
 
 /* Filter Buttons */
@@ -651,46 +577,38 @@ section p {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.philosopher-card, .argument-card, .timeline-event, #featured-argument-container .featured-argument {
+.philosopher-card, .argument-card, #featured-argument-container .featured-argument {
     animation: slideIn 0.5s ease-in-out;
 }
 
 /* Responsive Design */
+
+/* Medium Devices (Tablets) */
 @media (max-width: 1200px) {
     .carousel-button.prev-button,
     .carousel-button.next-button,
-    .featured-argument-carousel .carousel-button.prev-featured-button,
-    .featured-argument-carousel .carousel-button.next-featured-button,
-    .arguments-section .carousel-button.prev-arguments-button,
-    .arguments-section .carousel-button.next-arguments-button,
-    .timeline-carousel-container .timeline-button.prev-timeline-button,
-    .timeline-carousel-container .timeline-button.next-timeline-button {
+    .featured-carousel .prev-featured-button,
+    .featured-carousel .next-featured-button {
         left: -40px;
         right: -40px;
     }
 
-    .timeline-button.prev-timeline-button,
-    .timeline-button.next-timeline-button {
-        left: 50%;
-        transform: translateX(-50%);
+    .timeline-carousel-container {
+        display: none; /* Timeline removed */
     }
-}
 
-@media (max-width: 992px) {
-    .carousel-wrapper, .timeline-carousel-wrapper {
+    .carousel-wrapper, .featured-carousel .carousel-wrapper {
         max-width: 800px;
     }
     
-    .philosopher-card, .argument-card, .timeline-event {
-        width: 250px;
-    }
-
     .philosopher-card {
         flex: 0 0 calc(33.333% - 20px); /* 3 items per view */
+        width: calc(33.333% - 20px);
     }
 
     .argument-card {
         flex: 0 0 calc(25% - 22.5px); /* 4 items per view */
+        width: calc(25% - 22.5px);
     }
 
     .featured-argument-carousel {
@@ -713,368 +631,6 @@ section p {
 
     #featured-argument-container .featured-argument .details p {
         font-size: 0.95em;
-    }
-
-    .timeline-carousel-wrapper {
-        height: auto; /* Adjust height as needed */
-    }
-}
-
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* Consider implementing a hamburger menu */
-    }
-
-    .hero h1 {
-        font-size: 2.5em;
-    }
-
-    .hero p {
-        font-size: 1.2em;
-    }
-
-    .timeline-event {
-        flex: 0 0 calc(20% - 24px); /* Maintain 5 items per view */
-    }
-
-    .timeline-carousel.track {
-        gap: 20px;
-    }
-
-    .timeline-carousel-wrapper {
-        height: auto; /* Adjust height as needed */
-    }
-
-    .quotes-section {
-        height: 150px;
-    }
-
-    .quotes-section blockquote {
-        font-size: 1em;
-    }
-
-    .quotes-section blockquote::before,
-    .quotes-section blockquote::after {
-        font-size: 2em;
-    }
-
-    .featured-argument-carousel .carousel-button.prev-featured-button,
-    .featured-argument-carousel .carousel-button.next-featured-button,
-    .arguments-section .carousel-button.prev-arguments-button,
-    .arguments-section .carousel-button.next-arguments-button {
-        font-size: 1.2em;
-    }
-
-    #featured-argument-container .featured-argument-image {
-        width: 180px;
-        height: 180px;
-    }
-
-    #featured-argument-container .featured-argument h3 {
-        font-size: 1.6em;
-        margin-bottom: 12px;
-    }
-
-    #featured-argument-container .featured-argument p.summary {
-        font-size: 0.95em;
-    }
-
-    #featured-argument-container .featured-argument .details p {
-        font-size: 0.9em;
-    }
-}
-
-@media (max-width: 576px) {
-    .carousel-button.prev-button,
-    .carousel-button.next-button,
-    .featured-argument-carousel .carousel-button.prev-featured-button,
-    .featured-argument-carousel .carousel-button.next-featured-button,
-    .timeline-carousel-container .timeline-button.prev-timeline-button,
-    .timeline-carousel-container .timeline-button.next-timeline-button {
-        display: none;
-    }
-
-    .carousel.track, .timeline-carousel.track {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .featured-argument-carousel {
-        padding: 20px 10px;
-    }
-
-    #featured-argument-container .featured-argument-image {
-        width: 120px;
-        height: 120px;
-    }
-
-    #featured-argument-container .featured-argument h3 {
-        font-size: 1.2em;
-        margin-bottom: 8px;
-    }
-
-    #featured-argument-container .featured-argument p.summary {
-        font-size: 0.85em;
-    }
-
-    #featured-argument-container .featured-argument .details p {
-        font-size: 0.8em;
-    }
-
-    .quotes-section {
-        height: 100px;
-    }
-
-    .quotes-section blockquote {
-        font-size: 0.9em;
-    }
-
-    #philosophers-container .philosopher-card,
-    #arguments-container .argument-card,
-    #timeline-container .timeline-event {
-        flex: 0 0 100%;
-        width: 100%;
-    }
-
-    .timeline-carousel-wrapper {
-        height: auto; /* Adjust height as needed */
-    }
-
-    .filter-button {
-        padding: 8px 16px;
-        font-size: 0.9em;
-    }
-
-    .filter-button img {
-        width: 18px;
-        height: 18px;
-    }
-
-    #featured-argument-container .featured-argument-image {
-        width: 100px;
-        height: 100px;
-    }
-
-    #featured-argument-container .featured-argument h3 {
-        font-size: 1em;
-        margin-bottom: 6px;
-    }
-
-    #featured-argument-container .featured-argument p.summary {
-        font-size: 0.8em;
-    }
-
-    #featured-argument-container .featured-argument .details p {
-        font-size: 0.75em;
-    }
-}
-
-/* Featured Argument Carousel */
-.featured-argument-carousel {
-    background-color: var(--color-lavender);
-    border: 2px solid var(--color-accent);
-    border-radius: var(--border-radius);
-    padding: 30px 20px;
-    text-align: center;
-    margin: 40px 0;
-    box-shadow: 0 6px 12px var(--color-shadow);
-    position: relative;
-    transition: box-shadow var(--transition-speed), background-color var(--transition-speed);
-}
-
-.featured-argument-carousel:hover {
-    box-shadow: 0 10px 20px var(--color-shadow);
-    background-color: var(--color-snow);
-}
-
-.featured-argument-carousel h3 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: var(--color-primary);
-}
-
-/* Featured Argument Carousel Buttons */
-.featured-carousel .prev-featured-button,
-.featured-carousel .next-featured-button {
-    background-color: var(--color-secondary);
-    color: var(--color-bg);
-    font-size: 1.5em;
-    border-radius: 50%;
-    padding: 10px;
-    transition: background-color var(--transition-speed), transform var(--transition-speed);
-    cursor: pointer;
-}
-
-.featured-carousel .prev-featured-button:hover,
-.featured-carousel .next-featured-button:hover {
-    background-color: var(--color-accent);
-    transform: scale(1.1);
-}
-
-/* Featured Argument Card */
-#featured-argument-container .featured-argument {
-    flex: 0 0 100%; /* Show one featured argument at a time */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: var(--color-snow);
-    border: 1px solid var(--color-light);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--color-shadow);
-    transition: transform 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
-}
-
-#featured-argument-container .featured-argument:hover {
-    background-color: var(--color-light);
-    box-shadow: 0 8px 12px var(--color-shadow);
-    transform: translateY(-5px);
-}
-
-#featured-argument-container .featured-argument h3 {
-    font-size: 2em;
-    margin-bottom: 10px;
-    color: var(--color-primary);
-}
-
-#featured-argument-container .featured-argument p.summary {
-    font-size: 1.1em;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-#featured-argument-container .featured-argument .details {
-    text-align: left;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-#featured-argument-container .featured-argument .details p {
-    margin-bottom: 10px;
-}
-
-#featured-argument-container .featured-argument .details p span {
-    font-weight: bold;
-    color: var(--color-secondary);
-}
-
-/* Timeline Carousel */
-.timeline-carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-.timeline-carousel-wrapper {
-    overflow: hidden;
-    width: 100%;
-    max-width: 1200px;
-    height: auto;
-}
-
-.timeline-carousel.track {
-    display: flex;
-    flex-wrap: wrap;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
-    height: auto;
-}
-
-.timeline-event {
-    flex: 0 0 calc(20% - 24px); /* 5 items per view */
-    background-color: var(--color-snow);
-    border: 1px solid var(--color-light);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    box-shadow: 0 4px 6px var(--color-shadow);
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.timeline-event:hover {
-    background-color: var(--color-light);
-    box-shadow: 0 8px 12px var(--color-shadow);
-    transform: translateY(-5px);
-}
-
-.timeline-event h3 {
-    font-size: 1.2em;
-    color: var(--color-primary);
-    margin-bottom: 10px;
-}
-
-.timeline-event p {
-    font-size: 1em;
-    color: var(--color-text);
-}
-
-/* Responsive Design Adjustments */
-
-/* Medium Devices (Tablets) */
-@media (max-width: 992px) {
-    .carousel-button.prev-button,
-    .carousel-button.next-button,
-    .featured-carousel .carousel-button.prev-featured-button,
-    .featured-carousel .carousel-button.next-featured-button,
-    .timeline-carousel-container .timeline-button.prev-timeline-button,
-    .timeline-carousel-container .timeline-button.next-timeline-button {
-        left: -40px;
-        right: -40px;
-    }
-
-    .timeline-button.prev-timeline-button,
-    .timeline-button.next-timeline-button {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .carousel-wrapper, .timeline-carousel-wrapper {
-        max-width: 800px;
-    }
-    
-    .philosopher-card, .argument-card, .timeline-event {
-        width: 250px;
-    }
-
-    .philosopher-card {
-        flex: 0 0 calc(33.333% - 20px); /* 3 items per view */
-    }
-
-    .argument-card {
-        flex: 0 0 calc(25% - 22.5px); /* 4 items per view */
-    }
-
-    .featured-argument-carousel {
-        padding: 30px 15px;
-    }
-
-    #featured-argument-container .featured-argument-image {
-        width: 200px;
-        height: 200px;
-    }
-
-    #featured-argument-container .featured-argument h3 {
-        font-size: 1.8em;
-        margin-bottom: 15px;
-    }
-
-    #featured-argument-container .featured-argument p.summary {
-        font-size: 1em;
-    }
-
-    #featured-argument-container .featured-argument .details p {
-        font-size: 0.95em;
-    }
-
-    .timeline-carousel-wrapper {
-        height: auto; /* Adjust height as needed */
     }
 }
 
@@ -1092,35 +648,20 @@ section p {
         font-size: 1.2em;
     }
 
-    .timeline-event {
-        flex: 0 0 calc(20% - 24px); /* Maintain 5 items per view */
-    }
-
-    .timeline-carousel.track {
-        gap: 20px;
-    }
-
-    .timeline-carousel-wrapper {
-        height: auto; /* Adjust height as needed */
-    }
-
     .quotes-section {
         height: 150px;
     }
 
     .quotes-section blockquote {
-        font-size: 1em;
+        font-size: 1.5em; /* Increased font size */
     }
 
-    .quotes-section blockquote::before,
-    .quotes-section blockquote::after {
-        font-size: 2em;
+    .quotes-section cite {
+        font-size: 1em; /* Increased font size for questions */
     }
 
-    .featured-argument-carousel .carousel-button.prev-featured-button,
-    .featured-argument-carousel .carousel-button.next-featured-button,
-    .arguments-section .carousel-button.prev-arguments-button,
-    .arguments-section .carousel-button.next-arguments-button {
+    .featured-argument-carousel .prev-featured-button,
+    .featured-argument-carousel .next-featured-button {
         font-size: 1.2em;
     }
 
@@ -1147,14 +688,12 @@ section p {
 @media (max-width: 576px) {
     .carousel-button.prev-button,
     .carousel-button.next-button,
-    .featured-carousel .carousel-button.prev-featured-button,
-    .featured-carousel .carousel-button.next-featured-button,
-    .timeline-carousel-container .timeline-button.prev-timeline-button,
-    .timeline-carousel-container .timeline-button.next-timeline-button {
-        display: none;
+    .featured-carousel .prev-featured-button,
+    .featured-carousel .next-featured-button {
+        display: none; /* Hide carousel buttons */
     }
 
-    .carousel.track, .timeline-carousel.track {
+    .carousel.track, .featured-carousel .carousel.track {
         flex-direction: column;
         align-items: center;
     }
@@ -1186,18 +725,13 @@ section p {
     }
 
     .quotes-section blockquote {
-        font-size: 0.9em;
+        font-size: 1.2em; /* Increased font size */
     }
 
     #philosophers-container .philosopher-card,
-    #arguments-container .argument-card,
-    #timeline-container .timeline-event {
+    #arguments-container .argument-card {
         flex: 0 0 100%;
         width: 100%;
-    }
-
-    .timeline-carousel-wrapper {
-        height: auto; /* Adjust height as needed */
     }
 
     .filter-button {
@@ -1230,65 +764,53 @@ section p {
 }
 
 /* Quotes Section Auto-Cycle */
-@keyframes fadeInOut {
-    0%, 100% { opacity: 0; }
-    10%, 90% { opacity: 1; }
-}
-
-.quote-slide {
-    animation: fadeInOut 10s infinite;
-}
-
-.quote-slide:nth-child(1) {
-    animation-delay: 0s;
-}
-
-.quote-slide:nth-child(2) {
-    animation-delay: 5s;
-}
-
-.quote-slide:nth-child(3) {
-    animation-delay: 10s;
-}
-
-/* Ensure only one quote is visible at a time */
-.quote-slide {
+.quotes-section .quote-slide {
     opacity: 0;
+    transition: opacity 1s ease-in-out;
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 80%;
+    box-sizing: border-box;
 }
 
-.quote-slide.active {
+.quotes-section .quote-slide.active {
     opacity: 1;
     position: relative;
 }
 
-/* Timeline Event Sizing for 5 Cards */
-.timeline-event {
-    flex: 0 0 calc(20% - 24px); /* 5 items per view */
-    width: calc(20% - 24px);
+/* Ensure only one quote is visible at a time */
+.quotes-section blockquote {
+    font-size: 1.5em; /* Bigger text */
 }
 
-@media (max-width: 1200px) {
-    .timeline-event {
-        flex: 0 0 calc(33.333% - 24px); /* 3 items per view on medium screens */
-        width: calc(33.333% - 24px);
-    }
+.quotes-section cite {
+    font-size: 1em;
 }
 
-@media (max-width: 768px) {
-    .timeline-event {
-        flex: 0 0 calc(50% - 24px); /* 2 items per view on small screens */
-        width: calc(50% - 24px);
-    }
+/* Featured Argument Carousel Positioning */
+.featured-carousel .prev-featured-button {
+    left: -50px;
 }
 
-@media (max-width: 576px) {
-    .timeline-event {
-        flex: 0 0 100%; /* 1 item per view on extra small screens */
-        width: 100%;
-    }
+.featured-carousel .next-featured-button {
+    right: -50px;
+}
+
+/* Ensure only 3 philosophers are visible at once */
+#philosophers-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 30px;
+}
+
+.philosopher-card {
+    flex: 0 0 calc(33.333% - 20px); /* 3 items per view */
+    width: calc(33.333% - 20px);
+}
+
+/* Hide timeline styles as timeline is removed */
+.timeline-section {
+    display: none;
 }
