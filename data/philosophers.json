@@ -7,10 +7,23 @@
         "arguments": [
             {
                 "title": "Cogito, ergo sum",
-                "description": "I think, therefore I am.",
-                "importance": "Foundation for modern Western philosophy and the concept of self-awareness.",
-                "context": "Responded to skepticism about the external world.",
-                "influence": "Influenced existentialism and modern epistemology."
+                "briefOverview": "The foundation of Descartes' philosophy, asserting self-awareness as undeniable.",
+                "summary": "I think, therefore I am. This argument establishes the certainty of one's own existence through the act of thinking.",
+                "realLifeExample": "Even if you doubt everything else, the very act of doubting confirms your existence as a thinking being.",
+                "pro": "Provides a clear starting point for building knowledge based on certainty.",
+                "con": "Critiqued for being too introspective and not addressing the existence of the external world.",
+                "keyPhilosopher": "René Descartes",
+                "category": "mind"
+            },
+            {
+                "title": "Dualism",
+                "briefOverview": "The belief in two fundamental substances: mind and matter.",
+                "summary": "Dualism posits that the mind and body are distinct and separable entities, with the mind being non-material.",
+                "realLifeExample": "Your thoughts and consciousness exist independently of your physical body.",
+                "pro": "Explains the subjective experience and consciousness.",
+                "con": "Struggles to explain the interaction between mind and body.",
+                "keyPhilosopher": "René Descartes",
+                "category": "mind"
             }
         ],
         "influence": "His work laid the groundwork for rationalism and influenced subsequent philosophers like Spinoza and Leibniz."
@@ -23,10 +36,23 @@
         "arguments": [
             {
                 "title": "Categorical Imperative",
-                "description": "Act only according to that maxim whereby you can, at the same time, will that it should become a universal law.",
-                "importance": "Foundation of deontological ethics.",
-                "context": "Responded to moral relativism and consequentialist theories.",
-                "influence": "Influenced deontological ethical theories and human rights discourse."
+                "briefOverview": "A central principle in Kant's deontological moral philosophy.",
+                "summary": "Act only according to that maxim whereby you can, at the same time, will that it should become a universal law.",
+                "realLifeExample": "If you consider lying to get out of trouble, you must imagine a world where everyone lies in similar situations, which would undermine trust.",
+                "pro": "Provides a clear and universal basis for moral actions.",
+                "con": "Can be rigid and may not account for complex moral dilemmas.",
+                "keyPhilosopher": "Immanuel Kant",
+                "category": "ethics"
+            },
+            {
+                "title": "Transcendental Idealism",
+                "briefOverview": "Kant's theory on the nature of reality and human perception.",
+                "summary": "Asserts that our experience of things is about how they appear to us, not about those things as they are in themselves.",
+                "realLifeExample": "We perceive a tree's color based on our sensory input, not necessarily the tree's inherent color independent of our perception.",
+                "pro": "Bridges rationalism and empiricism, accounting for human perception.",
+                "con": "Leaves the nature of things-in-themselves obscure and unknowable.",
+                "keyPhilosopher": "Immanuel Kant",
+                "category": "existence"
             }
         ],
         "influence": "His critical philosophy bridged rationalism and empiricism, influencing German Idealism and contemporary philosophy."
@@ -39,10 +65,23 @@
         "arguments": [
             {
                 "title": "Golden Mean",
-                "description": "Virtue lies between two extremes of excess and deficiency.",
-                "importance": "Basis for virtue ethics.",
-                "context": "Responded to moral absolutism and hedonism.",
-                "influence": "Influenced subsequent ethical theories and character education."
+                "briefOverview": "A key concept in Aristotle's virtue ethics.",
+                "summary": "Virtue lies between two extremes of excess and deficiency, promoting moderation.",
+                "realLifeExample": "Courage is the balance between recklessness (excess) and cowardice (deficiency).",
+                "pro": "Encourages balanced and moderate behavior.",
+                "con": "Determining the exact mean can be subjective and context-dependent.",
+                "keyPhilosopher": "Aristotle",
+                "category": "ethics"
+            },
+            {
+                "title": "Four Causes",
+                "briefOverview": "Aristotle's explanation of why things exist as they do.",
+                "summary": "Includes material, formal, efficient, and final causes to explain an object's existence and purpose.",
+                "realLifeExample": "A wooden table: material cause (wood), formal cause (design), efficient cause (carpenter), final cause (to hold items).",
+                "pro": "Provides a comprehensive framework for understanding causality.",
+                "con": "Modern science often requires more precise explanations beyond the four causes.",
+                "keyPhilosopher": "Aristotle",
+                "category": "existence"
             }
         ],
         "influence": "His works laid the foundation for Western philosophy and science, influencing countless scholars through the centuries."
@@ -55,12 +94,83 @@
         "arguments": [
             {
                 "title": "Theory of Forms",
-                "description": "Non-material abstract forms, and not the material world, possess the highest and most fundamental kind of reality.",
-                "importance": "Foundation for metaphysical realism.",
-                "context": "Responded to the problem of universals and the nature of reality.",
-                "influence": "Influenced Neoplatonism, Christian theology, and modern philosophical realism."
+                "briefOverview": "Plato's metaphysical theory explaining the nature of reality.",
+                "summary": "Non-material abstract forms, and not the material world, possess the highest and most fundamental kind of reality.",
+                "realLifeExample": "A perfect circle exists in the realm of forms, while any drawn circle is merely an imperfect copy.",
+                "pro": "Explains the universality and perfection of concepts and objects.",
+                "con": "Difficult to explain how forms interact with the physical world.",
+                "keyPhilosopher": "Plato",
+                "category": "existence"
+            },
+            {
+                "title": "Allegory of the Cave",
+                "briefOverview": "A metaphor for human perception and enlightenment.",
+                "summary": "Humans are like prisoners in a cave who see only shadows of real objects, mistaking appearances for reality.",
+                "realLifeExample": "Educational enlightenment as breaking free from ignorance to understand the true nature of reality.",
+                "pro": "Illustrates the journey from ignorance to knowledge and the importance of education.",
+                "con": "Critiqued for being overly pessimistic about human perception.",
+                "keyPhilosopher": "Plato",
+                "category": "existence"
             }
         ],
         "influence": "Plato's ideas have shaped Western thought, politics, and education for over two millennia."
+    },
+    {
+        "name": "Søren Kierkegaard",
+        "image": "images/kierkegaard.jpg",
+        "bio": "A Danish philosopher, social critic, and theologian, often considered the first existentialist philosopher.",
+        "works": ["Either/Or", "Fear and Trembling", "The Sickness Unto Death"],
+        "arguments": [
+            {
+                "title": "Leap of Faith",
+                "briefOverview": "Kierkegaard's concept of believing without empirical evidence.",
+                "summary": "To believe in something transcendent, such as God, one must make a subjective leap of faith beyond rational understanding.",
+                "realLifeExample": "Choosing to believe in a higher power despite the lack of scientific proof.",
+                "pro": "Emphasizes personal commitment and the importance of individual belief.",
+                "con": "Critiqued for potentially encouraging irrational belief systems.",
+                "keyPhilosopher": "Søren Kierkegaard",
+                "category": "religion"
+            },
+            {
+                "title": "Existential Angst",
+                "briefOverview": "The feeling of deep anxiety arising from human freedom and responsibility.",
+                "summary": "Angst is the realization of one's absolute freedom to choose, leading to feelings of dread and uncertainty.",
+                "realLifeExample": "Feeling overwhelmed by the responsibility of making life-altering decisions.",
+                "pro": "Highlights the importance of personal responsibility and authenticity.",
+                "con": "Can be seen as perpetuating feelings of despair and meaninglessness.",
+                "keyPhilosopher": "Søren Kierkegaard",
+                "category": "mind"
+            }
+        ],
+        "influence": "His emphasis on individual existence and personal choice laid the groundwork for existentialism and modern theology."
+    },
+    {
+        "name": "Friedrich Nietzsche",
+        "image": "images/nietzsche.jpg",
+        "bio": "A German philosopher, cultural critic, poet, and philologist whose work has exerted a profound influence on Western philosophy and modern intellectual history.",
+        "works": ["Thus Spoke Zarathustra", "Beyond Good and Evil", "The Genealogy of Morals"],
+        "arguments": [
+            {
+                "title": "Übermensch (Overman/Superman)",
+                "briefOverview": "Nietzsche's idea of an individual who has transcended conventional morality to create their own values.",
+                "summary": "The Übermensch represents the goal for humanity to set their own values and purpose, overcoming the limitations of traditional societal norms.",
+                "realLifeExample": "An artist or thinker who creates groundbreaking work that redefines cultural or moral standards.",
+                "pro": "Encourages personal growth, creativity, and the rejection of herd mentality.",
+                "con": "Critiqued for promoting elitism and disregarding communal values.",
+                "keyPhilosopher": "Friedrich Nietzsche",
+                "category": "ethics"
+            },
+            {
+                "title": "Will to Power",
+                "briefOverview": "The fundamental driving force in humans to assert and enhance their power and influence.",
+                "summary": "Nietzsche posits that the primary motivation in humans is the 'will to power'—a desire to reach the highest possible position in life.",
+                "realLifeExample": "An entrepreneur striving to build a successful business empire.",
+                "pro": "Explains ambition and the drive for success in human behavior.",
+                "con": "Can be interpreted as endorsing domination and exploitation.",
+                "keyPhilosopher": "Friedrich Nietzsche",
+                "category": "ethics"
+            }
+        ],
+        "influence": "His provocative ideas challenged the foundations of Christianity and traditional morality, influencing a wide range of philosophical, artistic, and political movements."
     }
 ]
