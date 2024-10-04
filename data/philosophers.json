@@ -14,7 +14,7 @@
                 "pro": "Encourages balanced and moderate behavior.",
                 "con": "Determining the exact mean can be subjective and context-dependent.",
                 "keyPhilosopher": "Aristotle",
-                "category": "ethics",
+                "category": "ethics & morality",
                 "featured": false
             },
             {
@@ -25,7 +25,7 @@
                 "pro": "Provides a comprehensive framework for understanding causality.",
                 "con": "Modern science often requires more precise explanations beyond the four causes.",
                 "keyPhilosopher": "Aristotle",
-                "category": "existence",
+                "category": "existence & reality",
                 "featured": false
             }
         ],
@@ -46,7 +46,7 @@
                 "pro": "Explains the universality and perfection of concepts and objects.",
                 "con": "Difficult to explain how forms interact with the physical world.",
                 "keyPhilosopher": "Plato",
-                "category": "existence",
+                "category": "existence & reality",
                 "featured": false
             },
             {
@@ -57,7 +57,7 @@
                 "pro": "Illustrates the journey from ignorance to knowledge and the importance of education.",
                 "con": "Critiqued for being overly pessimistic about human perception.",
                 "keyPhilosopher": "Plato",
-                "category": "existence",
+                "category": "existence & reality",
                 "featured": false
             }
         ],
@@ -78,7 +78,7 @@
                 "pro": "Provides a clear starting point for building knowledge based on certainty.",
                 "con": "Critiqued for being too introspective and not addressing the existence of the external world.",
                 "keyPhilosopher": "René Descartes",
-                "category": "mind",
+                "category": "mind & consciousness",
                 "featured": true
             },
             {
@@ -89,7 +89,7 @@
                 "pro": "Explains the subjective experience and consciousness.",
                 "con": "Struggles to explain the interaction between mind and body.",
                 "keyPhilosopher": "René Descartes",
-                "category": "mind",
+                "category": "mind & consciousness",
                 "featured": false
             }
         ],
@@ -110,7 +110,7 @@
                 "pro": "Provides a clear and universal basis for moral actions.",
                 "con": "Can be rigid and may not account for complex moral dilemmas.",
                 "keyPhilosopher": "Immanuel Kant",
-                "category": "ethics",
+                "category": "ethics & morality",
                 "featured": true
             },
             {
@@ -121,7 +121,7 @@
                 "pro": "Bridges rationalism and empiricism, accounting for human perception.",
                 "con": "Leaves the nature of things-in-themselves obscure and unknowable.",
                 "keyPhilosopher": "Immanuel Kant",
-                "category": "existence",
+                "category": "existence & reality",
                 "featured": false
             },
             {
@@ -132,7 +132,7 @@
                 "pro": "Highlights the complexities of moral decision-making and the conflict between different ethical principles.",
                 "con": "Can oversimplify moral dilemmas and may not account for all real-world variables.",
                 "keyPhilosopher": "Immanuel Kant",
-                "category": "ethics",
+                "category": "ethics & morality",
                 "featured": true
             }
         ],
@@ -153,7 +153,7 @@
                 "pro": "Emphasizes personal commitment and the importance of individual belief.",
                 "con": "Critiqued for potentially encouraging irrational belief systems.",
                 "keyPhilosopher": "Søren Kierkegaard",
-                "category": "religion",
+                "category": "religion & god",
                 "featured": false
             },
             {
@@ -164,7 +164,7 @@
                 "pro": "Highlights the importance of personal responsibility and authenticity.",
                 "con": "Can be seen as perpetuating feelings of despair and meaninglessness.",
                 "keyPhilosopher": "Søren Kierkegaard",
-                "category": "mind",
+                "category": "mind & consciousness",
                 "featured": false
             }
         ],
@@ -185,7 +185,7 @@
                 "pro": "Encourages personal growth, creativity, and the rejection of herd mentality.",
                 "con": "Critiqued for promoting elitism and disregarding communal values.",
                 "keyPhilosopher": "Friedrich Nietzsche",
-                "category": "ethics",
+                "category": "ethics & morality",
                 "featured": true
             },
             {
@@ -196,7 +196,7 @@
                 "pro": "Explains ambition and the drive for success in human behavior.",
                 "con": "Can be interpreted as endorsing domination and exploitation.",
                 "keyPhilosopher": "Friedrich Nietzsche",
-                "category": "ethics",
+                "category": "ethics & morality",
                 "featured": false
             }
         ],
