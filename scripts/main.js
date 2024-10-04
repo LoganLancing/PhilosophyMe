@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let allPhilosophers = [];
 let allArguments = [];
+let featuredArguments = [];
 let currentPhilosophersIndex = 0;
 let currentArgumentsIndex = 0;
 let currentFeaturedIndex = 0;
@@ -35,12 +36,15 @@ async function fetchPhilosophers() {
     }
 }
 
-// Extract all unique arguments
+// Extract all unique arguments and featured arguments
 function extractArguments() {
     const argumentsSet = new Set();
     allPhilosophers.forEach(philosopher => {
         philosopher.arguments.forEach(arg => {
             argumentsSet.add(JSON.stringify(arg));
+            if (arg.featured) {
+                featuredArguments.push(arg);
+            }
         });
     });
     allArguments = Array.from(argumentsSet).map(arg => JSON.parse(arg));
@@ -195,8 +199,8 @@ function updateArgumentsCarousel() {
     const totalArguments = container.children.length;
     const maxIndex = Math.ceil(totalArguments / ARGUMENTS_VISIBLE) - 1;
 
-    const prevButton = document.querySelector('.arguments-section .prev-button');
-    const nextButton = document.querySelector('.arguments-section .next-button');
+    const prevButton = document.querySelector('.arguments-section .prev-arguments-button');
+    const nextButton = document.querySelector('.arguments-section .next-arguments-button');
     prevButton.disabled = currentArgumentsIndex === 0;
     nextButton.disabled = currentArgumentsIndex === maxIndex;
 
@@ -223,12 +227,15 @@ function setupCarouselNavigation() {
         if (currentPhilosophersIndex < maxIndex) {
             currentPhilosophersIndex++;
             updatePhilosophersCarousel();
+        } else {
+            currentPhilosophersIndex = 0;
+            updatePhilosophersCarousel();
         }
     });
 
     // Arguments Carousel
-    const prevArguments = document.querySelector('.arguments-section .prev-button');
-    const nextArguments = document.querySelector('.arguments-section .next-button');
+    const prevArguments = document.querySelector('.arguments-section .prev-arguments-button');
+    const nextArguments = document.querySelector('.arguments-section .next-arguments-button');
 
     prevArguments.addEventListener('click', () => {
         if (currentArgumentsIndex > 0) {
@@ -244,12 +251,15 @@ function setupCarouselNavigation() {
         if (currentArgumentsIndex < maxIndex) {
             currentArgumentsIndex++;
             updateArgumentsCarousel();
+        } else {
+            currentArgumentsIndex = 0;
+            updateArgumentsCarousel();
         }
     });
 
     // Featured Arguments Carousel
-    const prevFeatured = document.querySelector('.featured-argument-carousel .prev-button');
-    const nextFeatured = document.querySelector('.featured-argument-carousel .next-button');
+    const prevFeatured = document.querySelector('.featured-argument-carousel .prev-featured-button');
+    const nextFeatured = document.querySelector('.featured-argument-carousel .next-featured-button');
 
     prevFeatured.addEventListener('click', () => {
         if (currentFeaturedIndex > 0) {
@@ -259,12 +269,12 @@ function setupCarouselNavigation() {
     });
 
     nextFeatured.addEventListener('click', () => {
-        const featuredArguments = allArguments.filter(arg => arg.featured);
-        const maxIndex = Math.ceil(featuredArguments.length / FEATURED_VISIBLE) - 1;
-        if (currentFeaturedIndex < maxIndex) {
+        if (currentFeaturedIndex < featuredArguments.length - 1) {
             currentFeaturedIndex++;
-            updateFeaturedCarousel();
+        } else {
+            currentFeaturedIndex = 0;
         }
+        updateFeaturedCarousel();
     });
 
     // Timeline Carousel
@@ -284,6 +294,9 @@ function setupCarouselNavigation() {
         const maxIndex = Math.ceil(totalTimeline / TIMELINE_VISIBLE) - 1;
         if (currentTimelineIndex < maxIndex) {
             currentTimelineIndex++;
+            updateTimelineCarousel();
+        } else {
+            currentTimelineIndex = 0;
             updateTimelineCarousel();
         }
     });
@@ -371,24 +384,24 @@ function populateTimeline() {
     const sortedPhilosophers = allPhilosophers.slice().sort((a, b) => compareDates(a.publicationDate, b.publicationDate));
 
     sortedPhilosophers.forEach(philosopher => {
-        const event = document.createElement('div');
-        event.classList.add('timeline-event');
+        philosopher.arguments.forEach(arg => {
+            const event = document.createElement('div');
+            event.classList.add('timeline-event');
 
-        const date = document.createElement('h3');
-        date.textContent = philosopher.publicationDate;
-        event.appendChild(date);
+            const date = document.createElement('h3');
+            date.textContent = philosopher.publicationDate;
+            event.appendChild(date);
 
-        const name = document.createElement('p');
-        name.innerHTML = `<strong>${philosopher.name}</strong>`;
-        event.appendChild(name);
+            const name = document.createElement('p');
+            name.innerHTML = `<strong>${philosopher.name}</strong>`;
+            event.appendChild(name);
 
-        const arg = philosopher.arguments[0];
-        const summary = document.createElement('p');
-        summary.textContent = arg ? arg.description : 'No summary available.';
-        event.appendChild(summary);
+            const summary = document.createElement('p');
+            summary.textContent = arg.description;
+            event.appendChild(summary);
 
-        event.addEventListener('click', () => {
-            showModal(`${philosopher.name} - ${arg.title}`, `
+            event.addEventListener('click', () => {
+                showModal(`${philosopher.name} - ${arg.title}`, `
 Publication Date: ${philosopher.publicationDate}
 
 Argument: ${arg.title}
@@ -398,10 +411,11 @@ Real-Life Example: ${arg.realLifeExample}
 
 Influence:
 ${philosopher.influence}
-            `);
-        });
+                `);
+            });
 
-        timelineContainer.appendChild(event);
+            timelineContainer.appendChild(event);
+        });
     });
 
     updateTimelineCarousel();
@@ -430,17 +444,17 @@ function parseYear(dateStr) {
 
 // Populate featured arguments
 function populateFeaturedArguments() {
-    const container = document.getElementById('featured-arguments-container');
+    const container = document.getElementById('featured-argument-container');
     container.innerHTML = '';
 
-    const featuredArguments = allArguments.filter(arg => arg.featured);
+    if (featuredArguments.length === 0) {
+        container.innerHTML = '<p>No featured arguments available.</p>';
+        return;
+    }
 
-    featuredArguments.forEach(arg => {
-        const card = createFeaturedArgumentCard(arg);
-        container.appendChild(card);
-    });
-
-    updateFeaturedCarousel();
+    const arg = featuredArguments[currentFeaturedIndex];
+    const card = createFeaturedArgumentCard(arg);
+    container.appendChild(card);
 }
 
 // Create a featured argument card
@@ -458,9 +472,31 @@ function createFeaturedArgumentCard(argument) {
     title.textContent = argument.title;
     card.appendChild(title);
 
-    const synopsis = document.createElement('p');
-    synopsis.textContent = argument.summary;
-    card.appendChild(synopsis);
+    const summary = document.createElement('p');
+    summary.classList.add('summary');
+    summary.textContent = argument.summary;
+    card.appendChild(summary);
+
+    const details = document.createElement('div');
+    details.classList.add('details');
+
+    const example = document.createElement('p');
+    example.innerHTML = `<span>Real-Life Example:</span> ${argument.realLifeExample}`;
+    details.appendChild(example);
+
+    const pros = document.createElement('p');
+    pros.innerHTML = `<span>Pros:</span> ${argument.pro}`;
+    details.appendChild(pros);
+
+    const cons = document.createElement('p');
+    cons.innerHTML = `<span>Cons:</span> ${argument.con}`;
+    details.appendChild(cons);
+
+    const keyPhilosopher = document.createElement('p');
+    keyPhilosopher.innerHTML = `<span>Key Philosopher:</span> ${argument.keyPhilosopher}`;
+    details.appendChild(keyPhilosopher);
+
+    card.appendChild(details);
 
     card.addEventListener('click', () => {
         showModal(argument.title, `
@@ -486,30 +522,15 @@ ${argument.keyPhilosopher}
 
 // Update featured arguments carousel
 function updateFeaturedCarousel() {
-    const container = document.getElementById('featured-arguments-container');
-    const totalFeatured = container.children.length;
-    const maxIndex = Math.ceil(totalFeatured / FEATURED_VISIBLE) - 1;
+    const container = document.getElementById('featured-argument-container');
+    container.innerHTML = '';
 
-    const prevButton = document.querySelector('.featured-argument-carousel .prev-button');
-    const nextButton = document.querySelector('.featured-argument-carousel .next-button');
-    prevButton.disabled = currentFeaturedIndex === 0;
-    nextButton.disabled = currentFeaturedIndex === maxIndex;
+    if (featuredArguments.length === 0) {
+        container.innerHTML = '<p>No featured arguments available.</p>';
+        return;
+    }
 
-    const translateX = -(currentFeaturedIndex * (container.children[0].offsetWidth + 30) * FEATURED_VISIBLE);
-    container.style.transform = `translateX(${translateX}px)`;
-}
-
-// Update timeline carousel
-function updateTimelineCarousel() {
-    const container = document.getElementById('timeline-container');
-    const totalTimeline = container.children.length;
-    const maxIndex = Math.ceil(totalTimeline / TIMELINE_VISIBLE) - 1;
-
-    const prevButton = document.querySelector('.timeline-carousel-container .prev-timeline-button');
-    const nextButton = document.querySelector('.timeline-carousel-container .next-timeline-button');
-    prevButton.disabled = currentTimelineIndex === 0;
-    nextButton.disabled = currentTimelineIndex === maxIndex;
-
-    const translateY = -(currentTimelineIndex * (container.children[0].offsetHeight + 30) * TIMELINE_VISIBLE);
-    container.style.transform = `translateY(${translateY}px)`;
+    const arg = featuredArguments[currentFeaturedIndex];
+    const card = createFeaturedArgumentCard(arg);
+    container.appendChild(card);
 }
