@@ -141,11 +141,11 @@ function updatePhilosophersCarousel() {
     const maxIndex = Math.ceil(totalPhilosophers / PHILOSOPHERS_VISIBLE) - 1;
 
     // Disable buttons at the ends
-    document.querySelector('.prev-button').disabled = currentPhilosophersIndex === 0;
-    document.querySelector('.next-button').disabled = currentPhilosophersIndex === maxIndex;
+    document.querySelector('.philosophers-section .prev-button').disabled = currentPhilosophersIndex === 0;
+    document.querySelector('.philosophers-section .next-button').disabled = currentPhilosophersIndex === maxIndex;
 
     // Calculate translateX
-    const translateX = -(currentPhilosophersIndex * PHILOSOPHERS_VISIBLE * 340); // 300px width + 40px gap
+    const translateX = -(currentPhilosophersIndex * PHILOSOPHERS_VISIBLE * (300 + 30)); // 300px width + 30px gap
     container.style.transform = `translateX(${translateX}px)`;
 }
 
@@ -243,7 +243,7 @@ function updateArgumentsCarousel() {
     document.querySelector('.arguments-section .next-button').disabled = currentArgumentsIndex === maxIndex;
 
     // Calculate translateX
-    const translateX = -(currentArgumentsIndex * ARGUMENTS_VISIBLE * 340); // 300px width + 40px gap
+    const translateX = -(currentArgumentsIndex * ARGUMENTS_VISIBLE * (300 + 30)); // 300px width + 30px gap
     container.style.transform = `translateX(${translateX}px)`;
 }
 
@@ -344,27 +344,32 @@ function showModal(title, body) {
 function setupFeaturedArgument() {
     const challengeButton = document.querySelector('.featured-argument .challenge-button');
     challengeButton.addEventListener('click', () => {
-        showModal('Challenge Yourself: Quiz Time!', `
-**Quiz:** Match the Argument to the Philosopher
-
-**Question:** Who proposed the Ontological Argument?
-
-1. Aristotle
-2. René Descartes
-3. Anselm of Canterbury
-4. Immanuel Kant
-
-**Your Answer:** (Type the number corresponding to your answer)
-        `);
-
-        // Optionally, implement a simple quiz interaction here
+        setupQuiz(
+            'Who proposed the Ontological Argument?',
+            ['Aristotle', 'René Descartes', 'Anselm of Canterbury', 'Immanuel Kant'],
+            3 // Correct answer index (Anselm of Canterbury)
+        );
     });
 }
 
 // Setup scroll to top button (if implemented)
 function setupScrollToTop() {
-    // Optional: Implement a scroll-to-top button if desired
-    // Example implementation can be added here
+    const scrollButton = document.createElement('button');
+    scrollButton.classList.add('scroll-to-top');
+    scrollButton.innerHTML = '⬆️';
+    document.body.appendChild(scrollButton);
+
+    scrollButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            scrollButton.style.display = 'block';
+        } else {
+            scrollButton.style.display = 'none';
+        }
+    });
 }
 
 // Additional Interactive Features
@@ -470,23 +475,11 @@ function setupQuiz(question, options, correctAnswer) {
     modalBody.appendChild(quizContainer);
 }
 
+// Show quiz result
 function showQuizResult(isCorrect, correctAnswer) {
     const modalBody = document.getElementById('modal-body');
-    modalBody.innerHTML += `
-        <div class="quiz-results ${isCorrect ? 'active' : ''}">
-            <p>${isCorrect ? '✅ Correct!' : `❌ Incorrect. The correct answer is ${correctAnswer}.`}</p>
-        </div>
-    `;
-}
-
-// Example usage within featured argument setup
-function setupFeaturedArgument() {
-    const challengeButton = document.querySelector('.featured-argument .challenge-button');
-    challengeButton.addEventListener('click', () => {
-        setupQuiz(
-            'Who proposed the Ontological Argument?',
-            ['Aristotle', 'René Descartes', 'Anselm of Canterbury', 'Immanuel Kant'],
-            3 // Correct answer index (Anselm of Canterbury)
-        );
-    });
+    const result = document.createElement('div');
+    result.classList.add('quiz-results', 'active');
+    result.innerHTML = `<p>${isCorrect ? '✅ Correct!' : `❌ Incorrect. The correct answer is ${correctAnswer}.`}</p>`;
+    modalBody.appendChild(result);
 }
